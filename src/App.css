@@ -1,0 +1,807 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #e0f7ff;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #e0f7ff;
+  position: relative;
+}
+
+.header {
+  background: linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%);
+  color: white;
+  padding: 1.2rem 0;
+  box-shadow: 0 8px 24px rgba(15, 123, 168, 0.2);
+  position: relative;
+  z-index: 10;
+}
+
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.header-mascot {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.header-text {
+  text-align: center;
+}
+
+.header-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  letter-spacing: 1px;
+}
+
+.header-slogan {
+  font-size: 1.2rem;
+  font-weight: 600;
+  opacity: 0.95;
+  line-height: 1.3;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.btn-back {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+main {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+/* HERO SECTION */
+.hero-section {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  max-height: 420px;
+}
+
+.hero-mascot {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image {
+  width: 420px;
+  height: 420px;
+  object-fit: contain;
+}
+
+.hero-text {
+  padding-right: 1rem;
+}
+
+.hero-title {
+  color: #0f7ba8;
+  font-size: 2.2rem;
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  color: #085a8f;
+  font-size: 1.3rem;
+  margin: 0 0 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.hero-description {
+  color: #0f7ba8;
+  font-size: 1.15rem;
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+/* SERVICES GRID 2x2 */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.service-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.service-icon {
+  font-size: 2.8rem;
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+.service-card h3 {
+  font-size: 1.35rem;
+  color: #0f7ba8;
+  margin: 0 0 0.8rem;
+  font-weight: 700;
+}
+
+.service-card p {
+  font-size: 1.05rem;
+  color: #666;
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+.btn-service {
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  background: linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-service:hover {
+  box-shadow: 0 8px 20px rgba(15, 123, 168, 0.3);
+}
+
+/* VACCINES GRID */
+.vaccines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.vaccine-card {
+  background: white;
+  border: 2px solid #e0e7ff;
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.vaccine-card:hover {
+  transform: translateY(-8px);
+  border-color: #0f7ba8;
+  box-shadow: 0 12px 28px rgba(15, 123, 168, 0.2);
+}
+
+.vaccine-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.vaccine-card h3 {
+  font-size: 1.15rem;
+  color: #0f7ba8;
+  margin: 0 0 1.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  min-height: 2.8rem;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%);
+  color: white;
+  border: none;
+  padding: 0.95rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 20px rgba(15, 123, 168, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-large {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.15rem;
+  margin-top: 2rem;
+}
+
+/* PHARMACIES GRID */
+.pharmacies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.pharmacy-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pharmacy-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.pharmacy-card h3 {
+  color: #0f7ba8;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+}
+
+.city {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.6rem;
+  font-size: 1.1rem;
+}
+
+.address {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.hours {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.email {
+  font-size: 0.95rem;
+  color: #0f7ba8;
+  margin-bottom: 1.5rem;
+  word-break: break-all;
+  font-weight: 500;
+}
+
+/* BOOKING */
+.booking-container {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 650px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.booking-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #e0e7ff;
+}
+
+.booking-header h2 {
+  color: #0f7ba8;
+  margin-bottom: 0.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.booking-header p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.address-small {
+  font-size: 1rem;
+  color: #0f7ba8;
+  font-weight: 500;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.2rem;
+  color: #0f7ba8;
+  font-weight: 700;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  margin-bottom: 0.8rem;
+  transition: border-color 0.3s;
+  font-weight: 500;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #0f7ba8;
+  box-shadow: 0 0 0 3px rgba(15, 123, 168, 0.15);
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  transition: border-color 0.3s;
+  font-weight: 500;
+  resize: vertical;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #0f7ba8;
+  box-shadow: 0 0 0 3px rgba(15, 123, 168, 0.15);
+}
+
+/* TIME SLOTS */
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.8rem;
+}
+
+.time-slot {
+  padding: 0.9rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.time-slot:hover {
+  border-color: #0f7ba8;
+  color: #0f7ba8;
+  background: #f0f9ff;
+}
+
+.time-slot.active {
+  background: #0f7ba8;
+  color: white;
+  border-color: #0f7ba8;
+}
+
+/* CONFIRMATION */
+.confirmation {
+  background: white;
+  border-radius: 16px;
+  padding: 3.5rem 2.5rem;
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* CELEBRATION ANIMATION */
+.celebration-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  height: 350px;
+}
+
+.celebration-mascot {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  animation: celebrationDance 2s ease-in-out infinite;
+  filter: drop-shadow(0 20px 40px rgba(15, 123, 168, 0.3));
+}
+
+@keyframes celebrationDance {
+  0%, 100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-30px) scale(1.05) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(0) scale(1.1) rotate(5deg);
+  }
+  75% {
+    transform: translateY(-20px) scale(1.05) rotate(-5deg);
+  }
+}
+
+.confetti {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti::before,
+.confetti::after {
+  content: '🎉';
+  position: absolute;
+  font-size: 2.5rem;
+  animation: confettiFall 3s ease-out infinite;
+}
+
+.confetti::before {
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.confetti::after {
+  right: 10%;
+  animation-delay: 0.5s;
+}
+
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translateY(-50px) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(250px) rotate(360deg);
+  }
+}
+
+.celebration-title {
+  font-size: 2.8rem;
+  color: #0f7ba8;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  animation: slideInDown 0.8s ease-out;
+}
+
+.celebration-subtitle {
+  font-size: 1.3rem;
+  color: #085a8f;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  animation: slideInUp 0.8s ease-out 0.2s both;
+}
+
+.celebration-divider {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #0f7ba8, #1a9fcf);
+  border-radius: 2px;
+  margin: 1.5rem auto;
+  animation: scaleIn 0.8s ease-out 0.4s both;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.confirmation h2 {
+  color: #0f7ba8;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.confirmation > p {
+  color: #666;
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.confirmation-details {
+  background: #f0f9ff;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e7ff;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row .label {
+  font-weight: 700;
+  color: #0f7ba8;
+  font-size: 1.05rem;
+}
+
+.detail-row .value {
+  color: #333;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.confirmation-footer {
+  margin-top: 2rem;
+}
+
+.confirmation-footer p {
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* RECENT BOOKINGS */
+.recent-bookings {
+  margin-top: 3rem;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.recent-bookings h3 {
+  color: #0f7ba8;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: 1.35rem;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.booking-item {
+  padding: 1.5rem;
+  border: 2px solid #e0e7ff;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.booking-info strong {
+  color: #0f7ba8;
+  display: block;
+  margin-bottom: 0.6rem;
+  font-size: 1.15rem;
+}
+
+.booking-info p {
+  color: #333;
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.booking-info small {
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* FOOTER */
+.footer {
+  background: white;
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+  font-size: 1.05rem;
+  margin-top: 2rem;
+  border-top: 3px solid #dbeafe;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.03);
+  font-weight: 500;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    max-height: none;
+  }
+
+  .hero-image {
+    width: 250px;
+    height: 250px;
+  }
+
+  .hero-text {
+    padding-right: 0;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .header .container {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .header-slogan {
+    font-size: 1rem;
+  }
+
+  .btn-back {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vaccines-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .vaccine-card {
+    padding: 1.5rem;
+  }
+
+  .vaccine-card-icon {
+    font-size: 2rem;
+  }
+
+  .vaccine-card h3 {
+    font-size: 1rem;
+  }
+
+  .pharmacies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .time-slots {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  }
+
+  .time-slot {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  .celebration-mascot {
+    width: 200px;
+    height: 200px;
+  }
+
+  .celebration-title {
+    font-size: 2rem;
+  }
+
+  .celebration-subtitle {
+    font-size: 1.1rem;
+  }
+}
