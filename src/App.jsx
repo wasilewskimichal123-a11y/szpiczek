@@ -291,16 +291,32 @@ function HomePage() {
           </div>
         </main>
 
-        <div style={{ textAlign: 'center', padding: '2rem 0', borderTop: '1px solid #ddd', marginTop: '2rem' }}>
-          <p style={{ color: '#666', marginBottom: '1rem', fontSize: '0.95rem' }}>Pracujesz w aptece ACZ?</p>
-          <button 
-            className="btn-back"
-            onClick={() => navigate('/pharmacy-login')}
-            style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }}
-          >
-            Panel zarządzania apteki
-          </button>
-        </div>
+        <button 
+          onClick={() => navigate('/pharmacy-login')}
+          style={{
+            position: 'fixed',
+            bottom: '2rem',
+            right: '2rem',
+            width: '50px',
+            height: '50px',
+            borderRadius: '8px',
+            background: '#0f7ba8',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '0.7rem',
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            padding: '0.5rem',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            zIndex: 999
+          }}
+        >
+          Panel<br/>Apteki
+        </button>
 
         <footer className="footer">
           <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
