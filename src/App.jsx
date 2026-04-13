@@ -265,35 +265,25 @@ function HomePage() {
           </div>
         </main>
 
-        <button 
-          onClick={() => navigate('/pharmacy-login')}
-          style={{
-            position: 'fixed',
-            bottom: '2rem',
-            right: '2rem',
-            width: '50px',
-            height: '50px',
-            borderRadius: '8px',
-            background: '#0f7ba8',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '0.7rem',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            padding: '0.5rem',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-            zIndex: 999
-          }}
-        >
-          Panel<br/>Apteki
-        </button>
-
-        <footer className="footer">
-          <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+        <footer className="footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+          <p style={{ margin: 0 }}>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+          <button 
+            onClick={() => navigate('/pharmacy-login')}
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              color: 'white',
+              padding: '0.5rem 1.2rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Panel Apteki →
+          </button>
         </footer>
       </div>
     );
@@ -319,8 +309,25 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+        <footer className="footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+          <p style={{ margin: 0 }}>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+          <button 
+            onClick={() => navigate('/pharmacy-login')}
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              color: 'white',
+              padding: '0.5rem 1.2rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Panel Apteki →
+          </button>
         </footer>
       </div>
     );
@@ -365,8 +372,25 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+        <footer className="footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+          <p style={{ margin: 0 }}>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+          <button 
+            onClick={() => navigate('/pharmacy-login')}
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              color: 'white',
+              padding: '0.5rem 1.2rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Panel Apteki →
+          </button>
         </footer>
       </div>
     );
@@ -464,8 +488,25 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+        <footer className="footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+          <p style={{ margin: 0 }}>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+          <button 
+            onClick={() => navigate('/pharmacy-login')}
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              color: 'white',
+              padding: '0.5rem 1.2rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Panel Apteki →
+          </button>
         </footer>
       </div>
     );
@@ -555,15 +596,32 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+        <footer className="footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+          <p style={{ margin: 0 }}>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+          <button 
+            onClick={() => navigate('/pharmacy-login')}
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              color: 'white',
+              padding: '0.5rem 1.2rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Panel Apteki →
+          </button>
         </footer>
       </div>
     );
   }
 }
 
-// Login apteki (dummy bez backendu)
+// Login apteki
 function PharmacyLogin() {
   const navigate = useNavigate();
 
@@ -585,8 +643,25 @@ function PharmacyLogin() {
         </div>
       </main>
 
-      <footer className="footer">
-        <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+      <footer className="footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+        <p style={{ margin: 0 }}>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
+        <button 
+          onClick={() => navigate('/pharmacy-login')}
+          style={{
+            background: 'rgba(255, 255, 255, 0.15)',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            color: 'white',
+            padding: '0.5rem 1.2rem',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            fontWeight: '600',
+            whiteSpace: 'nowrap',
+            transition: 'all 0.3s ease'
+          }}
+        >
+          Panel Apteki →
+        </button>
       </footer>
     </div>
   );
