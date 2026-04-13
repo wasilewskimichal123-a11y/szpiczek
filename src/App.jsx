@@ -11,11 +11,13 @@ function HomePage() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [booking, setBooking] = useState(null);
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState(() => {
+    const saved = localStorage.getItem('szpiczekBookings');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [captchaAnswer, setCaptchaAnswer] = useState('');
   const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 0, num2: 0, answer: 0 });
   const [formErrors, setFormErrors] = useState({});
-  const [blockedTimes, setBlockedTimes] = useState([]);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -87,16 +89,6 @@ function HomePage() {
     generateCaptcha();
   }, []);
 
-  const fetchBlockedTimes = async (pharmacy, date) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/pharmacy/blocked-times/${pharmacy}/${date}`);
-      const data = await response.json();
-      setBlockedTimes(data.times || []);
-    } catch (error) {
-      console.log('Błąd pobierania godzin:', error);
-    }
-  };
-
   const validateEmail = (email) => {
     return email.includes('@') && email.includes('.');
   };
@@ -141,7 +133,6 @@ function HomePage() {
     setCurrentPage('booking');
     setSelectedDate(null);
     setSelectedTime(null);
-    setBlockedTimes([]);
   };
 
   const handleFormChange = (e) => {
@@ -155,14 +146,7 @@ function HomePage() {
     }
   };
 
-  const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
-    if (selectedPharmacy) {
-      fetchBlockedTimes(selectedPharmacy.name, e.target.value);
-    }
-  };
-
-  const handleConfirmBooking = async () => {
+  const handleConfirmBooking = () => {
     if (!validateForm()) {
       return;
     }
@@ -171,49 +155,39 @@ function HomePage() {
     
     if (selectedService === 'przeglądy') {
       if (isValid && formData.medications && captchaAnswer === captchaQuestion.answer.toString()) {
-        await createBooking('Przeglądy lekowe', formData.medications);
+        createBooking('Przeglądy lekowe', formData.medications);
       }
     } else {
       if (isValid && captchaAnswer === captchaQuestion.answer.toString()) {
-        await createBooking(serviceNames[selectedService], null);
+        createBooking(serviceNames[selectedService], null);
       }
     }
   };
 
-  const createBooking = async (serviceName, medications) => {
-    try {
-      const bookingData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        pharmacy: selectedPharmacy.city,
-        service: serviceName,
-        vaccine: selectedVaccine || null,
-        medications: medications || null,
-        date: selectedDate,
-        time: selectedTime
-      };
+  const createBooking = (serviceName, medications) => {
+    const newBooking = {
+      id: Date.now(),
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      pharmacy: selectedPharmacy.city,
+      service: serviceName,
+      vaccine: selectedVaccine || null,
+      medications: medications || null,
+      date: selectedDate,
+      time: selectedTime
+    };
 
-      const response = await fetch('http://localhost:5000/api/bookings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bookingData)
-      });
-
-      const result = await response.json();
-      
-      if (response.ok) {
-        setBooking(result.booking);
-        setBookings([...bookings, result.booking]);
-        setFormData({ firstName: '', lastName: '', email: '', phone: '', medications: '' });
-        setSelectedTime(null);
-        setSelectedDate(null);
-        setCurrentPage('confirmation');
-      }
-    } catch (error) {
-      console.log('Błąd rezerwacji:', error);
-    }
+    const updatedBookings = [...bookings, newBooking];
+    setBookings(updatedBookings);
+    localStorage.setItem('szpiczekBookings', JSON.stringify(updatedBookings));
+    
+    setBooking(newBooking);
+    setFormData({ firstName: '', lastName: '', email: '', phone: '', medications: '' });
+    setSelectedTime(null);
+    setSelectedDate(null);
+    setCurrentPage('confirmation');
   };
 
   const handleBackHome = () => {
@@ -447,7 +421,7 @@ function HomePage() {
                   <input 
                     type="date" 
                     value={selectedDate || ''} 
-                    onChange={handleDateChange}
+                    onChange={(e) => setSelectedDate(e.target.value)}
                     min={getMinDate()}
                     max={getMaxDate()}
                     className={`form-input ${formErrors.date ? 'input-error' : ''}`}
@@ -461,9 +435,8 @@ function HomePage() {
                     {timeSlots.map(time => (
                       <div 
                         key={time} 
-                        className={`time-slot ${selectedTime === time ? 'active' : ''} ${blockedTimes.includes(time) ? 'blocked' : ''}`}
-                        onClick={() => !blockedTimes.includes(time) && setSelectedTime(time)}
-                        style={blockedTimes.includes(time) ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
+                        className={`time-slot ${selectedTime === time ? 'active' : ''}`}
+                        onClick={() => setSelectedTime(time)}
                       >
                         {time}
                       </div>
@@ -517,7 +490,7 @@ function HomePage() {
               <div className="celebration-divider"></div>
 
               <h3 style={{ marginTop: '2rem', color: '#0f7ba8', fontSize: '1.4rem', fontWeight: '700' }}>Rezerwacja potwierdzona!</h3>
-              <p>Szczegóły zostały wysłane na Twój email.</p>
+              <p>Szczegóły zostały zapisane w Twojej przeglądarce.</p>
 
               <div className="confirmation-details">
                 <div className="detail-row">
@@ -590,264 +563,24 @@ function HomePage() {
   }
 }
 
-// Login apteki
+// Login apteki (dummy bez backendu)
 function PharmacyLogin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const handleLogin = async () => {
-    if (!email || !password) {
-      setError('Email i hasło są wymagane');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-
-    try {
-      const response = await fetch('http://localhost:5000/api/pharmacy/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('pharmacyToken', data.token);
-        localStorage.setItem('pharmacyName', data.pharmacy.name);
-        localStorage.setItem('pharmacyCity', data.pharmacy.city);
-        navigate('/pharmacy-dashboard');
-      } else {
-        setError(data.message || 'Błąd logowania');
-      }
-    } catch (error) {
-      console.log('Błąd:', error);
-      setError('Błąd połączenia z serwerem');
-    }
-
-    setLoading(false);
-  };
 
   return (
     <div className="app">
       <main>
         <div className="container">
-          <div className="login-container" style={{ maxWidth: '400px', margin: '5rem auto' }}>
+          <div className="login-container" style={{ maxWidth: '400px', margin: '5rem auto', textAlign: 'center' }}>
             <h1 style={{ textAlign: 'center', color: '#0f7ba8', marginBottom: '2rem' }}>Panel Apteki</h1>
-            
-            {error && <div style={{ color: '#ef4444', marginBottom: '1rem', fontWeight: 'bold' }}>{error}</div>}
-            
-            <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#0f7ba8' }}>Email apteki</label>
-              <input 
-                type="email" 
-                placeholder="apteka@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="form-input"
-                style={{ width: '100%' }}
-              />
-            </div>
-
-            <div style={{ marginBottom: '2rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#0f7ba8' }}>Hasło</label>
-              <input 
-                type="password" 
-                placeholder="Twoje hasło"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-input"
-                style={{ width: '100%' }}
-              />
-            </div>
-
-            <button 
-              className="btn-primary"
-              onClick={handleLogin}
-              disabled={loading}
-              style={{ width: '100%' }}
-            >
-              {loading ? 'Logowanie...' : 'Zaloguj się'}
-            </button>
-
+            <p style={{ color: '#666', marginBottom: '2rem' }}>Panel apteki będzie dostępny niedługo 🚀</p>
             <button 
               className="btn-back"
-              onClick={() => window.location.href = '/'}
-              style={{ width: '100%', marginTop: '1rem' }}
+              onClick={() => navigate('/')}
+              style={{ width: '100%' }}
             >
               Powrót do strony głównej
             </button>
-          </div>
-        </div>
-      </main>
-
-      <footer className="footer">
-        <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
-      </footer>
-    </div>
-  );
-}
-
-// Dashboard apteki
-function PharmacyDashboard() {
-  const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [blockedDate, setBlockedDate] = useState('');
-  const [blockedTime, setBlockedTime] = useState('');
-  const navigate = useNavigate();
-
-  const pharmacyName = localStorage.getItem('pharmacyName');
-  const pharmacyToken = localStorage.getItem('pharmacyToken');
-  const pharmacyCity = localStorage.getItem('pharmacyCity');
-
-  useEffect(() => {
-    if (!pharmacyToken) {
-      navigate('/pharmacy-login');
-      return;
-    }
-    fetchBookings();
-  }, []);
-
-  const fetchBookings = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/pharmacy/bookings', {
-        headers: { 'Authorization': `Bearer ${pharmacyToken}` }
-      });
-
-      const data = await response.json();
-      setBookings(data);
-    } catch (error) {
-      console.log('Błąd:', error);
-    }
-
-    setLoading(false);
-  };
-
-  const handleBlockTime = async () => {
-    if (!blockedDate || !blockedTime) {
-      alert('Wybierz datę i godzinę');
-      return;
-    }
-
-    try {
-      const response = await fetch('http://localhost:5000/api/pharmacy/block-time', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${pharmacyToken}`
-        },
-        body: JSON.stringify({ date: blockedDate, time: blockedTime })
-      });
-
-      if (response.ok) {
-        alert('Godzina zablokowana');
-        setBlockedDate('');
-        setBlockedTime('');
-        fetchBookings();
-      }
-    } catch (error) {
-      console.log('Błąd:', error);
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('pharmacyToken');
-    localStorage.removeItem('pharmacyName');
-    localStorage.removeItem('pharmacyCity');
-    navigate('/');
-  };
-
-  const timeSlots = Array.from({ length: 17 }, (_, i) => {
-    const hour = 8 + Math.floor(i / 2);
-    const minute = i % 2 === 0 ? '00' : '30';
-    return `${hour}:${minute}`;
-  });
-
-  if (loading) {
-    return (
-      <div className="app">
-        <main>
-          <div className="container" style={{ textAlign: 'center', padding: '5rem 0' }}>
-            <p>Ładowanie...</p>
-          </div>
-        </main>
-      </div>
-    );
-  }
-
-  return (
-    <div className="app">
-      <div className="header" style={{ padding: '1.5rem 0' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h2 style={{ color: 'white', margin: 0 }}>{pharmacyName}</h2>
-            <p style={{ color: 'rgba(255,255,255,0.8)', margin: '0.5rem 0 0' }}>{pharmacyCity}</p>
-          </div>
-          <button className="btn-back" onClick={handleLogout}>Wyloguj się</button>
-        </div>
-      </div>
-
-      <main>
-        <div className="container">
-          <div style={{ marginBottom: '3rem' }}>
-            <h3 style={{ color: '#0f7ba8', marginBottom: '1.5rem' }}>Zablokuj godzinę</h3>
-            <div style={{ background: 'white', padding: '2rem', borderRadius: '12px' }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Data</label>
-                <input 
-                  type="date"
-                  value={blockedDate}
-                  onChange={(e) => setBlockedDate(e.target.value)}
-                  className="form-input"
-                />
-              </div>
-
-              <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Godzina</label>
-                <select 
-                  value={blockedTime}
-                  onChange={(e) => setBlockedTime(e.target.value)}
-                  className="form-input"
-                >
-                  <option value="">-- Wybierz godzinę --</option>
-                  {timeSlots.map(time => (
-                    <option key={time} value={time}>{time}</option>
-                  ))}
-                </select>
-              </div>
-
-              <button className="btn-primary" onClick={handleBlockTime} style={{ width: '100%' }}>
-                Zablokuj tę godzinę
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <h3 style={{ color: '#0f7ba8', marginBottom: '1.5rem' }}>Rezerwacje</h3>
-            {bookings.length === 0 ? (
-              <p style={{ textAlign: 'center', color: '#666' }}>Brak rezerwacji</p>
-            ) : (
-              <div style={{ display: 'grid', gap: '1rem' }}>
-                {bookings.map(booking => (
-                  <div key={booking._id} style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', borderLeft: `4px solid ${booking.status === 'blocked' ? '#9ca3af' : booking.status === 'pending' ? '#3b82f6' : '#10b981'}` }}>
-                    <div style={{ marginBottom: '0.5rem' }}>
-                      <strong style={{ color: '#0f7ba8' }}>{booking.firstName} {booking.lastName}</strong>
-                      <span style={{ marginLeft: '1rem', padding: '0.25rem 0.75rem', background: booking.status === 'blocked' ? '#f3f4f6' : booking.status === 'pending' ? '#dbeafe' : '#d1fae5', borderRadius: '4px', fontSize: '0.9rem' }}>
-                        {booking.status === 'blocked' ? 'Zablokowana' : booking.status === 'pending' ? 'Oczekująca' : 'Potwierdzona'}
-                      </span>
-                    </div>
-                    <p style={{ margin: '0.5rem 0', color: '#666' }}>📅 {new Date(booking.date).toLocaleDateString('pl-PL')} o {booking.time}</p>
-                    <p style={{ margin: '0.5rem 0', color: '#666' }}>📋 {booking.service}</p>
-                    {booking.vaccine && <p style={{ margin: '0.5rem 0', color: '#666' }}>💉 {booking.vaccine}</p>}
-                    <p style={{ margin: '0.5rem 0', color: '#666' }}>📱 {booking.phone} | 📧 {booking.email}</p>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </main>
@@ -866,7 +599,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/pharmacy-login" element={<PharmacyLogin />} />
-        <Route path="/pharmacy-dashboard" element={<PharmacyDashboard />} />
       </Routes>
     </Router>
   );
