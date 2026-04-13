@@ -744,15 +744,40 @@ main {
 
 /* FOOTER */
 .footer {
-  background: white;
+  background: #0f7ba8;
   padding: 2rem;
-  text-align: center;
-  color: #666;
-  font-size: 1.05rem;
+  color: white;
   margin-top: 2rem;
   border-top: 3px solid #dbeafe;
   box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.03);
   font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.footer button {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.footer button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* RESPONSIVE */
@@ -848,5 +873,19 @@ main {
 
   .captcha-input {
     max-width: 100%;
+  }
+
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .footer p {
+    font-size: 0.95rem;
+  }
+
+  .footer button {
+    width: 100%;
   }
 }
