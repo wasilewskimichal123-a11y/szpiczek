@@ -58,6 +58,20 @@ export default function App() {
     'confirmation': '🎊 Zrobiłeś to! Teraz możesz żyć bez obaw'
   };
 
+  // Generuj minimalną datę (jutro)
+  const getMinDate = () => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split('T')[0];
+  };
+
+  // Maksymalna data (koniec roku)
+  const getMaxDate = () => {
+    const today = new Date();
+    return new Date(today.getFullYear(), 11, 31).toISOString().split('T')[0];
+  };
+
   // Generuj CAPTCHA
   const generateCaptcha = () => {
     const num1 = Math.floor(Math.random() * 10) + 1;
@@ -70,18 +84,6 @@ export default function App() {
   React.useEffect(() => {
     generateCaptcha();
   }, []);
-
-  // Generuj dostępne daty (od jutra)
-  const getAvailableDates = () => {
-    const dates = [];
-    const today = new Date();
-    for (let i = 1; i <= 14; i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() + i);
-      dates.push(date.toISOString().split('T')[0]);
-    }
-    return dates;
-  };
 
   // Walidacja email
   const validateEmail = (email) => {
@@ -385,14 +387,14 @@ export default function App() {
 
                 <div className="form-section">
                   <h3>Wybierz datę</h3>
-                  <select value={selectedDate || ''} onChange={(e) => setSelectedDate(e.target.value)} className={`form-input ${formErrors.date ? 'input-error' : ''}`}>
-                    <option value="">-- Wybierz datę --</option>
-                    {getAvailableDates().map(date => (
-                      <option key={date} value={date}>
-                        {new Date(date).toLocaleDateString('pl-PL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                      </option>
-                    ))}
-                  </select>
+                  <input 
+                    type="date" 
+                    value={selectedDate || ''} 
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    min={getMinDate()}
+                    max={getMaxDate()}
+                    className={`form-input ${formErrors.date ? 'input-error' : ''}`}
+                  />
                   {formErrors.date && <span className="error-message">{formErrors.date}</span>}
                 </div>
 
