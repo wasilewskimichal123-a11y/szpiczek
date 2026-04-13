@@ -111,7 +111,7 @@ function HomePage() {
     if (!formData.firstName.trim()) errors.firstName = 'Imię jest wymagane';
     if (!formData.lastName.trim()) errors.lastName = 'Nazwisko jest wymagane';
     if (!validateEmail(formData.email)) errors.email = 'Email musi zawierać @';
-    if (!validatePhone(formData.phone) && formData.phone) errors.phone = 'Telefon musi mieć min. 9 cyfr';
+    if (!formData.phone || !validatePhone(formData.phone)) errors.phone = 'Telefon jest wymagany i musi mieć min. 9 cyfr';
     if (!selectedDate) errors.date = 'Wybierz datę';
     if (!selectedTime) errors.time = 'Wybierz godzinę';
     if (captchaAnswer !== captchaQuestion.answer.toString()) errors.captcha = 'Odpowiedź na pytanie jest błędna';
@@ -172,7 +172,7 @@ function HomePage() {
       return;
     }
 
-    const isValid = formData.firstName && formData.lastName && validateEmail(formData.email) && selectedDate && selectedTime;
+    const isValid = formData.firstName && formData.lastName && validateEmail(formData.email) && formData.phone && selectedDate && selectedTime;
     
     if (selectedService === 'przeglądy') {
       if (isValid && formData.medications && captchaAnswer === captchaQuestion.answer.toString()) {
@@ -290,8 +290,8 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -317,8 +317,8 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -344,8 +344,8 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -371,8 +371,8 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -423,8 +423,8 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -522,8 +522,8 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer">
-          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -558,6 +558,10 @@ function HomePage() {
                 <div className="detail-row">
                   <span className="label">Email</span>
                   <span className="value">{booking.email}</span>
+                </div>
+                <div className="detail-row">
+                  <span className="label">Telefon</span>
+                  <span className="value">{booking.phone}</span>
                 </div>
                 <div className="detail-row">
                   <span className="label">Usługa</span>
@@ -601,34 +605,12 @@ function HomePage() {
                 <p>Numer rezerwacji: <strong>#{booking.id}</strong></p>
                 <button className="btn-primary btn-large" onClick={handleBackHome}>Powróć do strony głównej</button>
               </div>
-
-              {bookings.length > 0 && (
-                <div className="recent-bookings">
-                  <h3>Ostatnie rezerwacje</h3>
-                  <div className="bookings-list">
-                    {bookings.map(b => (
-                      <div key={b.id} className="booking-item">
-                        <div className="booking-info">
-                          <strong>{b.firstName} {b.lastName}</strong>
-                          <p>{b.service}</p>
-                          {b.vaccine && <p>Szczepienie: {b.vaccine}</p>}
-                          {b.exam && <p>Badanie: {b.exam}</p>}
-                          {b.test && <p>Test: {b.test}</p>}
-                          {b.medications && <p>Leki: {b.medications}</p>}
-                          <p>{b.pharmacy} - {new Date(b.date).toLocaleDateString('pl-PL')} o {b.time}</p>
-                          <small>{b.email}</small>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </main>
 
-        <footer className="footer">
-          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -663,8 +645,8 @@ function AboutPage() {
         </div>
       </main>
 
-      <footer className="footer">
-        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
   );
@@ -696,8 +678,8 @@ function FAQPage() {
         </div>
       </main>
 
-      <footer className="footer">
-        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
   );
@@ -731,8 +713,8 @@ function ContactPage() {
         </div>
       </main>
 
-      <footer className="footer">
-        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
   );
@@ -776,8 +758,8 @@ function PartnersPage() {
         </div>
       </main>
 
-      <footer className="footer">
-        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
   );
@@ -817,8 +799,8 @@ function BlogPage() {
         </div>
       </main>
 
-      <footer className="footer">
-        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
   );
@@ -835,8 +817,8 @@ function PharmacyLoginPage() {
         </div>
       </main>
 
-      <footer className="footer">
-        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
   );
