@@ -6,9 +6,13 @@ export default function App() {
   const [selectedService, setSelectedService] = useState(null);
   const [selectedVaccine, setSelectedVaccine] = useState(null);
   const [selectedPharmacy, setSelectedPharmacy] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [booking, setBooking] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+  const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 0, num2: 0, answer: 0 });
+  const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -54,6 +58,59 @@ export default function App() {
     'confirmation': '🎊 Zrobiłeś to! Teraz możesz żyć bez obaw'
   };
 
+  // Generuj CAPTCHA
+  const generateCaptcha = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const answer = num1 + num2;
+    setCaptchaQuestion({ num1, num2, answer });
+    setCaptchaAnswer('');
+  };
+
+  React.useEffect(() => {
+    generateCaptcha();
+  }, []);
+
+  // Generuj dostępne daty (od jutra)
+  const getAvailableDates = () => {
+    const dates = [];
+    const today = new Date();
+    for (let i = 1; i <= 14; i++) {
+      const date = new Date(today);
+      date.setDate(date.getDate() + i);
+      dates.push(date.toISOString().split('T')[0]);
+    }
+    return dates;
+  };
+
+  // Walidacja email
+  const validateEmail = (email) => {
+    return email.includes('@') && email.includes('.');
+  };
+
+  // Walidacja telefonu
+  const validatePhone = (phone) => {
+    const onlyDigits = phone.replace(/\D/g, '');
+    return onlyDigits.length >= 9;
+  };
+
+  // Walidacja formularza
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formData.firstName.trim()) errors.firstName = 'Imię jest wymagane';
+    if (!formData.lastName.trim()) errors.lastName = 'Nazwisko jest wymagane';
+    if (!validateEmail(formData.email)) errors.email = 'Email musi zawierać @';
+    if (!validatePhone(formData.phone) && formData.phone) errors.phone = 'Telefon musi mieć min. 9 cyfr';
+    if (!selectedDate) errors.date = 'Wybierz datę';
+    if (!selectedTime) errors.time = 'Wybierz godzinę';
+    if (captchaAnswer !== captchaQuestion.answer.toString()) errors.captcha = 'Odpowiedź na pytanie jest błędna';
+    if (selectedService === 'przeglądy' && !formData.medications.trim()) errors.medications = 'Wpisz listę leków';
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleServiceClick = (service) => {
     setSelectedService(service);
     if (service === 'szczepienia') {
@@ -71,21 +128,35 @@ export default function App() {
   const handlePharmacySelect = (pharmacy) => {
     setSelectedPharmacy(pharmacy);
     setCurrentPage('booking');
+    setSelectedDate(null);
+    setSelectedTime(null);
   };
 
   const handleFormChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    // Walidacja na żywo dla telefonu - tylko cyfry
+    if (name === 'phone') {
+      const onlyDigits = value.replace(/\D/g, '');
+      setFormData({ ...formData, [name]: onlyDigits });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleConfirmBooking = () => {
-    const isValid = formData.firstName && formData.lastName && formData.email && selectedTime;
+    if (!validateForm()) {
+      return;
+    }
+
+    const isValid = formData.firstName && formData.lastName && validateEmail(formData.email) && selectedDate && selectedTime;
     
     if (selectedService === 'przeglądy') {
-      if (isValid && formData.medications) {
+      if (isValid && formData.medications && captchaAnswer === captchaQuestion.answer.toString()) {
         createBooking('Przeglądy lekowe', formData.medications);
       }
     } else {
-      if (isValid) {
+      if (isValid && captchaAnswer === captchaQuestion.answer.toString()) {
         createBooking(serviceNames[selectedService], null);
       }
     }
@@ -102,13 +173,14 @@ export default function App() {
       service: serviceName,
       vaccine: selectedVaccine || null,
       medications: medications || null,
-      date: new Date().toLocaleDateString('pl-PL'),
+      date: selectedDate,
       time: selectedTime
     };
     setBooking(newBooking);
     setBookings([...bookings, newBooking]);
     setFormData({ firstName: '', lastName: '', email: '', phone: '', medications: '' });
     setSelectedTime(null);
+    setSelectedDate(null);
     setCurrentPage('confirmation');
   };
 
@@ -118,6 +190,8 @@ export default function App() {
     setSelectedPharmacy(null);
     setSelectedVaccine(null);
     setSelectedTime(null);
+    setSelectedDate(null);
+    setFormErrors({});
   };
 
   const renderHeader = (showSlogan = false, slogan = '') => {
@@ -142,7 +216,6 @@ export default function App() {
       <div className="app">
         <main>
           <div className="container">
-            {/* HERO SECTION */}
             <div className="hero-section">
               <div className="hero-mascot">
                 <img src="/images/szpiczek2.PNG" alt="Szpiczek" className="hero-image" />
@@ -154,7 +227,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* 4 KARTY 2x2 */}
             <div className="services-grid">
               <div className="service-card" onClick={() => handleServiceClick('szczepienia')}>
                 <div className="service-icon">💉</div>
@@ -283,10 +355,17 @@ export default function App() {
               <div className="booking-form">
                 <div className="form-section">
                   <h3>Dane osobowe</h3>
-                  <input type="text" name="firstName" placeholder="Imię" value={formData.firstName} onChange={handleFormChange} className="form-input" />
-                  <input type="text" name="lastName" placeholder="Nazwisko" value={formData.lastName} onChange={handleFormChange} className="form-input" />
-                  <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleFormChange} className="form-input" />
-                  <input type="tel" name="phone" placeholder="Telefon" value={formData.phone} onChange={handleFormChange} className="form-input" />
+                  <input type="text" name="firstName" placeholder="Imię" value={formData.firstName} onChange={handleFormChange} className={`form-input ${formErrors.firstName ? 'input-error' : ''}`} />
+                  {formErrors.firstName && <span className="error-message">{formErrors.firstName}</span>}
+                  
+                  <input type="text" name="lastName" placeholder="Nazwisko" value={formData.lastName} onChange={handleFormChange} className={`form-input ${formErrors.lastName ? 'input-error' : ''}`} />
+                  {formErrors.lastName && <span className="error-message">{formErrors.lastName}</span>}
+                  
+                  <input type="email" name="email" placeholder="Email (example@mail.com)" value={formData.email} onChange={handleFormChange} className={`form-input ${formErrors.email ? 'input-error' : ''}`} />
+                  {formErrors.email && <span className="error-message">{formErrors.email}</span>}
+                  
+                  <input type="text" name="phone" placeholder="Telefon (min. 9 cyfr)" value={formData.phone} onChange={handleFormChange} className={`form-input ${formErrors.phone ? 'input-error' : ''}`} />
+                  {formErrors.phone && <span className="error-message">{formErrors.phone}</span>}
                 </div>
 
                 {selectedService === 'przeglądy' && (
@@ -294,14 +373,28 @@ export default function App() {
                     <h3>Jakie leki państwo przyjmują?</h3>
                     <textarea 
                       name="medications" 
-                      placeholder="Wpisz listę leków, które przyjmujesz (np. Metformin 500mg, Aspirin 100mg, Atorvastatyna)..." 
+                      placeholder="Wpisz listę leków, które przyjmujesz..." 
                       value={formData.medications} 
                       onChange={handleFormChange} 
-                      className="form-textarea"
+                      className={`form-textarea ${formErrors.medications ? 'input-error' : ''}`}
                       rows="5"
                     ></textarea>
+                    {formErrors.medications && <span className="error-message">{formErrors.medications}</span>}
                   </div>
                 )}
+
+                <div className="form-section">
+                  <h3>Wybierz datę</h3>
+                  <select value={selectedDate || ''} onChange={(e) => setSelectedDate(e.target.value)} className={`form-input ${formErrors.date ? 'input-error' : ''}`}>
+                    <option value="">-- Wybierz datę --</option>
+                    {getAvailableDates().map(date => (
+                      <option key={date} value={date}>
+                        {new Date(date).toLocaleDateString('pl-PL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                      </option>
+                    ))}
+                  </select>
+                  {formErrors.date && <span className="error-message">{formErrors.date}</span>}
+                </div>
 
                 <div className="form-section">
                   <h3>Wybierz godzinę</h3>
@@ -312,6 +405,20 @@ export default function App() {
                       </div>
                     ))}
                   </div>
+                  {formErrors.time && <span className="error-message">{formErrors.time}</span>}
+                </div>
+
+                <div className="form-section captcha-section">
+                  <h3>Potwierdź że nie jesteś botem</h3>
+                  <p className="captcha-question">{captchaQuestion.num1} + {captchaQuestion.num2} = ?</p>
+                  <input 
+                    type="text" 
+                    placeholder="Wpisz wynik" 
+                    value={captchaAnswer} 
+                    onChange={(e) => setCaptchaAnswer(e.target.value)}
+                    className={`form-input captcha-input ${formErrors.captcha ? 'input-error' : ''}`}
+                  />
+                  {formErrors.captcha && <span className="error-message">{formErrors.captcha}</span>}
                 </div>
 
                 <button className="btn-primary btn-large" onClick={handleConfirmBooking}>Potwierdź rezerwację</button>
@@ -379,7 +486,7 @@ export default function App() {
                 </div>
                 <div className="detail-row">
                   <span className="label">Data i godzina</span>
-                  <span className="value">{booking.date} o {booking.time}</span>
+                  <span className="value">{new Date(booking.date).toLocaleDateString('pl-PL')} o {booking.time}</span>
                 </div>
               </div>
 
@@ -399,7 +506,7 @@ export default function App() {
                           <p>{b.service}</p>
                           {b.vaccine && <p>Szczepienie: {b.vaccine}</p>}
                           {b.medications && <p>Leki: {b.medications}</p>}
-                          <p>{b.pharmacy} - {b.date} o {b.time}</p>
+                          <p>{b.pharmacy} - {new Date(b.date).toLocaleDateString('pl-PL')} o {b.time}</p>
                           <small>{b.email}</small>
                         </div>
                       </div>

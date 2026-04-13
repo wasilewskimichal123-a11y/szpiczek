@@ -408,6 +408,11 @@ main {
   box-shadow: 0 0 0 3px rgba(15, 123, 168, 0.15);
 }
 
+.form-input.input-error {
+  border-color: #ef4444;
+  background-color: #fee2e2;
+}
+
 .form-textarea {
   width: 100%;
   padding: 1rem;
@@ -424,6 +429,20 @@ main {
   outline: none;
   border-color: #0f7ba8;
   box-shadow: 0 0 0 3px rgba(15, 123, 168, 0.15);
+}
+
+.form-textarea.input-error {
+  border-color: #ef4444;
+  background-color: #fee2e2;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: block;
+  margin-top: -0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 /* TIME SLOTS */
@@ -454,6 +473,28 @@ main {
   background: #0f7ba8;
   color: white;
   border-color: #0f7ba8;
+}
+
+/* CAPTCHA */
+.captcha-section {
+  background: #f0f9ff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #dbeafe;
+}
+
+.captcha-question {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f7ba8;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.captcha-input {
+  max-width: 150px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 /* CONFIRMATION */
@@ -803,5 +844,9 @@ main {
 
   .celebration-subtitle {
     font-size: 1.1rem;
+  }
+
+  .captcha-input {
+    max-width: 100%;
   }
 }
