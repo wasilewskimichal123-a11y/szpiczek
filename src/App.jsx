@@ -290,8 +290,9 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
         </footer>
       </div>
     );
@@ -317,8 +318,9 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
         </footer>
       </div>
     );
@@ -344,8 +346,9 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
         </footer>
       </div>
     );
@@ -371,8 +374,9 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
         </footer>
       </div>
     );
@@ -423,8 +427,9 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
         </footer>
       </div>
     );
@@ -522,8 +527,9 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
         </footer>
       </div>
     );
@@ -609,8 +615,9 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-          <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
         </footer>
       </div>
     );
@@ -645,8 +652,9 @@ function AboutPage() {
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
       </footer>
     </div>
   );
@@ -678,8 +686,9 @@ function FAQPage() {
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
       </footer>
     </div>
   );
@@ -713,8 +722,9 @@ function ContactPage() {
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
       </footer>
     </div>
   );
@@ -758,8 +768,9 @@ function PartnersPage() {
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
       </footer>
     </div>
   );
@@ -799,8 +810,9 @@ function BlogPage() {
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
       </footer>
     </div>
   );
@@ -817,8 +829,9 @@ function PharmacyLoginPage() {
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-        <p className="footer-slogan" style={{ margin: 0 }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
       </footer>
     </div>
   );
