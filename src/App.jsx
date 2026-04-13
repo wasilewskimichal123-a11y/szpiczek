@@ -291,26 +291,12 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
-          <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-          <button 
-            onClick={() => navigate('/pharmacy-login')}
-            style={{
-              background: 'rgba(30, 58, 138, 0.15)',
-              border: '1.5px solid rgba(30, 58, 138, 0.4)',
-              color: '#1e3a8a',
-              padding: '0.6rem 1.3rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.3s',
-              flexShrink: 0
-            }}
-          >
-            Panel Apteki
-          </button>
+        <footer className="footer">
+          <div className="footer-menu">
+            <a href="#" className="footer-link">🤝 Partnerzy</a>
+            <a href="#" className="footer-link">📰 Blog</a>
+          </div>
+          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -336,26 +322,12 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
-          <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-          <button 
-            onClick={() => navigate('/pharmacy-login')}
-            style={{
-              background: 'rgba(30, 58, 138, 0.15)',
-              border: '1.5px solid rgba(30, 58, 138, 0.4)',
-              color: '#1e3a8a',
-              padding: '0.6rem 1.3rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.3s',
-              flexShrink: 0
-            }}
-          >
-            Panel Apteki
-          </button>
+        <footer className="footer">
+          <div className="footer-menu">
+            <a href="#" className="footer-link">🤝 Partnerzy</a>
+            <a href="#" className="footer-link">📰 Blog</a>
+          </div>
+          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -381,26 +353,12 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
-          <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-          <button 
-            onClick={() => navigate('/pharmacy-login')}
-            style={{
-              background: 'rgba(30, 58, 138, 0.15)',
-              border: '1.5px solid rgba(30, 58, 138, 0.4)',
-              color: '#1e3a8a',
-              padding: '0.6rem 1.3rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.3s',
-              flexShrink: 0
-            }}
-          >
-            Panel Apteki
-          </button>
+        <footer className="footer">
+          <div className="footer-menu">
+            <a href="#" className="footer-link">🤝 Partnerzy</a>
+            <a href="#" className="footer-link">📰 Blog</a>
+          </div>
+          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -426,26 +384,12 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
-          <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-          <button 
-            onClick={() => navigate('/pharmacy-login')}
-            style={{
-              background: 'rgba(30, 58, 138, 0.15)',
-              border: '1.5px solid rgba(30, 58, 138, 0.4)',
-              color: '#1e3a8a',
-              padding: '0.6rem 1.3rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.3s',
-              flexShrink: 0
-            }}
-          >
-            Panel Apteki
-          </button>
+        <footer className="footer">
+          <div className="footer-menu">
+            <a href="#" className="footer-link">🤝 Partnerzy</a>
+            <a href="#" className="footer-link">📰 Blog</a>
+          </div>
+          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -496,26 +440,12 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
-          <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-          <button 
-            onClick={() => navigate('/pharmacy-login')}
-            style={{
-              background: 'rgba(30, 58, 138, 0.15)',
-              border: '1.5px solid rgba(30, 58, 138, 0.4)',
-              color: '#1e3a8a',
-              padding: '0.6rem 1.3rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.3s',
-              flexShrink: 0
-            }}
-          >
-            Panel Apteki
-          </button>
+        <footer className="footer">
+          <div className="footer-menu">
+            <a href="#" className="footer-link">🤝 Partnerzy</a>
+            <a href="#" className="footer-link">📰 Blog</a>
+          </div>
+          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -613,26 +543,12 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
-          <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-          <button 
-            onClick={() => navigate('/pharmacy-login')}
-            style={{
-              background: 'rgba(30, 58, 138, 0.15)',
-              border: '1.5px solid rgba(30, 58, 138, 0.4)',
-              color: '#1e3a8a',
-              padding: '0.6rem 1.3rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.3s',
-              flexShrink: 0
-            }}
-          >
-            Panel Apteki
-          </button>
+        <footer className="footer">
+          <div className="footer-menu">
+            <a href="#" className="footer-link">🤝 Partnerzy</a>
+            <a href="#" className="footer-link">📰 Blog</a>
+          </div>
+          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
@@ -736,74 +652,270 @@ function HomePage() {
           </div>
         </main>
 
-        <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
-          <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-          <button 
-            onClick={() => navigate('/pharmacy-login')}
-            style={{
-              background: 'rgba(30, 58, 138, 0.15)',
-              border: '1.5px solid rgba(30, 58, 138, 0.4)',
-              color: '#1e3a8a',
-              padding: '0.6rem 1.3rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.3s',
-              flexShrink: 0
-            }}
-          >
-            Panel Apteki
-          </button>
+        <footer className="footer">
+          <div className="footer-menu">
+            <a href="#" className="footer-link">🤝 Partnerzy</a>
+            <a href="#" className="footer-link">📰 Blog</a>
+          </div>
+          <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
     );
   }
 }
 
-// Login apteki
-function PharmacyLogin() {
+// O nas
+function AboutPage() {
   const navigate = useNavigate();
 
   return (
     <div className="app">
       <main>
-        <div className="container">
-          <div className="login-container" style={{ maxWidth: '400px', margin: '5rem auto', textAlign: 'center' }}>
-            <h1 style={{ textAlign: 'center', color: '#0f7ba8', marginBottom: '2rem' }}>Panel Apteki</h1>
-            <p style={{ color: '#666', marginBottom: '2rem' }}>Panel apteki będzie dostępny niedługo 🚀</p>
-            <button 
-              className="btn-back"
-              onClick={() => navigate('/')}
-              style={{ width: '100%' }}
-            >
-              Powrót do strony głównej
-            </button>
-          </div>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <button className="btn-back" onClick={() => navigate('/')}>← Wróć</button>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem', marginTop: '2rem' }}>O Szpiczku</h1>
+          
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Nasza misja</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Szpiczek to innowacyjna platforma, która zmienia dostęp do usług zdrowotnych w aptekach. Naszym celem jest wyeliminowanie kolejek i uproszczenie procesu rezerwacji szczepień, badań diagnostycznych i przeglądu leków.
+          </p>
+
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Co nas wyróżnia?</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            ✅ Szybkie rezerwacje online<br/>
+            ✅ Dostęp do wielu aptek w regionie<br/>
+            ✅ Potwierdzenie rezerwacji w kilka sekund<br/>
+            ✅ Bezpieczeństwo danych pacjenta
+          </p>
+
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Nasze wartości</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Wierzymy w demokratyzację opieki zdrowotnej. Każdy ma prawo do szybkiego i wygodnego dostępu do usług medycznych, niezależnie od wieku czy lokalizacji.
+          </p>
         </div>
       </main>
 
-      <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
-        <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-        <button 
-          onClick={() => navigate('/pharmacy-login')}
-          style={{
-            background: 'rgba(30, 58, 138, 0.15)',
-            border: '1.5px solid rgba(30, 58, 138, 0.4)',
-            color: '#1e3a8a',
-            padding: '0.6rem 1.3rem',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            fontWeight: '600',
-            whiteSpace: 'nowrap',
-            transition: 'all 0.3s',
-            flexShrink: 0
-          }}
-        >
-          Panel Apteki
-        </button>
+      <footer className="footer">
+        <div className="footer-menu">
+          <a href="#" className="footer-link">🤝 Partnerzy</a>
+          <a href="#" className="footer-link">📰 Blog</a>
+        </div>
+        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      </footer>
+    </div>
+  );
+}
+
+// FAQ
+function FAQPage() {
+  const navigate = useNavigate();
+
+  const faqs = [
+    { q: 'Jak rezerwować usługę?', a: 'Kliknij na wybraną usługę, wybierz szczepionkę/badanie, aptekę, datę i godzinę. Gotowe!' },
+    { q: 'Czy rezerwacja jest bezpłatna?', a: 'Sama rezerwacja jest bezpłatna. Płacisz za usługę w aptece.' },
+    { q: 'Czy mogę zmienić rezerwację?', a: 'Kontaktuj się z aptekę bezpośrednio lub napisz do nas.' },
+    { q: 'Które szczepienia są dostępne?', a: 'Oferujemy 15 szczepień od Kleszczowego zapalenia mózgu po HPV.' },
+    { q: 'Jakie badania diagnostyczne mamy?', a: 'Pomiar glukozy, ciśnienia, saturacji krwi i analizę masy ciała.' },
+    { q: 'Jak długo trwa wizyta?', a: 'Średnio 15-30 minut, w zależności od usługi.' }
+  ];
+
+  return (
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <button className="btn-back" onClick={() => navigate('/')}>← Wróć</button>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem', marginTop: '2rem' }}>Często zadawane pytania</h1>
+          
+          {faqs.map((faq, idx) => (
+            <div key={idx} style={{ marginBottom: '2rem', borderLeft: '4px solid #0f7ba8', paddingLeft: '1.5rem' }}>
+              <h3 style={{ color: '#0f7ba8', marginBottom: '0.5rem' }}>❓ {faq.q}</h3>
+              <p style={{ color: '#555', lineHeight: '1.8' }}>{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      <footer className="footer">
+        <div className="footer-menu">
+          <a href="#" className="footer-link">🤝 Partnerzy</a>
+          <a href="#" className="footer-link">📰 Blog</a>
+        </div>
+        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      </footer>
+    </div>
+  );
+}
+
+// Kontakt
+function ContactPage() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <button className="btn-back" onClick={() => navigate('/')}>← Wróć</button>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem', marginTop: '2rem' }}>Kontakt</h1>
+          
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Zainteresowany współpracą?</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Skontaktuj się z nami w poniższe sposoby:
+          </p>
+
+          <div style={{ background: '#e0f7ff', padding: '2rem', borderRadius: '12px', marginBottom: '2rem' }}>
+            <p style={{ marginBottom: '1rem' }}><strong>📧 Email:</strong> hello@szpiczek.pl</p>
+            <p style={{ marginBottom: '1rem' }}><strong>📱 WhatsApp:</strong> +48 123 456 789</p>
+            <p style={{ marginBottom: '0' }}><strong>📞 Telefon:</strong> +48 12 345 67 89</p>
+          </div>
+
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Godziny dostępności</h2>
+          <p style={{ lineHeight: '1.8', color: '#555' }}>
+            Poniedziałek - Piątek: 8:00 - 18:00<br/>
+            Sobota: 9:00 - 14:00<br/>
+            Niedziela: Zamknięte
+          </p>
+        </div>
+      </main>
+
+      <footer className="footer">
+        <div className="footer-menu">
+          <a href="#" className="footer-link">🤝 Partnerzy</a>
+          <a href="#" className="footer-link">📰 Blog</a>
+        </div>
+        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      </footer>
+    </div>
+  );
+}
+
+// Partnerzy
+function PartnersPage() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <button className="btn-back" onClick={() => navigate('/')}>← Wróć</button>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem', marginTop: '2rem' }}>Partnerzy</h1>
+          
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Sieci aptek</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Współpracujemy z siecią aptek ACZ - liderem w opiece zdrowotnej na terenie Polski.
+          </p>
+
+          <div style={{ background: '#e0f7ff', padding: '2rem', borderRadius: '12px', marginBottom: '2rem' }}>
+            <h3 style={{ color: '#0f7ba8', marginBottom: '1rem' }}>🤝 Chcesz dołączyć do naszych partnerów?</h3>
+            <p style={{ color: '#555', marginBottom: '1rem' }}>
+              Jeśli prowadzisz aptekę i zainteresowany Cię integracją z platformą Szpiczek, skontaktuj się z nami.
+            </p>
+            <a href="mailto:partners@szpiczek.pl" style={{ 
+              background: 'linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%)',
+              color: 'white',
+              padding: '0.7rem 1.5rem',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              marginTop: '1rem'
+            }}>
+              Napisz do nas
+            </a>
+          </div>
+
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Dla firm</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Oferujemy pakiety szczepień dla pracowników. Kontaktuj się, aby uzyskać wycenę dedykowaną dla Twojej organizacji.
+          </p>
+        </div>
+      </main>
+
+      <footer className="footer">
+        <div className="footer-menu">
+          <a href="#" className="footer-link">🤝 Partnerzy</a>
+          <a href="#" className="footer-link">📰 Blog</a>
+        </div>
+        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      </footer>
+    </div>
+  );
+}
+
+// Blog
+function BlogPage() {
+  const navigate = useNavigate();
+
+  const posts = [
+    { title: 'Znaczenie szczepień w dorosłości', date: '2026-04-10' },
+    { title: 'Jak dbać o zdrowie jesienią', date: '2026-03-15' },
+    { title: '5 mitów o szczepieniach', date: '2026-02-20' }
+  ];
+
+  return (
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <button className="btn-back" onClick={() => navigate('/')}>← Wróć</button>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem', marginTop: '2rem' }}>Blog zdrowotny</h1>
+          
+          <p style={{ color: '#666', marginBottom: '2rem' }}>
+            Artykuły i porady na temat zdrowia, szczepień i profilaktyki.
+          </p>
+
+          {posts.map((post, idx) => (
+            <div key={idx} style={{ 
+              background: 'white',
+              border: '0.5px solid #ddd',
+              padding: '1.5rem',
+              borderRadius: '8px',
+              marginBottom: '1.5rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s',
+              _hover: { boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }
+            }}>
+              <h3 style={{ color: '#0f7ba8', marginBottom: '0.5rem' }}>📝 {post.title}</h3>
+              <p style={{ color: '#999', fontSize: '14px' }}>📅 {new Date(post.date).toLocaleDateString('pl-PL')}</p>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      <footer className="footer">
+        <div className="footer-menu">
+          <a href="#" className="footer-link">🤝 Partnerzy</a>
+          <a href="#" className="footer-link">📰 Blog</a>
+        </div>
+        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      </footer>
+    </div>
+  );
+}
+
+// Panel Apteki
+function PharmacyLoginPage() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="app">
+      <main>
+        <div className="container" style={{ maxWidth: '400px', margin: '5rem auto', textAlign: 'center' }}>
+          <h1 style={{ textAlign: 'center', color: '#0f7ba8', marginBottom: '2rem' }}>Panel Apteki</h1>
+          <p style={{ color: '#666', marginBottom: '2rem' }}>Panel apteki będzie dostępny niedługo 🚀</p>
+          <button 
+            className="btn-back"
+            onClick={() => navigate('/')}
+            style={{ width: '100%' }}
+          >
+            Powrót do strony głównej
+          </button>
+        </div>
+      </main>
+
+      <footer className="footer">
+        <div className="footer-menu">
+          <a href="#" className="footer-link">🤝 Partnerzy</a>
+          <a href="#" className="footer-link">📰 Blog</a>
+        </div>
+        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
   );
@@ -811,11 +923,89 @@ function PharmacyLogin() {
 
 // Główna aplikacja z routingiem
 export default function App() {
+  const navigate = useNavigate();
+
   return (
     <Router>
+      {/* HEADER GÓRNY */}
+      <div style={{
+        background: 'linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%)',
+        color: 'white',
+        padding: '1rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+      }}>
+        <div style={{ display: 'flex', gap: '0.8rem' }}>
+          <a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }} style={{
+            color: 'white',
+            textDecoration: 'none',
+            fontSize: '13px',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
+            transition: '0.3s',
+            fontWeight: '600',
+            background: 'rgba(255,255,255,0.15)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            whiteSpace: 'nowrap'
+          }}>
+            📖 O nas
+          </a>
+          <a href="/faq" onClick={(e) => { e.preventDefault(); navigate('/faq'); }} style={{
+            color: 'white',
+            textDecoration: 'none',
+            fontSize: '13px',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
+            transition: '0.3s',
+            fontWeight: '600',
+            background: 'rgba(255,255,255,0.15)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            whiteSpace: 'nowrap'
+          }}>
+            ❓ FAQ
+          </a>
+          <a href="/contact" onClick={(e) => { e.preventDefault(); navigate('/contact'); }} style={{
+            color: 'white',
+            textDecoration: 'none',
+            fontSize: '13px',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
+            transition: '0.3s',
+            fontWeight: '600',
+            background: 'rgba(255,255,255,0.15)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            whiteSpace: 'nowrap'
+          }}>
+            📧 Kontakt
+          </a>
+        </div>
+        <button onClick={() => navigate('/pharmacy-login')} style={{
+          background: 'rgba(255,255,255,0.2)',
+          border: '1.5px solid rgba(255,255,255,0.4)',
+          color: 'white',
+          padding: '0.6rem 1.3rem',
+          borderRadius: '6px',
+          cursor: 'pointer',
+          fontSize: '14px',
+          fontWeight: '600',
+          transition: 'all 0.3s',
+          whiteSpace: 'nowrap'
+        }}>
+          📋 Panel Apteki
+        </button>
+      </div>
+
+      {/* ROUTES */}
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/pharmacy-login" element={<PharmacyLogin />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/faq" element={<FAQPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/pharmacy-login" element={<PharmacyLoginPage />} />
       </Routes>
     </Router>
   );
