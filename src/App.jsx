@@ -87,7 +87,6 @@ function HomePage() {
     generateCaptcha();
   }, []);
 
-  // Pobierz zajęte godziny
   const fetchBlockedTimes = async (pharmacy, date) => {
     try {
       const response = await fetch(`http://localhost:5000/api/pharmacy/blocked-times/${pharmacy}/${date}`);
@@ -238,14 +237,7 @@ function HomePage() {
           <div className="header-center">
             <div className="header-slogan">{slogan}</div>
           </div>
-          <div style={{ width: '60px' }}>
-            <button 
-              className="btn-login-pharmacy"
-              onClick={() => navigate('/pharmacy-login')}
-            >
-              Panel apteki
-            </button>
-          </div>
+          <div style={{ width: '60px' }}></div>
         </div>
       </div>
     );
@@ -264,13 +256,6 @@ function HomePage() {
                 <h1 className="hero-title">Cześć! Jestem Szpiczek! 👋</h1>
                 <p className="hero-subtitle">Twój osobisty asystent do rezerwacji usług zdrowotnych w aptece</p>
                 <p className="hero-description">Wybierz usługę poniżej i zarezerwuj termin. Bez kolejek, bez stresów!</p>
-                <button 
-                  className="btn-primary"
-                  style={{ marginTop: '1rem', width: '200px' }}
-                  onClick={() => navigate('/pharmacy-login')}
-                >
-                  Panel apteki
-                </button>
               </div>
             </div>
 
@@ -305,6 +290,17 @@ function HomePage() {
             </div>
           </div>
         </main>
+
+        <div style={{ textAlign: 'center', padding: '2rem 0', borderTop: '1px solid #ddd', marginTop: '2rem' }}>
+          <p style={{ color: '#666', marginBottom: '1rem', fontSize: '0.95rem' }}>Pracujesz w aptece ACZ?</p>
+          <button 
+            className="btn-back"
+            onClick={() => navigate('/pharmacy-login')}
+            style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }}
+          >
+            Panel zarządzania apteki
+          </button>
+        </div>
 
         <footer className="footer">
           <p>Szpiczek.pl — Zaufaj nam, zadbaj o siebie. Szczepienia w aptece. 💙</p>
