@@ -7,6 +7,7 @@ function HomePage() {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedService, setSelectedService] = useState(null);
   const [selectedVaccine, setSelectedVaccine] = useState(null);
+  const [selectedTest, setSelectedTest] = useState(null);
   const [selectedPharmacy, setSelectedPharmacy] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -42,6 +43,8 @@ function HomePage() {
     'Pneumokoki', 'Półpasiec', 'Polio', 'Żółta Febra', 'Grypa', 'Covid-19', 'RSV', 'HPV'
   ];
 
+  const tests = ['Angina', 'COVID-19', 'CRP', 'Cholesterol'];
+
   const timeSlots = Array.from({ length: 17 }, (_, i) => {
     const hour = 8 + Math.floor(i / 2);
     const minute = i % 2 === 0 ? '00' : '30';
@@ -52,15 +55,16 @@ function HomePage() {
     'szczepienia': 'Szczepienia',
     'przeglądy': 'Przeglądy lekowe',
     'cisnienie': 'Pomiar ciśnienia',
-    'glukoza': 'Pomiar cukru'
+    'testy': 'Testy diagnostyczne'
   };
 
   const slogans = {
     'vaccines-grid': '🛡️ Jeden wybór, pełna ochrona - która szczepionka dla Ciebie?',
+    'tests-grid': '🧬 Poznaj wynik - który test diagnostyczny dla Ciebie?',
     'pharmacies-szczepienia': '⏱️ Zbliżasz się - teraz tylko wybierz aptekę i umów się',
     'pharmacies-przeglądy': '💊 Wybierz aptekę - farmaceuta przejrzy Twoje leki',
     'pharmacies-cisnienie': '❤️ Wybierz aptekę - zmierzymy Ci ciśnienie',
-    'pharmacies-glukoza': '🩹 Wybierz aptekę - sprawdzimy Twój poziom glukozy',
+    'pharmacies-testy': '🧬 Wybierz aptekę - zrobimy test diagnostyczny',
     'booking': '✍️ Ostatnie 2 minuty - wpisz dane i masz terminu!',
     'confirmation': '🎊 Zrobiłeś to! Teraz możesz żyć bez obaw'
   };
@@ -118,13 +122,20 @@ function HomePage() {
     setSelectedService(service);
     if (service === 'szczepienia') {
       setCurrentPage('vaccines-grid');
-    } else if (service === 'przeglądy' || service === 'cisnienie' || service === 'glukoza') {
+    } else if (service === 'testy') {
+      setCurrentPage('tests-grid');
+    } else if (service === 'przeglądy' || service === 'cisnienie') {
       setCurrentPage('pharmacies');
     }
   };
 
   const handleVaccineSelect = (vaccine) => {
     setSelectedVaccine(vaccine);
+    setCurrentPage('pharmacies');
+  };
+
+  const handleTestSelect = (test) => {
+    setSelectedTest(test);
     setCurrentPage('pharmacies');
   };
 
@@ -174,6 +185,7 @@ function HomePage() {
       pharmacy: selectedPharmacy.city,
       service: serviceName,
       vaccine: selectedVaccine || null,
+      test: selectedTest || null,
       medications: medications || null,
       date: selectedDate,
       time: selectedTime
@@ -195,6 +207,7 @@ function HomePage() {
     setSelectedService(null);
     setSelectedPharmacy(null);
     setSelectedVaccine(null);
+    setSelectedTest(null);
     setSelectedTime(null);
     setSelectedDate(null);
     setFormErrors({});
@@ -255,10 +268,10 @@ function HomePage() {
                 <button className="btn-service">Zarezerwuj</button>
               </div>
 
-              <div className="service-card" onClick={() => handleServiceClick('glukoza')}>
-                <div className="service-icon">🩹</div>
-                <h3>Pomiar cukru</h3>
-                <p>Bezpłatne badanie poziomu glukozy</p>
+              <div className="service-card" onClick={() => handleServiceClick('testy')}>
+                <div className="service-icon">🧬</div>
+                <h3>Testy diagnostyczne</h3>
+                <p>Testy dostępne w aptece</p>
                 <button className="btn-service">Zarezerwuj</button>
               </div>
             </div>
@@ -335,6 +348,51 @@ function HomePage() {
     );
   }
 
+  if (currentPage === 'tests-grid') {
+    return (
+      <div className="app">
+        {renderHeader(true, slogans['tests-grid'])}
+
+        <main>
+          <div className="container">
+            <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0f7ba8', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz test diagnostyczny</h2>
+            <div className="vaccines-grid">
+              {tests.map(test => (
+                <div key={test} className="vaccine-card" onClick={() => handleTestSelect(test)}>
+                  <div className="vaccine-card-icon">🧬</div>
+                  <h3>{test}</h3>
+                  <button className="btn-service">Wybierz</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </main>
+
+        <footer className="footer" style={{ background: '#e0f7ff', borderTop: '1px solid #bfdbfe', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2.5rem 2rem' }}>
+          <p style={{ margin: 0, fontSize: '1.15rem', color: '#0c4a6e', fontWeight: 500, letterSpacing: '0.4px', textAlign: 'center', flex: 1, fontFamily: 'Georgia, serif' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <button 
+            onClick={() => navigate('/pharmacy-login')}
+            style={{
+              background: 'rgba(30, 58, 138, 0.15)',
+              border: '1.5px solid rgba(30, 58, 138, 0.4)',
+              color: '#1e3a8a',
+              padding: '0.6rem 1.3rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s',
+              flexShrink: 0
+            }}
+          >
+            Panel Apteki
+          </button>
+        </footer>
+      </div>
+    );
+  }
+
   if (currentPage === 'pharmacies') {
     const sloganKey = `pharmacies-${selectedService}`;
     
@@ -350,14 +408,17 @@ function HomePage() {
                 <h3 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#666', fontSize: '1.2rem', fontWeight: '500' }}>Wybierz aptekę</h3>
               </>
             )}
+            {selectedService === 'testy' && (
+              <>
+                <h2 style={{ textAlign: 'center', marginBottom: '0.8rem', color: '#0f7ba8', fontSize: '1.6rem', fontWeight: '700' }}>Test: {selectedTest}</h2>
+                <h3 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#666', fontSize: '1.2rem', fontWeight: '500' }}>Wybierz aptekę</h3>
+              </>
+            )}
             {selectedService === 'przeglądy' && (
               <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0f7ba8', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz aptekę do przeglądu leków</h2>
             )}
             {selectedService === 'cisnienie' && (
               <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0f7ba8', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz aptekę do pomiaru ciśnienia</h2>
-            )}
-            {selectedService === 'glukoza' && (
-              <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0f7ba8', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz aptekę do pomiaru glukozy</h2>
             )}
             <div className="pharmacies-grid">
               {pharmacies.map(pharmacy => (
@@ -556,6 +617,12 @@ function HomePage() {
                     <span className="value">{booking.vaccine}</span>
                   </div>
                 )}
+                {booking.test && (
+                  <div className="detail-row">
+                    <span className="label">Test</span>
+                    <span className="value">{booking.test}</span>
+                  </div>
+                )}
                 {booking.medications && (
                   <div className="detail-row">
                     <span className="label">Leki</span>
@@ -587,6 +654,7 @@ function HomePage() {
                           <strong>{b.firstName} {b.lastName}</strong>
                           <p>{b.service}</p>
                           {b.vaccine && <p>Szczepienie: {b.vaccine}</p>}
+                          {b.test && <p>Test: {b.test}</p>}
                           {b.medications && <p>Leki: {b.medications}</p>}
                           <p>{b.pharmacy} - {new Date(b.date).toLocaleDateString('pl-PL')} o {b.time}</p>
                           <small>{b.email}</small>
