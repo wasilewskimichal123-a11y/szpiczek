@@ -242,6 +242,24 @@ function HomePage() {
     );
   };
 
+  const footerStyle = {
+    display: 'flex',
+    gap: '1rem',
+    textAlign: 'center'
+  };
+
+  const footerButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#0c4a6e',
+    fontSize: '14px',
+    fontWeight: '600',
+    padding: '0.8rem',
+    borderRadius: '8px',
+    transition: 'all 0.3s'
+  };
+
   if (currentPage === 'home') {
     return (
       <div className="app">
@@ -291,9 +309,9 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div className="footer-menu">
-            <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-            <a href="#blog" className="footer-link">📰 Blog</a>
+          <div style={footerStyle}>
+            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
           </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
@@ -322,9 +340,9 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div className="footer-menu">
-            <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-            <a href="#blog" className="footer-link">📰 Blog</a>
+          <div style={footerStyle}>
+            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
           </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
@@ -353,9 +371,9 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div className="footer-menu">
-            <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-            <a href="#blog" className="footer-link">📰 Blog</a>
+          <div style={footerStyle}>
+            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
           </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
@@ -384,9 +402,9 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div className="footer-menu">
-            <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-            <a href="#blog" className="footer-link">📰 Blog</a>
+          <div style={footerStyle}>
+            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
           </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
@@ -440,9 +458,9 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div className="footer-menu">
-            <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-            <a href="#blog" className="footer-link">📰 Blog</a>
+          <div style={footerStyle}>
+            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
           </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
@@ -543,9 +561,9 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div className="footer-menu">
-            <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-            <a href="#blog" className="footer-link">📰 Blog</a>
+          <div style={footerStyle}>
+            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
           </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
@@ -652,9 +670,9 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div className="footer-menu">
-            <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-            <a href="#blog" className="footer-link">📰 Blog</a>
+          <div style={footerStyle}>
+            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
           </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
@@ -665,6 +683,25 @@ function HomePage() {
 
 // O nas
 function AboutPage() {
+  const navigate = useNavigate();
+  const footerStyle = {
+    display: 'flex',
+    gap: '1rem',
+    textAlign: 'center'
+  };
+
+  const footerButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#0c4a6e',
+    fontSize: '14px',
+    fontWeight: '600',
+    padding: '0.8rem',
+    borderRadius: '8px',
+    transition: 'all 0.3s'
+  };
+
   return (
     <div className="app">
       <main>
@@ -692,9 +729,9 @@ function AboutPage() {
       </main>
 
       <footer className="footer">
-        <div className="footer-menu">
-          <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-          <a href="#blog" className="footer-link">📰 Blog</a>
+        <div style={footerStyle}>
+          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
         </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
@@ -704,6 +741,25 @@ function AboutPage() {
 
 // FAQ
 function FAQPage() {
+  const navigate = useNavigate();
+  const footerStyle = {
+    display: 'flex',
+    gap: '1rem',
+    textAlign: 'center'
+  };
+
+  const footerButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#0c4a6e',
+    fontSize: '14px',
+    fontWeight: '600',
+    padding: '0.8rem',
+    borderRadius: '8px',
+    transition: 'all 0.3s'
+  };
+
   const faqs = [
     { q: 'Jak rezerwować usługę?', a: 'Kliknij na wybraną usługę, wybierz szczepionkę/badanie, aptekę, datę i godzinę. Gotowe!' },
     { q: 'Czy rezerwacja jest bezpłatna?', a: 'Sama rezerwacja jest bezpłatna. Płacisz za usługę w aptece.' },
@@ -729,9 +785,9 @@ function FAQPage() {
       </main>
 
       <footer className="footer">
-        <div className="footer-menu">
-          <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-          <a href="#blog" className="footer-link">📰 Blog</a>
+        <div style={footerStyle}>
+          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
         </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
@@ -741,6 +797,25 @@ function FAQPage() {
 
 // Kontakt
 function ContactPage() {
+  const navigate = useNavigate();
+  const footerStyle = {
+    display: 'flex',
+    gap: '1rem',
+    textAlign: 'center'
+  };
+
+  const footerButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#0c4a6e',
+    fontSize: '14px',
+    fontWeight: '600',
+    padding: '0.8rem',
+    borderRadius: '8px',
+    transition: 'all 0.3s'
+  };
+
   return (
     <div className="app">
       <main>
@@ -768,9 +843,9 @@ function ContactPage() {
       </main>
 
       <footer className="footer">
-        <div className="footer-menu">
-          <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-          <a href="#blog" className="footer-link">📰 Blog</a>
+        <div style={footerStyle}>
+          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
         </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
@@ -780,6 +855,25 @@ function ContactPage() {
 
 // Partnerzy
 function PartnersPage() {
+  const navigate = useNavigate();
+  const footerStyle = {
+    display: 'flex',
+    gap: '1rem',
+    textAlign: 'center'
+  };
+
+  const footerButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#0c4a6e',
+    fontSize: '14px',
+    fontWeight: '600',
+    padding: '0.8rem',
+    borderRadius: '8px',
+    transition: 'all 0.3s'
+  };
+
   return (
     <div className="app">
       <main>
@@ -817,9 +911,9 @@ function PartnersPage() {
       </main>
 
       <footer className="footer">
-        <div className="footer-menu">
-          <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-          <a href="#blog" className="footer-link">📰 Blog</a>
+        <div style={footerStyle}>
+          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
         </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
@@ -829,6 +923,25 @@ function PartnersPage() {
 
 // Blog
 function BlogPage() {
+  const navigate = useNavigate();
+  const footerStyle = {
+    display: 'flex',
+    gap: '1rem',
+    textAlign: 'center'
+  };
+
+  const footerButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#0c4a6e',
+    fontSize: '14px',
+    fontWeight: '600',
+    padding: '0.8rem',
+    borderRadius: '8px',
+    transition: 'all 0.3s'
+  };
+
   const posts = [
     { title: 'Znaczenie szczepień w dorosłości', date: '2026-04-10' },
     { title: 'Jak dbać o zdrowie jesienią', date: '2026-03-15' },
@@ -862,9 +975,9 @@ function BlogPage() {
       </main>
 
       <footer className="footer">
-        <div className="footer-menu">
-          <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-          <a href="#blog" className="footer-link">📰 Blog</a>
+        <div style={footerStyle}>
+          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
         </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
@@ -874,6 +987,25 @@ function BlogPage() {
 
 // Panel Apteki
 function PharmacyLoginPage() {
+  const navigate = useNavigate();
+  const footerStyle = {
+    display: 'flex',
+    gap: '1rem',
+    textAlign: 'center'
+  };
+
+  const footerButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#0c4a6e',
+    fontSize: '14px',
+    fontWeight: '600',
+    padding: '0.8rem',
+    borderRadius: '8px',
+    transition: 'all 0.3s'
+  };
+
   return (
     <div className="app">
       <main>
@@ -884,9 +1016,9 @@ function PharmacyLoginPage() {
       </main>
 
       <footer className="footer">
-        <div className="footer-menu">
-          <a href="#partners" className="footer-link">🤝 Partnerzy</a>
-          <a href="#blog" className="footer-link">📰 Blog</a>
+        <div style={footerStyle}>
+          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
+          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
         </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
