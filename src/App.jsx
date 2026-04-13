@@ -242,24 +242,6 @@ function HomePage() {
     );
   };
 
-  const footerStyle = {
-    display: 'flex',
-    gap: '1rem',
-    textAlign: 'center'
-  };
-
-  const footerButtonStyle = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#0c4a6e',
-    fontSize: '14px',
-    fontWeight: '600',
-    padding: '0.8rem',
-    borderRadius: '8px',
-    transition: 'all 0.3s'
-  };
-
   if (currentPage === 'home') {
     return (
       <div className="app">
@@ -309,10 +291,6 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div style={footerStyle}>
-            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-          </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
@@ -340,10 +318,6 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div style={footerStyle}>
-            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-          </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
@@ -371,10 +345,6 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div style={footerStyle}>
-            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-          </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
@@ -402,10 +372,6 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div style={footerStyle}>
-            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-          </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
@@ -458,10 +424,6 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div style={footerStyle}>
-            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-          </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
@@ -561,10 +523,6 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div style={footerStyle}>
-            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-          </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
@@ -670,10 +628,6 @@ function HomePage() {
         </main>
 
         <footer className="footer">
-          <div style={footerStyle}>
-            <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-            <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-          </div>
           <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
         </footer>
       </div>
@@ -683,25 +637,6 @@ function HomePage() {
 
 // O nas
 function AboutPage() {
-  const navigate = useNavigate();
-  const footerStyle = {
-    display: 'flex',
-    gap: '1rem',
-    textAlign: 'center'
-  };
-
-  const footerButtonStyle = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#0c4a6e',
-    fontSize: '14px',
-    fontWeight: '600',
-    padding: '0.8rem',
-    borderRadius: '8px',
-    transition: 'all 0.3s'
-  };
-
   return (
     <div className="app">
       <main>
@@ -729,10 +664,6 @@ function AboutPage() {
       </main>
 
       <footer className="footer">
-        <div style={footerStyle}>
-          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-        </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
@@ -741,25 +672,6 @@ function AboutPage() {
 
 // FAQ
 function FAQPage() {
-  const navigate = useNavigate();
-  const footerStyle = {
-    display: 'flex',
-    gap: '1rem',
-    textAlign: 'center'
-  };
-
-  const footerButtonStyle = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#0c4a6e',
-    fontSize: '14px',
-    fontWeight: '600',
-    padding: '0.8rem',
-    borderRadius: '8px',
-    transition: 'all 0.3s'
-  };
-
   const faqs = [
     { q: 'Jak rezerwować usługę?', a: 'Kliknij na wybraną usługę, wybierz szczepionkę/badanie, aptekę, datę i godzinę. Gotowe!' },
     { q: 'Czy rezerwacja jest bezpłatna?', a: 'Sama rezerwacja jest bezpłatna. Płacisz za usługę w aptece.' },
@@ -785,10 +697,6 @@ function FAQPage() {
       </main>
 
       <footer className="footer">
-        <div style={footerStyle}>
-          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-        </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
@@ -797,25 +705,6 @@ function FAQPage() {
 
 // Kontakt
 function ContactPage() {
-  const navigate = useNavigate();
-  const footerStyle = {
-    display: 'flex',
-    gap: '1rem',
-    textAlign: 'center'
-  };
-
-  const footerButtonStyle = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#0c4a6e',
-    fontSize: '14px',
-    fontWeight: '600',
-    padding: '0.8rem',
-    borderRadius: '8px',
-    transition: 'all 0.3s'
-  };
-
   return (
     <div className="app">
       <main>
@@ -843,10 +732,6 @@ function ContactPage() {
       </main>
 
       <footer className="footer">
-        <div style={footerStyle}>
-          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-        </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
@@ -855,25 +740,6 @@ function ContactPage() {
 
 // Partnerzy
 function PartnersPage() {
-  const navigate = useNavigate();
-  const footerStyle = {
-    display: 'flex',
-    gap: '1rem',
-    textAlign: 'center'
-  };
-
-  const footerButtonStyle = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#0c4a6e',
-    fontSize: '14px',
-    fontWeight: '600',
-    padding: '0.8rem',
-    borderRadius: '8px',
-    transition: 'all 0.3s'
-  };
-
   return (
     <div className="app">
       <main>
@@ -911,10 +777,6 @@ function PartnersPage() {
       </main>
 
       <footer className="footer">
-        <div style={footerStyle}>
-          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-        </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
@@ -923,25 +785,6 @@ function PartnersPage() {
 
 // Blog
 function BlogPage() {
-  const navigate = useNavigate();
-  const footerStyle = {
-    display: 'flex',
-    gap: '1rem',
-    textAlign: 'center'
-  };
-
-  const footerButtonStyle = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#0c4a6e',
-    fontSize: '14px',
-    fontWeight: '600',
-    padding: '0.8rem',
-    borderRadius: '8px',
-    transition: 'all 0.3s'
-  };
-
   const posts = [
     { title: 'Znaczenie szczepień w dorosłości', date: '2026-04-10' },
     { title: 'Jak dbać o zdrowie jesienią', date: '2026-03-15' },
@@ -975,10 +818,6 @@ function BlogPage() {
       </main>
 
       <footer className="footer">
-        <div style={footerStyle}>
-          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-        </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
@@ -987,25 +826,6 @@ function BlogPage() {
 
 // Panel Apteki
 function PharmacyLoginPage() {
-  const navigate = useNavigate();
-  const footerStyle = {
-    display: 'flex',
-    gap: '1rem',
-    textAlign: 'center'
-  };
-
-  const footerButtonStyle = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#0c4a6e',
-    fontSize: '14px',
-    fontWeight: '600',
-    padding: '0.8rem',
-    borderRadius: '8px',
-    transition: 'all 0.3s'
-  };
-
   return (
     <div className="app">
       <main>
@@ -1016,10 +836,6 @@ function PharmacyLoginPage() {
       </main>
 
       <footer className="footer">
-        <div style={footerStyle}>
-          <button onClick={() => navigate('/partners')} style={footerButtonStyle}>🤝 Partnerzy</button>
-          <button onClick={() => navigate('/blog')} style={footerButtonStyle}>📰 Blog</button>
-        </div>
         <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
       </footer>
     </div>
@@ -1040,7 +856,7 @@ function AppWrapper() {
 
   return (
     <>
-      {/* HEADER GÓRNY */}
+      {/* HEADER GÓRNY - NOWA WERSJA */}
       <div style={{
         background: 'linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%)',
         color: 'white',
@@ -1048,53 +864,94 @@ function AppWrapper() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        flexWrap: 'wrap',
+        gap: '1rem'
       }}>
-        <div style={{ display: 'flex', gap: '0.8rem' }}>
-          <button onClick={() => navigate('/about')} style={{
+        <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+          <button onClick={() => navigate('/')} style={{
             color: 'white',
-            textDecoration: 'none',
             fontSize: '13px',
             padding: '0.5rem 1rem',
             borderRadius: '20px',
-            transition: '0.3s',
+            fontWeight: '700',
+            background: 'rgba(255,255,255,0.25)',
+            border: '1px solid rgba(255,255,255,0.5)',
+            whiteSpace: 'nowrap',
+            cursor: 'pointer',
+            transition: '0.3s'
+          }}>
+            🏠 Home
+          </button>
+          <button onClick={() => navigate('/about')} style={{
+            color: 'white',
+            fontSize: '13px',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
             fontWeight: '600',
             background: 'rgba(255,255,255,0.15)',
             border: '1px solid rgba(255,255,255,0.3)',
             whiteSpace: 'nowrap',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: '0.3s'
           }}>
             📖 O nas
           </button>
           <button onClick={() => navigate('/faq')} style={{
             color: 'white',
-            textDecoration: 'none',
             fontSize: '13px',
             padding: '0.5rem 1rem',
             borderRadius: '20px',
-            transition: '0.3s',
             fontWeight: '600',
             background: 'rgba(255,255,255,0.15)',
             border: '1px solid rgba(255,255,255,0.3)',
             whiteSpace: 'nowrap',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: '0.3s'
           }}>
             ❓ FAQ
           </button>
           <button onClick={() => navigate('/contact')} style={{
             color: 'white',
-            textDecoration: 'none',
             fontSize: '13px',
             padding: '0.5rem 1rem',
             borderRadius: '20px',
-            transition: '0.3s',
             fontWeight: '600',
             background: 'rgba(255,255,255,0.15)',
             border: '1px solid rgba(255,255,255,0.3)',
             whiteSpace: 'nowrap',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: '0.3s'
           }}>
             📧 Kontakt
+          </button>
+          <button onClick={() => navigate('/partners')} style={{
+            color: 'white',
+            fontSize: '13px',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
+            fontWeight: '600',
+            background: 'rgba(255,255,255,0.15)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            whiteSpace: 'nowrap',
+            cursor: 'pointer',
+            transition: '0.3s'
+          }}>
+            🤝 Partnerzy
+          </button>
+          <button onClick={() => navigate('/blog')} style={{
+            color: 'white',
+            fontSize: '13px',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
+            fontWeight: '600',
+            background: 'rgba(255,255,255,0.15)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            whiteSpace: 'nowrap',
+            cursor: 'pointer',
+            transition: '0.3s'
+          }}>
+            📰 Blog
           </button>
         </div>
         <button onClick={() => navigate('/pharmacy-login')} style={{
