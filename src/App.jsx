@@ -13,13 +13,10 @@ function HomePage() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [booking, setBooking] = useState(null);
-  const [bookings, setBookings] = useState(() => {
-    const saved = localStorage.getItem('szpiczekBookings');
-    return saved ? JSON.parse(saved) : [];
-  });
   const [captchaAnswer, setCaptchaAnswer] = useState('');
   const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 0, num2: 0, answer: 0 });
   const [formErrors, setFormErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -171,46 +168,52 @@ function HomePage() {
     if (!validateForm()) {
       return;
     }
-
-    const isValid = formData.firstName && formData.lastName && validateEmail(formData.email) && formData.phone && selectedDate && selectedTime;
-    
-    if (selectedService === 'przeglądy') {
-      if (isValid && formData.medications && captchaAnswer === captchaQuestion.answer.toString()) {
-        createBooking('Przeglądy lekowe', formData.medications);
-      }
-    } else {
-      if (isValid && captchaAnswer === captchaQuestion.answer.toString()) {
-        createBooking(serviceNames[selectedService], null);
-      }
-    }
+    createBooking();
   };
 
-  const createBooking = (serviceName, medications) => {
-    const newBooking = {
-      id: Date.now(),
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      phone: formData.phone,
-      pharmacy: selectedPharmacy.city,
-      service: serviceName,
-      vaccine: selectedVaccine || null,
-      test: selectedTest || null,
-      exam: selectedExam || null,
-      medications: medications || null,
-      date: selectedDate,
-      time: selectedTime
-    };
+  const createBooking = async () => {
+    setLoading(true);
+    try {
+      const bookingData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        pharmacy: selectedPharmacy.city,
+        service: serviceNames[selectedService],
+        vaccine: selectedVaccine || null,
+        test: selectedTest || null,
+        exam: selectedExam || null,
+        medications: formData.medications || null,
+        date: selectedDate,
+        time: selectedTime
+      };
 
-    const updatedBookings = [...bookings, newBooking];
-    setBookings(updatedBookings);
-    localStorage.setItem('szpiczekBookings', JSON.stringify(updatedBookings));
-    
-    setBooking(newBooking);
-    setFormData({ firstName: '', lastName: '', email: '', phone: '', medications: '' });
-    setSelectedTime(null);
-    setSelectedDate(null);
-    setCurrentPage('confirmation');
+      // WYSYŁAJ DO BACKENDU
+      const response = await fetch('http://localhost:5000/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookingData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Błąd wysyłania rezerwacji');
+      }
+
+      const result = await response.json();
+      setBooking(bookingData);
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', medications: '' });
+      setSelectedTime(null);
+      setSelectedDate(null);
+      setCurrentPage('confirmation');
+    } catch (error) {
+      console.log('Błąd:', error);
+      alert('Błąd wysyłania rezerwacji. Spróbuj ponownie.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleBackHome = () => {
@@ -521,7 +524,9 @@ function HomePage() {
                   {formErrors.captcha && <span className="error-message">{formErrors.captcha}</span>}
                 </div>
 
-                <button className="btn-primary btn-large" onClick={handleConfirmBooking}>Potwierdź rezerwację</button>
+                <button className="btn-primary btn-large" onClick={handleConfirmBooking} disabled={loading}>
+                  {loading ? 'Wysyłanie...' : 'Potwierdź rezerwację'}
+                </button>
               </div>
             </div>
           </div>
@@ -554,7 +559,7 @@ function HomePage() {
               <div className="celebration-divider"></div>
 
               <h3 style={{ marginTop: '2rem', color: '#0f7ba8', fontSize: '1.4rem', fontWeight: '700' }}>Rezerwacja potwierdzona!</h3>
-              <p>Szczegóły zostały zapisane w Twojej przeglądarce.</p>
+              <p>Email potwierdzenia został wysłany na {booking.email}</p>
 
               <div className="confirmation-details">
                 <div className="detail-row">
@@ -608,7 +613,6 @@ function HomePage() {
               </div>
 
               <div className="confirmation-footer">
-                <p>Numer rezerwacji: <strong>#{booking.id}</strong></p>
                 <button className="btn-primary btn-large" onClick={handleBackHome}>Powróć do strony głównej</button>
               </div>
             </div>
@@ -851,7 +855,7 @@ function AppWrapper() {
 
   return (
     <>
-      {/* HEADER GÓRNY - NOWA WERSJA */}
+      {/* HEADER GÓRNY */}
       <div style={{
         background: 'linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%)',
         color: 'white',
