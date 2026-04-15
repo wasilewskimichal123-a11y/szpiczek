@@ -824,12 +824,273 @@ function BlogPage() {
 
 // Panel Apteki
 function PharmacyLoginPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
+  const [pharmacyName, setPharmacyName] = useState(null);
+  const [loginForm, setLoginForm] = useState({ pharmacy: '', password: '' });
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState('');
+
+  const pharmacyOptions = ['Myślibórz', 'Świnoujście', 'Szczecin (Gierczak)', 'Szczecin (Nałkowska)', 'Police'];
+
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginForm({ ...loginForm, [name]: value });
+    setLoginError('');
+  };
+
+  const handleLogin = async () => {
+    if (!loginForm.pharmacy || !loginForm.password) {
+      setLoginError('Wpisz nazwę apteki i hasło');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:5000/api/pharmacy/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pharmacy: loginForm.pharmacy,
+          password: loginForm.password
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setLoginError(errorData.message || 'Błąd logowania');
+        return;
+      }
+
+      const data = await response.json();
+      setToken(data.token);
+      setPharmacyName(data.pharmacy);
+      setIsLoggedIn(true);
+      setLoginForm({ pharmacy: '', password: '' });
+      
+      // Pobierz rezerwacje
+      await fetchBookings(data.token);
+    } catch (error) {
+      setLoginError('Błąd połączenia z serwerem');
+      console.log('Błąd logowania:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchBookings = async (authToken) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/pharmacy/bookings', {
+        headers: { 'Authorization': `Bearer ${authToken}` }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setBookings(data);
+      }
+    } catch (error) {
+      console.log('Błąd pobierania rezerwacji:', error);
+    }
+  };
+
+  const handleStatusChange = async (bookingId, newStatus) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/pharmacy/booking/${bookingId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (response.ok) {
+        // Odśwież listę
+        await fetchBookings(token);
+      }
+    } catch (error) {
+      console.log('Błąd aktualizacji statusu:', error);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setToken(null);
+    setPharmacyName(null);
+    setBookings([]);
+    setLoginForm({ pharmacy: '', password: '' });
+  };
+
+  // LOGIN PAGE
+  if (!isLoggedIn) {
+    return (
+      <div className="app">
+        <main>
+          <div className="container" style={{ maxWidth: '500px', margin: '5rem auto' }}>
+            <div style={{ background: 'white', padding: '3rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+              <h1 style={{ textAlign: 'center', color: '#0f7ba8', marginBottom: '2rem' }}>📋 Panel Apteki</h1>
+
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#333' }}>Apteka</label>
+                <select
+                  name="pharmacy"
+                  value={loginForm.pharmacy}
+                  onChange={handleLoginChange}
+                  style={{
+                    width: '100%',
+                    padding: '0.8rem',
+                    borderRadius: '6px',
+                    border: '1px solid #ddd',
+                    fontSize: '14px',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  <option value="">Wybierz aptekę</option>
+                  {pharmacyOptions.map(opt => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#333' }}>Hasło</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Wpisz hasło"
+                  value={loginForm.password}
+                  onChange={handleLoginChange}
+                  style={{
+                    width: '100%',
+                    padding: '0.8rem',
+                    borderRadius: '6px',
+                    border: '1px solid #ddd',
+                    fontSize: '14px',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              {loginError && (
+                <div style={{ background: '#fee', border: '1px solid #fcc', color: '#c33', padding: '1rem', borderRadius: '6px', marginBottom: '1rem' }}>
+                  ❌ {loginError}
+                </div>
+              )}
+
+              <button
+                onClick={handleLogin}
+                disabled={loading}
+                style={{
+                  width: '100%',
+                  padding: '0.8rem',
+                  background: loading ? '#ccc' : 'linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '6px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: loading ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {loading ? 'Logowanie...' : 'Zaloguj się'}
+              </button>
+
+              <p style={{ textAlign: 'center', color: '#999', fontSize: '12px', marginTop: '2rem' }}>
+                Domyślne hasło dla testów: <strong>password123</strong>
+              </p>
+            </div>
+          </div>
+        </main>
+
+        <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+          <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+        </footer>
+      </div>
+    );
+  }
+
+  // DASHBOARD PAGE
   return (
     <div className="app">
       <main>
-        <div className="container" style={{ maxWidth: '400px', margin: '5rem auto', textAlign: 'center' }}>
-          <h1 style={{ textAlign: 'center', color: '#0f7ba8', marginBottom: '2rem' }}>📋 Panel Apteki</h1>
-          <p style={{ color: '#666', marginBottom: '2rem' }}>Panel apteki będzie dostępny niedługo 🚀</p>
+        <div className="container" style={{ maxWidth: '1000px', margin: '2rem auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <h1 style={{ color: '#0f7ba8', margin: 0 }}>📋 Panel Apteki: {pharmacyName}</h1>
+            <button
+              onClick={handleLogout}
+              style={{
+                padding: '0.6rem 1.2rem',
+                background: '#f0f0f0',
+                border: '1px solid #ddd',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Wyloguj się
+            </button>
+          </div>
+
+          <h2 style={{ color: '#333', marginBottom: '1.5rem' }}>Rezerwacje ({bookings.length})</h2>
+
+          {bookings.length === 0 ? (
+            <div style={{ background: '#e0f7ff', padding: '2rem', borderRadius: '8px', textAlign: 'center', color: '#0f7ba8' }}>
+              Brak rezerwacji 📭
+            </div>
+          ) : (
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                background: 'white',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                borderRadius: '8px'
+              }}>
+                <thead>
+                  <tr style={{ background: '#0f7ba8', color: 'white' }}>
+                    <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #0f7ba8' }}>Pacjent</th>
+                    <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #0f7ba8' }}>Email</th>
+                    <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #0f7ba8' }}>Telefon</th>
+                    <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #0f7ba8' }}>Usługa</th>
+                    <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #0f7ba8' }}>Data i godzina</th>
+                    <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #0f7ba8' }}>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bookings.map((booking) => (
+                    <tr key={booking._id} style={{ borderBottom: '1px solid #eee' }}>
+                      <td style={{ padding: '1rem' }}>{booking.firstName} {booking.lastName}</td>
+                      <td style={{ padding: '1rem' }}>{booking.email}</td>
+                      <td style={{ padding: '1rem' }}>{booking.phone}</td>
+                      <td style={{ padding: '1rem' }}>{booking.service}</td>
+                      <td style={{ padding: '1rem' }}>
+                        {new Date(booking.date).toLocaleDateString('pl-PL')} o {booking.time}
+                      </td>
+                      <td style={{ padding: '1rem' }}>
+                        <select
+                          value={booking.status}
+                          onChange={(e) => handleStatusChange(booking._id, e.target.value)}
+                          style={{
+                            padding: '0.5rem',
+                            borderRadius: '4px',
+                            border: '1px solid #ddd',
+                            background: booking.status === 'confirmed' ? '#d4edda' : booking.status === 'cancelled' ? '#f8d7da' : '#fff3cd',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <option value="pending">Oczekuje</option>
+                          <option value="confirmed">Potwierdzona</option>
+                          <option value="cancelled">Anulowana</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </main>
 
