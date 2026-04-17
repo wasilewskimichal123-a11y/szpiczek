@@ -425,83 +425,197 @@ function HomePage() {
 // ============================================================
 // STRONY STATYCZNE
 // ============================================================
+// ============================================================
+// STRONY STATYCZNE
+// ============================================================
 function AboutPage() {
   return (
-    <div className="app"><main>
-      <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-        <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📖 O Szpiczku</h1>
-        <h2 style={{ color: '#0f7ba8' }}>Nasza misja</h2>
-        <p style={{ lineHeight: '1.8', color: '#555' }}>Szpiczek to innowacyjna platforma, która zmienia dostęp do usług zdrowotnych w aptekach.</p>
-      </div>
-    </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📖 O Szpiczku</h1>
+          
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Nasza misja</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Szpiczek to innowacyjna platforma, która zmienia dostęp do usług zdrowotnych w aptekach. Naszym celem jest wyeliminowanie kolejek i uproszczenie procesu rezerwacji szczepień, badań diagnostycznych i przeglądu leków.
+          </p>
+
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Co nas wyróżnia?</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            ✅ Szybkie rezerwacje online<br/>
+            ✅ Dostęp do wielu aptek w regionie<br/>
+            ✅ Potwierdzenie rezerwacji w kilka sekund<br/>
+            ✅ Bezpieczeństwo danych pacjenta
+          </p>
+
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Nasze wartości</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Wierzymy w demokratyzację opieki zdrowotnej. Każdy ma prawo do szybkiego i wygodnego dostępu do usług medycznych, niezależnie od wieku czy lokalizacji.
+          </p>
+        </div>
+      </main>
+
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+      </footer>
+    </div>
   );
 }
 
 function FAQPage() {
+  const faqs = [
+    { q: 'Jak rezerwować usługę?', a: 'Kliknij na wybraną usługę, wybierz szczepionkę/badanie, aptekę, datę i godzinę. Gotowe!' },
+    { q: 'Czy rezerwacja jest bezpłatna?', a: 'Sama rezerwacja jest bezpłatna. Płacisz za usługę w aptece.' },
+    { q: 'Czy mogę zmienić rezerwację?', a: 'Kontaktuj się z aptekę bezpośrednio lub napisz do nas.' },
+    { q: 'Które szczepienia są dostępne?', a: 'Oferujemy 15 szczepień od Kleszczowego zapalenia mózgu po HPV.' },
+    { q: 'Jakie badania diagnostyczne mamy?', a: 'Pomiar glukozy, ciśnienia, saturacji krwi i analizę masy ciała.' },
+    { q: 'Jak długo trwa wizyta?', a: 'Średnio 15-30 minut, w zależności od usługi.' }
+  ];
+
   return (
-    <div className="app"><main>
-      <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-        <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>❓ FAQ</h1>
-        <p>Najczęściej zadawane pytania.</p>
-      </div>
-    </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>❓ Często zadawane pytania</h1>
+          
+          {faqs.map((faq, idx) => (
+            <div key={idx} style={{ marginBottom: '2rem', borderLeft: '4px solid #0f7ba8', paddingLeft: '1.5rem' }}>
+              <h3 style={{ color: '#0f7ba8', marginBottom: '0.5rem' }}>Q: {faq.q}</h3>
+              <p style={{ color: '#555', lineHeight: '1.8' }}>A: {faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+      </footer>
+    </div>
   );
 }
 
 function ContactPage() {
   return (
-    <div className="app"><main>
-      <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-        <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📧 Kontakt</h1>
-        <p>Email: hello@szpiczek.pl</p>
-      </div>
-    </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📧 Kontakt</h1>
+          
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Zainteresowany współpracą?</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Skontaktuj się z nami w poniższe sposoby:
+          </p>
+
+          <div style={{ background: '#e0f7ff', padding: '2rem', borderRadius: '12px', marginBottom: '2rem' }}>
+            <p style={{ marginBottom: '1rem' }}><strong>📧 Email:</strong> hello@szpiczek.pl</p>
+            <p style={{ marginBottom: '1rem' }}><strong>📱 WhatsApp:</strong> +48 123 456 789</p>
+            <p style={{ marginBottom: '0' }}><strong>📞 Telefon:</strong> +48 12 345 67 89</p>
+          </div>
+
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Godziny dostępności</h2>
+          <p style={{ lineHeight: '1.8', color: '#555' }}>
+            Poniedziałek - Piątek: 8:00 - 18:00<br/>
+            Sobota: 9:00 - 14:00<br/>
+            Niedziela: Zamknięte
+          </p>
+        </div>
+      </main>
+
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+      </footer>
+    </div>
   );
 }
 
 function PartnersPage() {
   return (
-    <div className="app"><main>
-      <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-        <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>🤝 Partnerzy</h1>
-        <p>Współpracujemy z siecią aptek ACZ.</p>
-      </div>
-    </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>🤝 Partnerzy</h1>
+          
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Sieci aptek</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Współpracujemy z siecią aptek ACZ - liderem w opiece zdrowotnej na terenie Polski.
+          </p>
+
+          <div style={{ background: '#e0f7ff', padding: '2rem', borderRadius: '12px', marginBottom: '2rem' }}>
+            <h3 style={{ color: '#0f7ba8', marginBottom: '1rem' }}>Chcesz dołączyć do naszych partnerów?</h3>
+            <p style={{ color: '#555', marginBottom: '1rem' }}>
+              Jeśli prowadzisz aptekę i zainteresowany Cię integracją z platformą Szpiczek, skontaktuj się z nami.
+            </p>
+            <a href="mailto:partners@szpiczek.pl" style={{ 
+              background: 'linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%)',
+              color: 'white',
+              padding: '0.7rem 1.5rem',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              marginTop: '1rem'
+            }}>
+              Napisz do nas
+            </a>
+          </div>
+
+          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Dla firm</h2>
+          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
+            Oferujemy pakiety szczepień dla pracowników. Kontaktuj się, aby uzyskać wycenę dedykowaną dla Twojej organizacji.
+          </p>
+        </div>
+      </main>
+
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+      </footer>
+    </div>
   );
 }
 
 function BlogPage() {
+  const posts = [
+    { title: 'Znaczenie szczepień w dorosłości', date: '2026-04-10' },
+    { title: 'Jak dbać o zdrowie jesienią', date: '2026-03-15' },
+    { title: '5 mitów o szczepieniach', date: '2026-02-20' }
+  ];
+
   return (
-    <div className="app"><main>
-      <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-        <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📰 Blog</h1>
-        <p>Artykuły zdrowotne.</p>
-      </div>
-    </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <div className="app">
+      <main>
+        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📰 Blog zdrowotny</h1>
+          
+          <p style={{ color: '#666', marginBottom: '2rem' }}>
+            Artykuły i porady na temat zdrowia, szczepień i profilaktyki.
+          </p>
+
+          {posts.map((post, idx) => (
+            <div key={idx} style={{ 
+              background: 'white',
+              border: '0.5px solid #ddd',
+              padding: '1.5rem',
+              borderRadius: '8px',
+              marginBottom: '1.5rem',
+              cursor: 'pointer'
+            }}>
+              <h3 style={{ color: '#0f7ba8', marginBottom: '0.5rem' }}>📝 {post.title}</h3>
+              <p style={{ color: '#999', fontSize: '14px' }}>📅 {new Date(post.date).toLocaleDateString('pl-PL')}</p>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+      </footer>
+    </div>
   );
 }
-
-// ============================================================
 // PANEL APTEKI — 3 zakładki
 // ============================================================
 function PharmacyLoginPage() {
