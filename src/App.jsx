@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://szpiczek-backend.onrender.com';
 
 // ============================================================
 // STRONA GŁÓWNA (rezerwacje pacjentów)
