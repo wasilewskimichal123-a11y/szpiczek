@@ -1,4 +1,570 @@
-* {
+/* ==========================================
+   KROK 1: GRADIENT BLOBS + NOISE OVERLAY
+   ========================================== */
+
+.bg-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform;
+}
+
+.blob-1 {
+  top: 10%;
+  left: 5%;
+  width: 400px;
+  height: 400px;
+  background: #1a9fcf;
+  opacity: 0.45;
+  animation: float-blob-1 30s ease-in-out infinite;
+}
+
+.blob-2 {
+  top: 40%;
+  right: 10%;
+  width: 450px;
+  height: 450px;
+  background: #0f7ba8;
+  opacity: 0.35;
+  animation: float-blob-2 35s ease-in-out infinite;
+}
+
+.blob-3 {
+  bottom: 5%;
+  left: 25%;
+  width: 380px;
+  height: 380px;
+  background: #85B7EB;
+  opacity: 0.5;
+  animation: float-blob-3 28s ease-in-out infinite;
+}
+
+.blob-4 {
+  top: 20%;
+  right: 30%;
+  width: 320px;
+  height: 320px;
+  background: #B5D4F4;
+  opacity: 0.4;
+  animation: float-blob-4 32s ease-in-out infinite;
+}
+
+@keyframes float-blob-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, 60px) scale(1.1); }
+  66% { transform: translate(-50px, 40px) scale(0.9); }
+}
+
+@keyframes float-blob-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-100px, -80px) scale(1.15); }
+}
+
+@keyframes float-blob-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, -70px) scale(1.05); }
+  75% { transform: translate(-80px, 50px) scale(0.95); }
+}
+
+@keyframes float-blob-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(90px, 70px) scale(1.08); }
+}
+
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .blob {
+    filter: blur(60px);
+  }
+}
+/* ==========================================
+   KROK 2: FLOATING PILL NAVIGATION
+   ========================================== */
+
+.floating-nav-wrapper {
+  position: sticky;
+  top: 20px;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  pointer-events: none;
+  margin-top: 20px;
+  margin-bottom: 1rem;
+}
+
+.floating-nav {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  padding: 0.4rem 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  max-width: 100%;
+  pointer-events: auto;
+  box-shadow: 
+    0 8px 32px rgba(15, 123, 168, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  justify-content: center;
+}
+
+.floating-nav.scrolled {
+  transform: scale(0.92);
+  box-shadow: 
+    0 12px 40px rgba(15, 123, 168, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.nav-pill {
+  padding: 0.5rem 1rem;
+  color: #0c4a6e;
+  border: none;
+  background: transparent;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.nav-pill:hover {
+  background: rgba(15, 123, 168, 0.1);
+  color: #0f7ba8;
+  transform: translateY(-1px);
+}
+
+.nav-pill.active {
+  background: #0f7ba8;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(15, 123, 168, 0.3);
+}
+
+.nav-pill.active:hover {
+  background: #0f7ba8;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 123, 168, 0.4);
+}
+
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(15, 123, 168, 0.2);
+  margin: 0 0.3rem;
+}
+
+.nav-pill.accent {
+  background: rgba(15, 123, 168, 0.1);
+  color: #0f7ba8;
+  border: 1px solid rgba(15, 123, 168, 0.3);
+  font-weight: 600;
+}
+
+.nav-pill.accent:hover {
+  background: rgba(15, 123, 168, 0.2);
+  border-color: rgba(15, 123, 168, 0.5);
+}
+
+.nav-pill.accent.primary {
+  background: #0f7ba8;
+  color: white;
+  border: 1px solid #0f7ba8;
+}
+
+.nav-pill.accent.primary:hover {
+  background: #1a9fcf;
+  border-color: #1a9fcf;
+  box-shadow: 0 6px 16px rgba(15, 123, 168, 0.4);
+}
+
+@media (max-width: 768px) {
+  .floating-nav {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    gap: 0.2rem;
+    padding: 0.3rem 0.4rem;
+  }
+  
+  .nav-pill {
+    padding: 0.4rem 0.7rem;
+    font-size: 11px;
+  }
+  
+  .nav-divider {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-nav,
+  .nav-pill {
+    transition: none !important;
+  }
+  /* ==========================================
+   KROK 3: PILL SHAPES EVERYWHERE
+   ========================================== */
+
+button.btn-primary,
+button.btn-service,
+button.btn-large {
+  border-radius: 9999px !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button.btn-primary:hover,
+button.btn-service:hover,
+button.btn-large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 123, 168, 0.3);
+}
+
+button.btn-back {
+  border-radius: 9999px !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button.btn-back:hover {
+  transform: translateY(-1px);
+}
+
+.form-input,
+.form-textarea {
+  border-radius: 9999px !important;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-textarea {
+  border-radius: 20px !important;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  box-shadow: 0 0 0 3px rgba(15, 123, 168, 0.15);
+  border-color: #0f7ba8;
+  outline: none;
+}
+
+.time-slot {
+  border-radius: 9999px !important;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.time-slot:hover:not([style*="not-allowed"]) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 123, 168, 0.2);
+}
+
+.captcha-input {
+  border-radius: 9999px !important;
+  text-align: center;
+}
+
+input[type="date"],
+input[type="email"],
+input[type="password"],
+input[type="text"],
+select {
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input[type="date"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+select:focus {
+  box-shadow: 0 0 0 3px rgba(15, 123, 168, 0.15);
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button,
+  .form-input,
+  .time-slot {
+    transition: none !important;
+  }
+  /* ==========================================
+   KROK 4: GLASSMORPHISM CARDS
+   ========================================== */
+
+.hero-section {
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 24px !important;
+  box-shadow: 
+    0 8px 32px rgba(15, 123, 168, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+.service-card {
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 20px !important;
+  box-shadow: 
+    0 8px 32px rgba(15, 123, 168, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.service-card:hover {
+  transform: translateY(-4px) !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 
+    0 16px 48px rgba(15, 123, 168, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+.vaccine-card {
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 8px 32px rgba(15, 123, 168, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.vaccine-card:hover {
+  transform: translateY(-3px) !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+}
+
+.pharmacy-card {
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 8px 32px rgba(15, 123, 168, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.pharmacy-card:hover {
+  transform: translateY(-3px) !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+}
+
+.booking-container {
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 24px !important;
+  box-shadow: 
+    0 8px 32px rgba(15, 123, 168, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+.confirmation {
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 24px !important;
+  box-shadow: 
+    0 8px 32px rgba(15, 123, 168, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+.captcha-section {
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 16px !important;
+}
+
+.footer {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+@media (max-width: 768px) {
+  .hero-section,
+  .service-card,
+  .vaccine-card,
+  .pharmacy-card,
+  .booking-container,
+  .confirmation {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card,
+  .vaccine-card,
+  .pharmacy-card {
+    transition: none !important;
+  }
+  /* ==========================================
+   KROK 5: MIKROINTERAKCJE
+   ========================================== */
+
+.btn-primary,
+.btn-service,
+.btn-large {
+  position: relative;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 12px rgba(15, 123, 168, 0.25) !important;
+}
+
+.btn-primary:hover,
+.btn-service:hover,
+.btn-large:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+  box-shadow: 
+    0 12px 28px rgba(15, 123, 168, 0.4),
+    0 0 0 4px rgba(26, 159, 207, 0.15) !important;
+}
+
+.btn-primary:active,
+.btn-service:active,
+.btn-large:active {
+  transform: translateY(-1px) scale(1.01) !important;
+}
+
+.service-card:hover {
+  transform: translateY(-6px) !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 
+    0 20px 48px rgba(15, 123, 168, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+.vaccine-card:hover {
+  transform: translateY(-5px) !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 
+    0 16px 40px rgba(15, 123, 168, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+.pharmacy-card:hover {
+  transform: translateY(-5px) !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 
+    0 16px 40px rgba(15, 123, 168, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+.time-slot:hover:not(.disabled) {
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 6px 16px rgba(15, 123, 168, 0.25) !important;
+}
+
+.time-slot.active {
+  transform: scale(1.05) !important;
+  box-shadow: 
+    0 6px 16px rgba(15, 123, 168, 0.4),
+    0 0 0 3px rgba(26, 159, 207, 0.2) !important;
+}
+
+.form-input:hover,
+.form-textarea:hover {
+  border-color: rgba(15, 123, 168, 0.4) !important;
+}
+
+.nav-pill {
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.nav-pill:hover:not(.active) {
+  transform: translateY(-2px);
+  background: rgba(15, 123, 168, 0.15);
+  color: #0f7ba8;
+}
+
+.nav-pill.magnetic {
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-service,
+  .btn-large,
+  .service-card,
+  .vaccine-card,
+  .pharmacy-card,
+  .time-slot,
+  .nav-pill {
+    transition: none !important;
+  }
+  
+  .btn-primary:hover,
+  .btn-service:hover,
+  .btn-large:hover,
+  .service-card:hover,
+  .vaccine-card:hover,
+  .pharmacy-card:hover,
+  .time-slot:hover,
+  .nav-pill:hover {
+    transform: none !important;
+  }
+}
+  
+  .service-card:hover,
+  .vaccine-card:hover,
+  .pharmacy-card:hover {
+    transform: none !important;
+  }
+}
+  
+  button:hover,
+  .time-slot:hover {
+    transform: none !important;
+  }
+}
+}* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -16,7 +582,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #e0f7ff;
+  background: transparent;
   position: relative;
 }
 
@@ -111,9 +677,13 @@ main {
   align-items: center;
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
   margin-bottom: 1rem;
   max-height: 420px;
+  box-shadow: 0 8px 32px rgba(15, 123, 168, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .hero-mascot {
@@ -166,13 +736,15 @@ main {
 }
 
 .service-card {
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
   padding: 2rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(15, 123, 168, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .service-card:hover {
@@ -206,15 +778,17 @@ main {
   background: linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: 600;
   font-size: 1.1rem;
-  transition: all 0.3s ease;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(15, 123, 168, 0.25);
 }
 
 .btn-service:hover {
-  box-shadow: 0 8px 20px rgba(15, 123, 168, 0.3);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(15, 123, 168, 0.4), 0 0 0 4px rgba(26, 159, 207, 0.15);
 }
 
 /* VACCINES GRID */
@@ -226,14 +800,16 @@ main {
 }
 
 .vaccine-card {
-  background: white;
-  border: 2px solid #e0e7ff;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 16px;
   padding: 2rem;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(15, 123, 168, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .vaccine-card:hover {
@@ -263,17 +839,18 @@ main {
   color: white;
   border: none;
   padding: 0.95rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: 600;
   font-size: 1.05rem;
-  transition: all 0.3s ease;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
+  box-shadow: 0 4px 12px rgba(15, 123, 168, 0.25);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 8px 20px rgba(15, 123, 168, 0.3);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 123, 168, 0.4), 0 0 0 4px rgba(26, 159, 207, 0.15);
+  transform: translateY(-3px) scale(1.03);
 }
 
 .btn-large {
@@ -291,12 +868,15 @@ main {
 }
 
 .pharmacy-card {
-  background: white;
-  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 16px;
   padding: 2rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(15, 123, 168, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .pharmacy-card:hover {
@@ -342,12 +922,15 @@ main {
 
 /* BOOKING */
 .booking-container {
-  background: white;
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
   padding: 2.5rem;
   max-width: 650px;
   margin: 0 auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(15, 123, 168, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .booking-header {
@@ -499,13 +1082,16 @@ main {
 
 /* CONFIRMATION */
 .confirmation {
-  background: white;
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
   padding: 3.5rem 2.5rem;
   max-width: 650px;
   margin: 0 auto;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(15, 123, 168, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* CELEBRATION ANIMATION */

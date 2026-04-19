@@ -6,6 +6,45 @@ const API_URL = 'https://szpiczek-backend.onrender.com';
 // ============================================================
 // HOOKS I HELPERY DLA KONT PACJENTÓW
 // ============================================================
+// Hook do magnetic effect na przyciskach
+function useMagnetic(ref, radius = 80, strength = 0.4) {
+  useEffect(() => {
+    if (!ref.current) return;
+    
+    const el = ref.current;
+    
+    const handleMouseMove = (e) => {
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (dist < radius) {
+        const pull = (radius - dist) / radius;
+        el.style.transform = `translate(${dx * pull * strength}px, ${dy * pull * strength}px)`;
+      } else {
+        el.style.transform = 'translate(0, 0)';
+      }
+    };
+    
+    const handleMouseLeave = () => {
+      el.style.transform = 'translate(0, 0)';
+    };
+    
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.innerWidth < 768) return;
+    
+    document.addEventListener('mousemove', handleMouseMove);
+    el.addEventListener('mouseleave', handleMouseLeave);
+    
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      el.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [ref, radius, strength]);
+}
 function usePatientAuth() {
   const [patient, setPatient] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('patientToken'));
@@ -1793,44 +1832,40 @@ export default function App() {
 function AppWrapper() {
   const navigate = useNavigate();
 
-  return (
+    return (
     <>
-      <div style={{
-        background: 'linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%)',
-        color: 'white', padding: '1rem 2rem', display: 'flex',
-        justifyContent: 'space-between', alignItems: 'center',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)', flexWrap: 'wrap', gap: '1rem'
-      }}>
-        <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
-          <button onClick={() => navigate('/')} style={navBtn(true)}>🏠 Home</button>
-          <button onClick={() => navigate('/about')} style={navBtn()}>📖 O nas</button>
-          <button onClick={() => navigate('/faq')} style={navBtn()}>❓ FAQ</button>
-          <button onClick={() => navigate('/contact')} style={navBtn()}>📧 Kontakt</button>
-          <button onClick={() => navigate('/partners')} style={navBtn()}>🤝 Partnerzy</button>
-          <button onClick={() => navigate('/blog')} style={navBtn()}>📰 Blog</button>
-        </div>
-        {localStorage.getItem('patientToken') ? (
-          <button onClick={() => navigate('/my-account')} style={{
-            background: 'rgba(255,255,255,0.2)',
-            border: '1.5px solid rgba(255,255,255,0.4)',
-            color: 'white', padding: '0.6rem 1.3rem', borderRadius: '6px',
-            cursor: 'pointer', fontSize: '14px', fontWeight: '600', whiteSpace: 'nowrap',
-            marginRight: '0.5rem'
-          }}>👤 Moje konto</button>
-        ) : (
-          <button onClick={() => navigate('/login')} style={{
-            background: 'rgba(255,255,255,0.2)',
-            border: '1.5px solid rgba(255,255,255,0.4)',
-            color: 'white', padding: '0.6rem 1.3rem', borderRadius: '6px',
-            cursor: 'pointer', fontSize: '14px', fontWeight: '600', whiteSpace: 'nowrap',
-            marginRight: '0.5rem'
-          }}>🔑 Zaloguj</button>
-        )}
-        <button onClick={() => navigate('/pharmacy-login')} style={{
-          background: 'rgba(255,255,255,0.2)', border: '1.5px solid rgba(255,255,255,0.4)',
-          color: 'white', padding: '0.6rem 1.3rem', borderRadius: '6px', cursor: 'pointer',
-          fontSize: '14px', fontWeight: '600', whiteSpace: 'nowrap'
-        }}>📋 Panel Apteki</button>
+      {/* GRADIENT BLOBS + NOISE */}
+      <div className="bg-blobs" aria-hidden="true">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
+        <div className="blob blob-4"></div>
+      </div>
+      <svg className="noise-overlay" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <filter id="noiseFilter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)"></rect>
+      </svg>
+
+      <div className="floating-nav-wrapper">
+        <nav className="floating-nav">
+          <button onClick={() => navigate('/')} className="nav-pill active">🏠 Home</button>
+          <button onClick={() => navigate('/about')} className="nav-pill">📖 O nas</button>
+          <button onClick={() => navigate('/faq')} className="nav-pill">❓ FAQ</button>
+          <button onClick={() => navigate('/contact')} className="nav-pill">📧 Kontakt</button>
+          <button onClick={() => navigate('/partners')} className="nav-pill">🤝 Partnerzy</button>
+          <button onClick={() => navigate('/blog')} className="nav-pill">📰 Blog</button>
+          
+          <div className="nav-divider"></div>
+          
+          {localStorage.getItem('patientToken') ? (
+            <button onClick={() => navigate('/my-account')} className="nav-pill accent">👤 Moje konto</button>
+          ) : (
+            <button onClick={() => navigate('/login')} className="nav-pill accent">🔑 Zaloguj</button>
+          )}
+          <button onClick={() => navigate('/pharmacy-login')} className="nav-pill accent primary">📋 Panel Apteki</button>
+        </nav>
       </div>
 
       <Routes>
