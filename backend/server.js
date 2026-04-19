@@ -45,29 +45,42 @@ async function sendPatientEmail(booking) {
     to: booking.email,
     subject: '✅ Twoja rezerwacja w Szpiczku - Potwierdzenie',
     html: `
-      <h2>Cześć ${booking.firstName}! 👋</h2>
-      <p>Twoja rezerwacja została <strong>potwierdzona</strong>! 🎉</p>
-      <h3>📋 Szczegóły:</h3>
-      <ul>
-        <li><strong>Usługa:</strong> ${booking.service}</li>
-        ${booking.vaccine ? `<li><strong>Szczepienie:</strong> ${booking.vaccine}</li>` : ''}
-        ${booking.exam ? `<li><strong>Badanie:</strong> ${booking.exam}</li>` : ''}
-        ${booking.test ? `<li><strong>Test:</strong> ${booking.test}</li>` : ''}
-        <li><strong>Apteka:</strong> ${booking.pharmacy}</li>
-        <li><strong>Data:</strong> ${new Date(booking.date).toLocaleDateString('pl-PL')}</li>
-        <li><strong>Godzina:</strong> ${booking.time}</li>
-      </ul>
-      <hr>
-      <p style="text-align: center; margin: 2rem 0;">
-        <a href="https://szpiczek.vercel.app/cancel/${booking.cancelToken}" 
-           style="display: inline-block; background: #ef4444; color: white; padding: 0.8rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600;">
-          ❌ Anuluj rezerwację
-        </a>
-      </p>
-      <p style="color: #999; font-size: 12px; text-align: center;">
-        Nie pojawisz się? Proszę anuluj rezerwację, żeby zwolnić slot dla innych pacjentów.
-      </p>
-      <p style="color: #0f7ba8; font-weight: bold;">Szpiczek Team 💙</p>
+      <div style="background: #f5f5f5; padding: 2rem; font-family: Arial, sans-serif;">
+        <div style="max-width: 560px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+          
+          <div style="background: linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%); padding: 2rem; text-align: center;">
+            <div style="font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 500; letter-spacing: 1px; margin-bottom: 4px;">SZPICZEK.PL</div>
+            <div style="font-size: 22px; color: white; font-weight: 500;">Rezerwacja potwierdzona</div>
+          </div>
+
+          <div style="padding: 2rem;">
+            <p style="font-size: 16px; color: #333; margin: 0 0 1rem 0;">Cześć ${booking.firstName}! 👋</p>
+            <p style="font-size: 14px; color: #555; line-height: 1.6; margin: 0 0 1.5rem 0;">Twoja wizyta w aptece została zarezerwowana. Poniżej szczegóły:</p>
+
+            <div style="background: #f8fafc; border-left: 3px solid #0f7ba8; padding: 1rem 1.25rem; border-radius: 4px; margin-bottom: 1.5rem;">
+              <table style="width: 100%; font-size: 14px; color: #333; border-collapse: collapse;">
+                <tr><td style="padding: 4px 0; color: #777; width: 110px;">Usługa</td><td style="padding: 4px 0; font-weight: 500;">${booking.service}</td></tr>
+                ${booking.vaccine ? `<tr><td style="padding: 4px 0; color: #777;">Szczepionka</td><td style="padding: 4px 0; font-weight: 500;">${booking.vaccine}</td></tr>` : ''}
+                ${booking.exam ? `<tr><td style="padding: 4px 0; color: #777;">Badanie</td><td style="padding: 4px 0; font-weight: 500;">${booking.exam}</td></tr>` : ''}
+                ${booking.test ? `<tr><td style="padding: 4px 0; color: #777;">Test</td><td style="padding: 4px 0; font-weight: 500;">${booking.test}</td></tr>` : ''}
+                <tr><td style="padding: 4px 0; color: #777;">Apteka</td><td style="padding: 4px 0; font-weight: 500;">ACZ ${booking.pharmacy}</td></tr>
+                <tr><td style="padding: 4px 0; color: #777;">Data</td><td style="padding: 4px 0; font-weight: 500;">${new Date(booking.date).toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' })}</td></tr>
+                <tr><td style="padding: 4px 0; color: #777;">Godzina</td><td style="padding: 4px 0; font-weight: 500;">${booking.time}</td></tr>
+              </table>
+            </div>
+
+            <p style="font-size: 13px; color: #777; line-height: 1.6; margin: 0 0 0.5rem 0;">Nie możesz przyjść? Anuluj rezerwację, by zwolnić slot dla innych pacjentów:</p>
+            <p style="margin: 0 0 1.5rem 0;">
+              <a href="https://szpiczek.vercel.app/cancel/${booking.cancelToken}" style="color: #0f7ba8; font-size: 13px; text-decoration: underline; font-weight: 500;">Anuluj rezerwację →</a>
+            </p>
+
+            <div style="border-top: 1px solid #eee; padding-top: 1rem; margin-top: 1.5rem;">
+              <p style="font-size: 12px; color: #999; margin: 0 0 4px 0;">Zaufaj nam, zadbaj o siebie. 💙</p>
+              <p style="font-size: 11px; color: #bbb; margin: 0;">Szpiczek Team · szpiczek.pl</p>
+            </div>
+          </div>
+        </div>
+      </div>
     `
   };
   try {
