@@ -9,7 +9,10 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+// Generator unikalnych tokenów
+function generateToken() {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
 // MAIL SETUP
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -54,6 +57,16 @@ async function sendPatientEmail(booking) {
         <li><strong>Data:</strong> ${new Date(booking.date).toLocaleDateString('pl-PL')}</li>
         <li><strong>Godzina:</strong> ${booking.time}</li>
       </ul>
+      <hr>
+      <p style="text-align: center; margin: 2rem 0;">
+        <a href="https://szpiczek.vercel.app/cancel/${booking.cancelToken}" 
+           style="display: inline-block; background: #ef4444; color: white; padding: 0.8rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600;">
+          ❌ Anuluj rezerwację
+        </a>
+      </p>
+      <p style="color: #999; font-size: 12px; text-align: center;">
+        Nie pojawisz się? Proszę anuluj rezerwację, żeby zwolnić slot dla innych pacjentów.
+      </p>
       <p style="color: #0f7ba8; font-weight: bold;">Szpiczek Team 💙</p>
     `
   };
@@ -96,17 +109,18 @@ async function sendPharmacyEmail(booking) {
 app.post('/api/bookings', async (req, res) => {
   try {
     const b = req.body;
+    const cancelToken = generateToken();
     const stmt = db.prepare(`
-      INSERT INTO bookings (firstName, lastName, email, phone, pharmacy, service, vaccine, test, exam, medications, date, time, source)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'online')
+      INSERT INTO bookings (firstName, lastName, email, phone, pharmacy, service, vaccine, test, exam, medications, date, time, source, cancelToken)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'online', ?)
     `);
     const result = stmt.run(
       b.firstName, b.lastName, b.email, b.phone, b.pharmacy, b.service,
       b.vaccine || null, b.test || null, b.exam || null, b.medications || null,
-      b.date, b.time
+      b.date, b.time, cancelToken
     );
 
-    const booking = { ...b, id: result.lastInsertRowid };
+    const booking = { ...b, id: result.lastInsertRowid, cancelToken };
     await sendPatientEmail(booking);
     await sendPharmacyEmail(booking);
 
@@ -301,7 +315,31 @@ app.get('/api/pharmacy/stats', authenticateToken, (req, res) => {
     res.status(500).json({ message: 'Błąd serwera' });
   }
 });
+// ENDPOINT: Pobierz szczegóły rezerwacji po tokenie
+app.get('/api/cancel/:token', (req, res) => {
+  try {
+    const booking = db.prepare(`SELECT * FROM bookings WHERE cancelToken = ?`).get(req.params.token);
+    if (!booking) return res.status(404).json({ message: 'Nie znaleziono rezerwacji' });
+    if (booking.status === 'cancelled') return res.status(400).json({ message: 'Ta rezerwacja została już anulowana' });
+    res.json(booking);
+  } catch (error) {
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
 
+// ENDPOINT: Anuluj rezerwację po tokenie
+app.post('/api/cancel/:token', (req, res) => {
+  try {
+    const booking = db.prepare(`SELECT * FROM bookings WHERE cancelToken = ?`).get(req.params.token);
+    if (!booking) return res.status(404).json({ message: 'Nie znaleziono rezerwacji' });
+    if (booking.status === 'cancelled') return res.status(400).json({ message: 'Ta rezerwacja została już anulowana' });
+    
+    db.prepare(`UPDATE bookings SET status = 'cancelled' WHERE cancelToken = ?`).run(req.params.token);
+    res.json({ message: 'Rezerwacja anulowana' });
+  } catch (error) {
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
 // Test
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend działa z SQLite!' });

@@ -21,6 +21,7 @@ db.exec(`
     time TEXT NOT NULL,
     status TEXT DEFAULT 'pending',
     source TEXT DEFAULT 'online',
+    cancelToken TEXT,
     createdAt TEXT DEFAULT (datetime('now'))
   )
 `);
@@ -45,7 +46,11 @@ db.exec(`
     password TEXT NOT NULL
   )
 `);
-
+try {
+  db.exec(`ALTER TABLE bookings ADD COLUMN cancelToken TEXT`);
+} catch (e) {
+  // Kolumna już istnieje
+}
 console.log('✅ Baza danych SQLite gotowa');
 
 module.exports = db;

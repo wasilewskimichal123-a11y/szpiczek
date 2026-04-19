@@ -618,6 +618,125 @@ function BlogPage() {
 }
 // PANEL APTEKI — 3 zakładki
 // ============================================================
+// ============================================================
+// STRONA ANULOWANIA REZERWACJI
+// ============================================================
+function CancelPage() {
+  const [booking, setBooking] = useState(null);
+  const [status, setStatus] = useState('loading');
+  const [message, setMessage] = useState('');
+  const token = window.location.pathname.split('/cancel/')[1];
+
+  useEffect(() => {
+    if (!token) {
+      setStatus('error');
+      setMessage('Brak tokenu anulacji');
+      return;
+    }
+    fetch(`${API_URL}/api/cancel/${token}`)
+      .then(res => res.json().then(data => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if (!ok) {
+          setStatus('error');
+          setMessage(data.message || 'Błąd');
+        } else {
+          setBooking(data);
+          setStatus('ready');
+        }
+      })
+      .catch(() => {
+        setStatus('error');
+        setMessage('Błąd połączenia');
+      });
+  }, [token]);
+
+  const handleCancel = async () => {
+    setStatus('cancelling');
+    try {
+      const res = await fetch(`${API_URL}/api/cancel/${token}`, { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) {
+        setStatus('error');
+        setMessage(data.message || 'Błąd');
+      } else {
+        setStatus('cancelled');
+      }
+    } catch (e) {
+      setStatus('error');
+      setMessage('Błąd połączenia');
+    }
+  };
+
+  return (
+    <div className="app">
+      <main>
+        <div className="container" style={{ maxWidth: '600px', margin: '3rem auto', padding: '0 2rem' }}>
+          <div style={{ background: 'white', padding: '3rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+            
+            {status === 'loading' && (
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{ color: '#0f7ba8' }}>Ładowanie...</h2>
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{ color: '#ef4444' }}>❌ Błąd</h2>
+                <p style={{ color: '#666', marginTop: '1rem' }}>{message}</p>
+                <a href="/" style={{ display: 'inline-block', marginTop: '2rem', background: '#0f7ba8', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '6px', textDecoration: 'none' }}>Strona główna</a>
+              </div>
+            )}
+
+            {status === 'ready' && booking && (
+              <>
+                <h1 style={{ color: '#0f7ba8', textAlign: 'center', marginBottom: '2rem' }}>❌ Anuluj rezerwację</h1>
+                <p style={{ color: '#666', textAlign: 'center', marginBottom: '2rem' }}>Czy na pewno chcesz anulować poniższą rezerwację?</p>
+
+                <div style={{ background: '#e0f7ff', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem' }}>
+                  <p style={{ marginBottom: '0.5rem' }}><strong>Pacjent:</strong> {booking.firstName} {booking.lastName}</p>
+                  <p style={{ marginBottom: '0.5rem' }}><strong>Usługa:</strong> {booking.service}</p>
+                  {booking.vaccine && <p style={{ marginBottom: '0.5rem' }}><strong>Szczepienie:</strong> {booking.vaccine}</p>}
+                  {booking.exam && <p style={{ marginBottom: '0.5rem' }}><strong>Badanie:</strong> {booking.exam}</p>}
+                  {booking.test && <p style={{ marginBottom: '0.5rem' }}><strong>Test:</strong> {booking.test}</p>}
+                  <p style={{ marginBottom: '0.5rem' }}><strong>Apteka:</strong> {booking.pharmacy}</p>
+                  <p style={{ marginBottom: '0' }}><strong>Data:</strong> {new Date(booking.date).toLocaleDateString('pl-PL')} o {booking.time}</p>
+                </div>
+
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <button onClick={handleCancel} style={{ flex: 1, padding: '0.8rem', background: '#ef4444', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '15px' }}>
+                    Tak, anuluj
+                  </button>
+                  <a href="/" style={{ flex: 1, padding: '0.8rem', background: '#f0f0f0', color: '#333', border: 'none', borderRadius: '6px', textDecoration: 'none', textAlign: 'center', fontWeight: '600', fontSize: '15px' }}>
+                    Nie, wróć
+                  </a>
+                </div>
+              </>
+            )}
+
+            {status === 'cancelling' && (
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{ color: '#0f7ba8' }}>Anulowanie...</h2>
+              </div>
+            )}
+
+            {status === 'cancelled' && (
+              <div style={{ textAlign: 'center' }}>
+                <h1 style={{ color: '#10b981', marginBottom: '1rem' }}>✅ Anulowane</h1>
+                <p style={{ color: '#666', marginBottom: '2rem' }}>Twoja rezerwacja została anulowana. Slot zwolniony dla innych pacjentów.</p>
+                <a href="/" style={{ display: 'inline-block', background: '#0f7ba8', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '6px', textDecoration: 'none' }}>Strona główna</a>
+              </div>
+            )}
+
+          </div>
+        </div>
+      </main>
+      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+        <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+      </footer>
+    </div>
+  );
+}
 function PharmacyLoginPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
@@ -1355,6 +1474,7 @@ function AppWrapper() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/pharmacy-login" element={<PharmacyLoginPage />} />
+        <Route path="/cancel/:token" element={<CancelPage />} />
       </Routes>
     </>
   );
