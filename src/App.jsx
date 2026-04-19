@@ -3,6 +3,44 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import './App.css';
 
 const API_URL = 'https://szpiczek-backend.onrender.com';
+// ============================================================
+// HOOKS I HELPERY DLA KONT PACJENTÓW
+// ============================================================
+function usePatientAuth() {
+  const [patient, setPatient] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem('patientToken'));
+
+  useEffect(() => {
+    if (token) {
+      fetch(`${API_URL}/api/patient/me`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (data) setPatient(data);
+          else {
+            localStorage.removeItem('patientToken');
+            setToken(null);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [token]);
+
+  const login = (newToken, patientData) => {
+    localStorage.setItem('patientToken', newToken);
+    setToken(newToken);
+    setPatient(patientData);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('patientToken');
+    setToken(null);
+    setPatient(null);
+  };
+
+  return { patient, token, login, logout };
+}
 
 // ============================================================
 // STRONA GŁÓWNA (rezerwacje pacjentów)
@@ -88,6 +126,22 @@ function HomePage() {
   useEffect(() => {
     generateCaptcha();
   }, []);
+  // Auto-wypełnij dane zalogowanego pacjenta
+  useEffect(() => {
+    const patientData = localStorage.getItem('patientData');
+    if (patientData) {
+      try {
+        const p = JSON.parse(patientData);
+        setFormData(prev => ({
+          ...prev,
+          firstName: p.firstName || '',
+          lastName: p.lastName || '',
+          email: p.email || '',
+          phone: p.phone || ''
+        }));
+      } catch (e) {}
+    }
+  }, []);
 
   // Pobierz zajęte godziny gdy zmieni się data/apteka
   useEffect(() => {
@@ -144,9 +198,13 @@ function HomePage() {
         exam: selectedExam || null, medications: formData.medications || null,
         date: selectedDate, time: selectedTime
       };
+      const patientToken = localStorage.getItem('patientToken');
+      const headers = { 'Content-Type': 'application/json' };
+      if (patientToken) headers['Authorization'] = `Bearer ${patientToken}`;
+      
       const response = await fetch(`${API_URL}/api/bookings`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify(bookingData)
       });
       if (!response.ok) throw new Error('Błąd');
@@ -735,6 +793,298 @@ function CancelPage() {
         <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
       </footer>
     </div>
+  );
+}
+// ============================================================
+// STRONA LOGOWANIA PACJENTA
+// ============================================================
+function PatientLoginPage() {
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    if (!formData.email || !formData.password) {
+      setError('Wypełnij wszystkie pola');
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/patient/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.message || 'Błąd');
+        return;
+      }
+      localStorage.setItem('patientToken', data.token);
+      localStorage.setItem('patientData', JSON.stringify(data.patient));
+      navigate('/my-account');
+      window.location.reload();
+    } catch (e) {
+      setError('Błąd połączenia');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="app"><main>
+      <div className="container" style={{ maxWidth: '450px', margin: '3rem auto', padding: '0 2rem' }}>
+        <div style={{ background: 'white', padding: '2.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+          <h1 style={{ color: '#0f7ba8', textAlign: 'center', marginBottom: '0.5rem' }}>Zaloguj się</h1>
+          <p style={{ color: '#666', textAlign: 'center', marginBottom: '2rem', fontSize: '14px' }}>Zarządzaj rezerwacjami w swoim koncie</p>
+
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Email</label>
+            <input type="email" value={formData.email} onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setError(''); }}
+              placeholder="email@example.com" style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+          </div>
+
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Hasło</label>
+            <input type="password" value={formData.password} onChange={(e) => { setFormData({ ...formData, password: e.target.value }); setError(''); }}
+              placeholder="Twoje hasło" style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+          </div>
+
+          {error && <div style={{ background: '#fee', border: '1px solid #fcc', color: '#c33', padding: '0.7rem', borderRadius: '6px', marginBottom: '1rem', fontSize: '14px' }}>❌ {error}</div>}
+
+          <button onClick={handleLogin} disabled={loading}
+            style={{ width: '100%', padding: '0.8rem', background: loading ? '#ccc' : 'linear-gradient(135deg, #0f7ba8, #1a9fcf)', color: 'white', border: 'none', borderRadius: '6px', fontSize: '15px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer' }}>
+            {loading ? 'Logowanie...' : 'Zaloguj się'}
+          </button>
+
+          <p style={{ textAlign: 'center', color: '#666', marginTop: '1.5rem', fontSize: '14px' }}>
+            Nie masz konta? <a href="/register" style={{ color: '#0f7ba8', fontWeight: '600' }}>Zarejestruj się</a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+    </footer></div>
+  );
+}
+
+// ============================================================
+// STRONA REJESTRACJI PACJENTA
+// ============================================================
+function PatientRegisterPage() {
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', phone: '', password: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleRegister = async () => {
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.password) {
+      setError('Wypełnij wszystkie pola');
+      return;
+    }
+    if (formData.password.length < 6) {
+      setError('Hasło musi mieć min. 6 znaków');
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/patient/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.message || 'Błąd');
+        return;
+      }
+      localStorage.setItem('patientToken', data.token);
+      localStorage.setItem('patientData', JSON.stringify(data.patient));
+      navigate('/my-account');
+      window.location.reload();
+    } catch (e) {
+      setError('Błąd połączenia');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="app"><main>
+      <div className="container" style={{ maxWidth: '500px', margin: '3rem auto', padding: '0 2rem' }}>
+        <div style={{ background: 'white', padding: '2.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+          <h1 style={{ color: '#0f7ba8', textAlign: 'center', marginBottom: '0.5rem' }}>Utwórz konto</h1>
+          <p style={{ color: '#666', textAlign: 'center', marginBottom: '2rem', fontSize: '14px' }}>Rezerwuj szybciej i zarządzaj wizytami</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Imię</label>
+              <input value={formData.firstName} onChange={(e) => { setFormData({ ...formData, firstName: e.target.value }); setError(''); }}
+                style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Nazwisko</label>
+              <input value={formData.lastName} onChange={(e) => { setFormData({ ...formData, lastName: e.target.value }); setError(''); }}
+                style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+            </div>
+          </div>
+
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Email</label>
+            <input type="email" value={formData.email} onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setError(''); }}
+              placeholder="email@example.com" style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+          </div>
+
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Telefon</label>
+            <input value={formData.phone} onChange={(e) => { setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '') }); setError(''); }}
+              placeholder="min. 9 cyfr" style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+          </div>
+
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Hasło</label>
+            <input type="password" value={formData.password} onChange={(e) => { setFormData({ ...formData, password: e.target.value }); setError(''); }}
+              placeholder="min. 6 znaków" style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+          </div>
+
+          {error && <div style={{ background: '#fee', border: '1px solid #fcc', color: '#c33', padding: '0.7rem', borderRadius: '6px', marginBottom: '1rem', fontSize: '14px' }}>❌ {error}</div>}
+
+          <button onClick={handleRegister} disabled={loading}
+            style={{ width: '100%', padding: '0.8rem', background: loading ? '#ccc' : 'linear-gradient(135deg, #0f7ba8, #1a9fcf)', color: 'white', border: 'none', borderRadius: '6px', fontSize: '15px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer' }}>
+            {loading ? 'Tworzenie...' : 'Utwórz konto'}
+          </button>
+
+          <p style={{ textAlign: 'center', color: '#666', marginTop: '1.5rem', fontSize: '14px' }}>
+            Masz już konto? <a href="/login" style={{ color: '#0f7ba8', fontWeight: '600' }}>Zaloguj się</a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+    </footer></div>
+  );
+}
+
+// ============================================================
+// STRONA "MOJE KONTO"
+// ============================================================
+function MyAccountPage() {
+  const [patient, setPatient] = useState(null);
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('patientToken');
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    
+    Promise.all([
+      fetch(`${API_URL}/api/patient/me`, { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+      fetch(`${API_URL}/api/patient/bookings`, { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json())
+    ]).then(([p, b]) => {
+      setPatient(p);
+      setBookings(b);
+      setLoading(false);
+    }).catch(() => {
+      localStorage.removeItem('patientToken');
+      navigate('/login');
+    });
+  }, []);
+
+  const handleCancel = async (id) => {
+    if (!confirm('Na pewno chcesz anulować tę rezerwację?')) return;
+    try {
+      const res = await fetch(`${API_URL}/api/patient/cancel/${id}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const refreshed = await fetch(`${API_URL}/api/patient/bookings`, { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json());
+        setBookings(refreshed);
+      }
+    } catch (e) {
+      alert('Błąd anulowania');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('patientToken');
+    localStorage.removeItem('patientData');
+    navigate('/');
+    window.location.reload();
+  };
+
+  if (loading) return <div style={{ textAlign: 'center', padding: '5rem' }}>Ładowanie...</div>;
+
+  const upcoming = bookings.filter(b => b.status !== 'cancelled' && new Date(b.date) >= new Date(new Date().toDateString()));
+  const past = bookings.filter(b => b.status === 'cancelled' || new Date(b.date) < new Date(new Date().toDateString()));
+
+  return (
+    <div className="app"><main>
+      <div className="container" style={{ maxWidth: '900px', margin: '2rem auto', padding: '0 2rem' }}>
+        
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <h1 style={{ color: '#0f7ba8', margin: 0 }}>Witaj, {patient.firstName}! 👋</h1>
+            <p style={{ color: '#666', marginTop: '0.5rem' }}>{patient.email}</p>
+          </div>
+          <button onClick={handleLogout} style={{ padding: '0.6rem 1.2rem', background: '#f0f0f0', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer' }}>Wyloguj się</button>
+        </div>
+
+        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', marginBottom: '1.5rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+          <h2 style={{ color: '#0f7ba8', marginTop: 0, fontSize: '1.3rem' }}>📅 Nadchodzące wizyty ({upcoming.length})</h2>
+          {upcoming.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '2rem', color: '#999' }}>
+              Brak nadchodzących wizyt.<br/>
+              <a href="/" style={{ color: '#0f7ba8', fontWeight: '600', marginTop: '1rem', display: 'inline-block' }}>Zarezerwuj wizytę →</a>
+            </div>
+          ) : (
+            upcoming.map(b => (
+              <div key={b.id} style={{ border: '1px solid #e0e0e0', borderRadius: '8px', padding: '1rem', marginBottom: '0.8rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                  <div style={{ fontWeight: '600', color: '#0f7ba8', marginBottom: '0.3rem' }}>
+                    {b.service}{b.vaccine && ` · ${b.vaccine}`}{b.exam && ` · ${b.exam}`}{b.test && ` · ${b.test}`}
+                  </div>
+                  <div style={{ fontSize: '14px', color: '#666' }}>
+                    📍 ACZ {b.pharmacy} · {new Date(b.date).toLocaleDateString('pl-PL')} o {b.time}
+                  </div>
+                </div>
+                <button onClick={() => handleCancel(b.id)} style={{ padding: '0.5rem 1rem', background: '#fee', color: '#c33', border: '1px solid #fcc', borderRadius: '6px', cursor: 'pointer', fontSize: '13px' }}>Anuluj</button>
+              </div>
+            ))
+          )}
+        </div>
+
+        {past.length > 0 && (
+          <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+            <h2 style={{ color: '#999', marginTop: 0, fontSize: '1.3rem' }}>📜 Historia ({past.length})</h2>
+            {past.map(b => (
+              <div key={b.id} style={{ border: '1px solid #e0e0e0', borderRadius: '8px', padding: '1rem', marginBottom: '0.8rem', opacity: 0.7 }}>
+                <div style={{ fontWeight: '600', color: '#666', marginBottom: '0.3rem' }}>
+                  {b.service}{b.vaccine && ` · ${b.vaccine}`}
+                  {b.status === 'cancelled' && <span style={{ background: '#fee', color: '#c33', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '11px', marginLeft: '0.5rem' }}>ANULOWANE</span>}
+                </div>
+                <div style={{ fontSize: '14px', color: '#999' }}>
+                  ACZ {b.pharmacy} · {new Date(b.date).toLocaleDateString('pl-PL')} o {b.time}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </main>
+    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
+      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
+    </footer></div>
   );
 }
 function PharmacyLoginPage() {
@@ -1459,6 +1809,23 @@ function AppWrapper() {
           <button onClick={() => navigate('/partners')} style={navBtn()}>🤝 Partnerzy</button>
           <button onClick={() => navigate('/blog')} style={navBtn()}>📰 Blog</button>
         </div>
+        {localStorage.getItem('patientToken') ? (
+          <button onClick={() => navigate('/my-account')} style={{
+            background: 'rgba(255,255,255,0.2)',
+            border: '1.5px solid rgba(255,255,255,0.4)',
+            color: 'white', padding: '0.6rem 1.3rem', borderRadius: '6px',
+            cursor: 'pointer', fontSize: '14px', fontWeight: '600', whiteSpace: 'nowrap',
+            marginRight: '0.5rem'
+          }}>👤 Moje konto</button>
+        ) : (
+          <button onClick={() => navigate('/login')} style={{
+            background: 'rgba(255,255,255,0.2)',
+            border: '1.5px solid rgba(255,255,255,0.4)',
+            color: 'white', padding: '0.6rem 1.3rem', borderRadius: '6px',
+            cursor: 'pointer', fontSize: '14px', fontWeight: '600', whiteSpace: 'nowrap',
+            marginRight: '0.5rem'
+          }}>🔑 Zaloguj</button>
+        )}
         <button onClick={() => navigate('/pharmacy-login')} style={{
           background: 'rgba(255,255,255,0.2)', border: '1.5px solid rgba(255,255,255,0.4)',
           color: 'white', padding: '0.6rem 1.3rem', borderRadius: '6px', cursor: 'pointer',
@@ -1475,6 +1842,9 @@ function AppWrapper() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/pharmacy-login" element={<PharmacyLoginPage />} />
         <Route path="/cancel/:token" element={<CancelPage />} />
+        <Route path="/login" element={<PatientLoginPage />} />
+        <Route path="/register" element={<PatientRegisterPage />} />
+        <Route path="/my-account" element={<MyAccountPage />} />
       </Routes>
     </>
   );

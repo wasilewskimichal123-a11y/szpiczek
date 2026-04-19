@@ -123,14 +123,28 @@ app.post('/api/bookings', async (req, res) => {
   try {
     const b = req.body;
     const cancelToken = generateToken();
+    
+    // Sprawdź czy pacjent jest zalogowany (opcjonalnie)
+    let patientId = null;
+    const authHeader = req.headers['authorization'];
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      try {
+        const decoded = jwt.verify(token, 'secret_key');
+        if (decoded.type === 'patient') patientId = decoded.id;
+      } catch (e) {
+        // Token nieważny - OK, pacjent nie zalogowany
+      }
+    }
+    
     const stmt = db.prepare(`
-      INSERT INTO bookings (firstName, lastName, email, phone, pharmacy, service, vaccine, test, exam, medications, date, time, source, cancelToken)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'online', ?)
+      INSERT INTO bookings (firstName, lastName, email, phone, pharmacy, service, vaccine, test, exam, medications, date, time, source, cancelToken, patientId)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'online', ?, ?)
     `);
     const result = stmt.run(
       b.firstName, b.lastName, b.email, b.phone, b.pharmacy, b.service,
       b.vaccine || null, b.test || null, b.exam || null, b.medications || null,
-      b.date, b.time, cancelToken
+      b.date, b.time, cancelToken, patientId
     );
 
     const booking = { ...b, id: result.lastInsertRowid, cancelToken };
@@ -349,6 +363,118 @@ app.post('/api/cancel/:token', (req, res) => {
     
     db.prepare(`UPDATE bookings SET status = 'cancelled' WHERE cancelToken = ?`).run(req.params.token);
     res.json({ message: 'Rezerwacja anulowana' });
+  } catch (error) {
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
+// =====================================================
+// ENDPOINTY KONT PACJENTÓW
+// =====================================================
+
+// Rejestracja pacjenta
+app.post('/api/patient/register', async (req, res) => {
+  try {
+    const { email, password, firstName, lastName, phone } = req.body;
+    
+    if (!email || !password || !firstName || !lastName || !phone) {
+      return res.status(400).json({ message: 'Wypełnij wszystkie pola' });
+    }
+    
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Hasło musi mieć min. 6 znaków' });
+    }
+    
+    const existing = db.prepare(`SELECT id FROM patients WHERE email = ?`).get(email);
+    if (existing) {
+      return res.status(400).json({ message: 'Email już zarejestrowany' });
+    }
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = db.prepare(`
+      INSERT INTO patients (email, password, firstName, lastName, phone) 
+      VALUES (?, ?, ?, ?, ?)
+    `).run(email, hashedPassword, firstName, lastName, phone);
+    
+    const token = jwt.sign({ id: result.lastInsertRowid, email, type: 'patient' }, 'secret_key', { expiresIn: '30d' });
+    res.json({ token, patient: { id: result.lastInsertRowid, email, firstName, lastName, phone } });
+  } catch (error) {
+    console.log('Błąd rejestracji:', error);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
+
+// Logowanie pacjenta
+app.post('/api/patient/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const patient = db.prepare(`SELECT * FROM patients WHERE email = ?`).get(email);
+    
+    if (!patient) {
+      return res.status(401).json({ message: 'Nieprawidłowy email lub hasło' });
+    }
+    
+    const isValid = await bcrypt.compare(password, patient.password);
+    if (!isValid) {
+      return res.status(401).json({ message: 'Nieprawidłowy email lub hasło' });
+    }
+    
+    const token = jwt.sign({ id: patient.id, email: patient.email, type: 'patient' }, 'secret_key', { expiresIn: '30d' });
+    res.json({ 
+      token, 
+      patient: { id: patient.id, email: patient.email, firstName: patient.firstName, lastName: patient.lastName, phone: patient.phone } 
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
+
+// Middleware dla pacjenta
+const authenticatePatient = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'Brak tokenu' });
+  jwt.verify(token, 'secret_key', (err, decoded) => {
+    if (err) return res.status(403).json({ message: 'Nieważny token' });
+    if (decoded.type !== 'patient') return res.status(403).json({ message: 'Brak dostępu' });
+    req.patient = decoded;
+    next();
+  });
+};
+
+// Moje rezerwacje
+app.get('/api/patient/bookings', authenticatePatient, (req, res) => {
+  try {
+    const bookings = db.prepare(`
+      SELECT * FROM bookings WHERE patientId = ? OR email = ? ORDER BY date DESC, time DESC
+    `).all(req.patient.id, req.patient.email);
+    res.json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
+
+// Anuluj rezerwację (zalogowany pacjent)
+app.post('/api/patient/cancel/:id', authenticatePatient, (req, res) => {
+  try {
+    const booking = db.prepare(`SELECT * FROM bookings WHERE id = ?`).get(req.params.id);
+    if (!booking) return res.status(404).json({ message: 'Nie znaleziono' });
+    
+    if (booking.patientId !== req.patient.id && booking.email !== req.patient.email) {
+      return res.status(403).json({ message: 'Brak dostępu' });
+    }
+    
+    db.prepare(`UPDATE bookings SET status = 'cancelled' WHERE id = ?`).run(req.params.id);
+    res.json({ message: 'Rezerwacja anulowana' });
+  } catch (error) {
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
+
+// Moje dane (profil)
+app.get('/api/patient/me', authenticatePatient, (req, res) => {
+  try {
+    const patient = db.prepare(`SELECT id, email, firstName, lastName, phone FROM patients WHERE id = ?`).get(req.patient.id);
+    if (!patient) return res.status(404).json({ message: 'Nie znaleziono' });
+    res.json(patient);
   } catch (error) {
     res.status(500).json({ message: 'Błąd serwera' });
   }
