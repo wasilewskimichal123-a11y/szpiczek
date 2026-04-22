@@ -630,21 +630,18 @@ select:focus {
   .nav-pill:hover {
     transform: none !important;
   }
-}
   
   .service-card:hover,
   .vaccine-card:hover,
   .pharmacy-card:hover {
     transform: none !important;
   }
-}
   
   button:hover,
   .time-slot:hover {
     transform: none !important;
   }
-}
-}* {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
