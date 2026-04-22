@@ -2175,3 +2175,133 @@ main {
     animation: none !important;
   }
 }
+
+/* ==========================================
+   NOWE IKONY KAFELKÓW GŁÓWNYCH (SVG)
+   Custom design z gradientem + animacja hover
+   ========================================== */
+
+/* Kontener ikony SVG - zastępuje stary .service-icon (emoji) */
+.service-icon-wrap {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(15, 31, 76, 0.1) 0%, rgba(20, 184, 166, 0.08) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(15, 31, 76, 0.18);
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtelny glow wewnętrzny (pojawia się na hover) */
+.service-icon-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(15, 31, 76, 0.2) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+/* SVG w środku */
+.service-icon-svg {
+  width: 42px;
+  height: 42px;
+  position: relative;
+  z-index: 1;
+  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animacja hover - kontener rośnie i obraca się */
+.service-card:hover .service-icon-wrap {
+  transform: scale(1.08) rotate(-5deg);
+  border-color: rgba(15, 31, 76, 0.4);
+  box-shadow: 0 12px 24px rgba(15, 31, 76, 0.2);
+}
+
+.service-card:hover .service-icon-wrap::before {
+  opacity: 1;
+}
+
+.service-card:hover .service-icon-svg {
+  transform: scale(1.05);
+}
+
+/* Wyłącz animacje dla reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .service-icon-wrap,
+  .service-icon-svg {
+    transition: none !important;
+  }
+  .service-card:hover .service-icon-wrap,
+  .service-card:hover .service-icon-svg {
+    transform: none !important;
+  }
+}
+
+/* ==========================================
+   IKONY W GRID-ACH SZCZEPIEŃ/BADAŃ/TESTÓW
+   (trochę mniejsze niż w kafelkach głównych)
+   ========================================== */
+
+.vaccine-card-icon-wrap {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(15, 31, 76, 0.1) 0%, rgba(20, 184, 166, 0.08) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(15, 31, 76, 0.18);
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.vaccine-card-icon-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(15, 31, 76, 0.2) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.vaccine-card-icon-wrap .service-icon-svg {
+  width: 36px;
+  height: 36px;
+}
+
+.vaccine-card:hover .vaccine-card-icon-wrap {
+  transform: scale(1.08) rotate(-5deg);
+  border-color: rgba(15, 31, 76, 0.4);
+  box-shadow: 0 10px 20px rgba(15, 31, 76, 0.2);
+}
+
+.vaccine-card:hover .vaccine-card-icon-wrap::before {
+  opacity: 1;
+}
+
+/* Nagłówki w kafelkach gridów (Grypa sezonowa, itp.) - GRANAT zamiast miętowego */
+.vaccine-card h3 {
+  color: #0f1f4c !important;
+}
+
+/* Nagłówki na stronie głównej też w granacie */
+.service-card h3 {
+  color: #0f1f4c !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vaccine-card-icon-wrap {
+    transition: none !important;
+  }
+  .vaccine-card:hover .vaccine-card-icon-wrap {
+    transform: none !important;
+  }
+}

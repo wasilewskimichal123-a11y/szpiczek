@@ -22,6 +22,91 @@ function AppFooter() {
 }
 
 // ============================================================
+// KOMPONENTY IKON SVG (używane w kafelkach głównych + grid-ach)
+// ============================================================
+function IconSyringe() {
+  return (
+    <svg className="service-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="rotate(-30 24 24)">
+        <rect x="10" y="20" width="20" height="8" rx="1" stroke="url(#serviceIconGradient)" strokeWidth="2.5" fill="rgba(13, 148, 136, 0.15)"/>
+        <line x1="14" y1="20" x2="14" y2="22" stroke="url(#serviceIconGradient)" strokeWidth="1.5"/>
+        <line x1="18" y1="20" x2="18" y2="22" stroke="url(#serviceIconGradient)" strokeWidth="1.5" opacity="0.7"/>
+        <line x1="22" y1="20" x2="22" y2="22" stroke="url(#serviceIconGradient)" strokeWidth="1.5"/>
+        <line x1="26" y1="20" x2="26" y2="22" stroke="url(#serviceIconGradient)" strokeWidth="1.5" opacity="0.7"/>
+        <rect x="20" y="21" width="10" height="6" fill="url(#serviceIconGradient)" opacity="0.6"/>
+        <rect x="6" y="17" width="4" height="14" rx="1" fill="url(#serviceIconGradient)"/>
+        <rect x="3" y="22.5" width="3" height="3" fill="url(#serviceIconGradient)"/>
+        <rect x="0" y="20" width="3" height="8" rx="1" fill="url(#serviceIconGradient)"/>
+        <rect x="30" y="22.5" width="4" height="3" fill="url(#serviceIconGradient)"/>
+        <rect x="34" y="23.25" width="12" height="1.5" fill="url(#serviceIconGradient)"/>
+        <path d="M46 23.25L48 24L46 24.75Z" fill="url(#serviceIconGradient)"/>
+      </g>
+      <circle cx="40" cy="42" r="1.5" fill="url(#serviceIconGradient)" opacity="0.8"/>
+      <circle cx="43" cy="45" r="1" fill="url(#serviceIconGradient)" opacity="0.5"/>
+    </svg>
+  );
+}
+
+function IconPill() {
+  return (
+    <svg className="service-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="18" width="28" height="14" rx="7" stroke="url(#serviceIconGradient)" strokeWidth="2.5" fill="rgba(20, 184, 166, 0.15)" transform="rotate(-25 20 25)"/>
+      <path d="M13 29L21 21" stroke="url(#serviceIconGradient)" strokeWidth="2" strokeLinecap="round"/>
+      <circle cx="36" cy="14" r="9" fill="url(#serviceIconGradient)"/>
+      <path d="M32 14L35 17L41 11" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+    </svg>
+  );
+}
+
+function IconPulse() {
+  return (
+    <svg className="service-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="5" y="11" width="38" height="26" rx="4" stroke="url(#serviceIconGradient)" strokeWidth="2.5" fill="rgba(20, 184, 166, 0.08)"/>
+      <path d="M9 24L14 24L17 18L21 30L25 20L28 26L32 24L39 24" stroke="url(#serviceIconGradient)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="39" cy="24" r="2" fill="url(#serviceIconGradient)"/>
+      <circle cx="10" cy="15" r="0.8" fill="url(#serviceIconGradient)" opacity="0.5"/>
+      <circle cx="13" cy="15" r="0.8" fill="url(#serviceIconGradient)" opacity="0.5"/>
+      <circle cx="16" cy="15" r="0.8" fill="url(#serviceIconGradient)" opacity="0.5"/>
+    </svg>
+  );
+}
+
+function IconTestStrip() {
+  return (
+    <svg className="service-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="9" y="19" width="30" height="10" rx="2" stroke="url(#serviceIconGradient)" strokeWidth="2" fill="rgba(20, 184, 166, 0.05)"/>
+      <rect x="11" y="21" width="5" height="6" fill="url(#serviceIconGradient)" opacity="0.3"/>
+      <rect x="17" y="21" width="5" height="6" fill="url(#serviceIconGradient)" opacity="0.55"/>
+      <rect x="23" y="21" width="5" height="6" fill="url(#serviceIconGradient)" opacity="0.8"/>
+      <rect x="29" y="21" width="5" height="6" fill="url(#serviceIconGradient)" opacity="1"/>
+      <path d="M25 14L25 17L23 17L25 20L27 17L25 17Z" fill="url(#serviceIconGradient)"/>
+      <path d="M25 6C25 6 21 10 21 12C21 13.5 22.5 15 25 15C27.5 15 29 13.5 29 12C29 10 25 6 25 6Z" fill="url(#serviceIconGradient)" opacity="0.7"/>
+      <line x1="11" y1="32" x2="11" y2="34" stroke="url(#serviceIconGradient)" strokeWidth="1.5"/>
+      <line x1="18" y1="32" x2="18" y2="34" stroke="url(#serviceIconGradient)" strokeWidth="1.5"/>
+      <line x1="25" y1="32" x2="25" y2="34" stroke="url(#serviceIconGradient)" strokeWidth="1.5"/>
+      <line x1="32" y1="32" x2="32" y2="34" stroke="url(#serviceIconGradient)" strokeWidth="1.5"/>
+      <line x1="39" y1="32" x2="39" y2="34" stroke="url(#serviceIconGradient)" strokeWidth="1.5"/>
+      <line x1="9" y1="34" x2="41" y2="34" stroke="url(#serviceIconGradient)" strokeWidth="1.5"/>
+    </svg>
+  );
+}
+
+// Globalny gradient SVG (używany przez wszystkie ikony)
+function IconGradientDef() {
+  return (
+    <svg width="0" height="0" style={{ position: 'absolute' }}>
+      <defs>
+        <linearGradient id="serviceIconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#0f1f4c" />
+          <stop offset="60%" stopColor="#0d9488" />
+          <stop offset="100%" stopColor="#14b8a6" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+// ============================================================
 // HOOKS I HELPERY DLA KONT PACJENTÓW
 // ============================================================
 // Hook do magnetic effect na przyciskach
@@ -284,6 +369,39 @@ function HomePage() {
     setSelectedTime(null); setSelectedDate(null); setFormErrors({});
   };
 
+  // Cofa o jeden krok wstecz (zamiast od razu na stronę główną)
+  const handleBackStep = () => {
+    if (currentPage === 'booking') {
+      // Booking -> Lista aptek (reset wyboru apteki/daty/godziny)
+      setSelectedPharmacy(null);
+      setSelectedDate(null);
+      setSelectedTime(null);
+      setFormErrors({});
+      setCurrentPage('pharmacies');
+    } else if (currentPage === 'pharmacies') {
+      // Lista aptek -> grid usługi z której przyszedł
+      if (selectedService === 'szczepienia') {
+        setSelectedVaccine(null);
+        setCurrentPage('vaccines-grid');
+      } else if (selectedService === 'testy') {
+        setSelectedTest(null);
+        setCurrentPage('tests-grid');
+      } else if (selectedService === 'badania') {
+        setSelectedExam(null);
+        setCurrentPage('exams-grid');
+      } else {
+        // 'przeglądy' nie ma grid-u, wraca na home
+        handleBackHome();
+      }
+    } else if (currentPage === 'vaccines-grid' || currentPage === 'tests-grid' || currentPage === 'exams-grid') {
+      // Grid usług -> strona główna
+      handleBackHome();
+    } else {
+      // Fallback - wraca na home
+      handleBackHome();
+    }
+  };
+
   const renderFooter = () => (
     <AppFooter />
   );
@@ -291,7 +409,7 @@ function HomePage() {
   const renderHeader = (slogan) => (
     <div className="header">
       <div className="container">
-        <button className="btn-back" onClick={handleBackHome}>← Wróć</button>
+        <button className="btn-back" onClick={handleBackStep}>← Wróć</button>
         <div className="header-center"><div className="header-slogan">{slogan}</div></div>
         <div style={{ width: '60px' }}></div>
       </div>
@@ -314,23 +432,36 @@ function HomePage() {
               </div>
             </div>
             <div className="services-grid">
+              <IconGradientDef />
+
+              {/* SZCZEPIENIA */}
               <div className="service-card" onClick={() => handleServiceClick('szczepienia')}>
-                <div className="service-icon">💉</div><h3>Szczepienia</h3>
+                <div className="service-icon-wrap"><IconSyringe /></div>
+                <h3>Szczepienia</h3>
                 <p>Szczepienia dostępne w aptece</p>
                 <button className="btn-service">Umów wizytę</button>
               </div>
+
+              {/* PRZEGLĄDY LEKOWE */}
               <div className="service-card" onClick={() => handleServiceClick('przeglądy')}>
-                <div className="service-icon">🩺</div><h3>Przeglądy lekowe</h3>
+                <div className="service-icon-wrap"><IconPill /></div>
+                <h3>Przeglądy lekowe</h3>
                 <p>Zapytaj farmaceute o swoje leki</p>
                 <button className="btn-service">Umów wizytę</button>
               </div>
+
+              {/* BADANIA DIAGNOSTYCZNE */}
               <div className="service-card" onClick={() => handleServiceClick('badania')}>
-                <div className="service-icon">📊</div><h3>Badania diagnostyczne</h3>
+                <div className="service-icon-wrap"><IconPulse /></div>
+                <h3>Badania diagnostyczne</h3>
                 <p>Badania dostępne w aptece</p>
                 <button className="btn-service">Umów wizytę</button>
               </div>
+
+              {/* TESTY DIAGNOSTYCZNE */}
               <div className="service-card" onClick={() => handleServiceClick('testy')}>
-                <div className="service-icon">🧬</div><h3>Testy diagnostyczne</h3>
+                <div className="service-icon-wrap"><IconTestStrip /></div>
+                <h3>Testy diagnostyczne</h3>
                 <p>Testy dostępne w aptece</p>
                 <button className="btn-service">Umów wizytę</button>
               </div>
@@ -346,11 +477,12 @@ function HomePage() {
     return (
       <div className="app">{renderHeader(slogans['vaccines-grid'])}
         <main><div className="container">
+          <IconGradientDef />
           <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz szczepienie</h2>
           <div className="vaccines-grid">
             {vaccines.map(v => (
               <div key={v} className="vaccine-card" onClick={() => { setSelectedVaccine(v); setCurrentPage('pharmacies'); }}>
-                <div className="vaccine-card-icon">💉</div><h3>{v}</h3>
+                <div className="vaccine-card-icon-wrap"><IconSyringe /></div><h3>{v}</h3>
                 <button className="btn-service">Wybierz</button>
               </div>
             ))}
@@ -365,11 +497,12 @@ function HomePage() {
     return (
       <div className="app">{renderHeader(slogans['exams-grid'])}
         <main><div className="container">
+          <IconGradientDef />
           <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz badanie diagnostyczne</h2>
           <div className="vaccines-grid">
             {exams.map(e => (
               <div key={e} className="vaccine-card" onClick={() => { setSelectedExam(e); setCurrentPage('pharmacies'); }}>
-                <div className="vaccine-card-icon">📊</div><h3>{e}</h3>
+                <div className="vaccine-card-icon-wrap"><IconPulse /></div><h3>{e}</h3>
                 <button className="btn-service">Wybierz</button>
               </div>
             ))}
@@ -384,11 +517,12 @@ function HomePage() {
     return (
       <div className="app">{renderHeader(slogans['tests-grid'])}
         <main><div className="container">
+          <IconGradientDef />
           <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz test diagnostyczny</h2>
           <div className="vaccines-grid">
             {tests.map(t => (
               <div key={t} className="vaccine-card" onClick={() => { setSelectedTest(t); setCurrentPage('pharmacies'); }}>
-                <div className="vaccine-card-icon">🧬</div><h3>{t}</h3>
+                <div className="vaccine-card-icon-wrap"><IconTestStrip /></div><h3>{t}</h3>
                 <button className="btn-service">Wybierz</button>
               </div>
             ))}
