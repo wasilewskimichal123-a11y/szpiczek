@@ -239,7 +239,7 @@
   /* ==========================================
    KROK 3: PILL SHAPES EVERYWHERE
    ========================================== */
-
+}
 button.btn-primary,
 button.btn-service,
 button.btn-large {
@@ -321,7 +321,7 @@ select:focus {
   /* ==========================================
    KROK 4: GLASSMORPHISM CARDS
    ========================================== */
-
+}
 .hero-section {
   background: rgba(255, 255, 255, 0.3) !important;
   backdrop-filter: blur(20px) saturate(180%);
@@ -446,7 +446,7 @@ select:focus {
   /* ==========================================
    KROK 5: MIKROINTERAKCJE
    ========================================== */
-
+}
 .btn-primary,
 .btn-service,
 .btn-large {
@@ -564,9 +564,11 @@ select:focus {
 }
 
 @keyframes szpiczek-sway {
-  0%, 100% { transform: none; }
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-6px) rotate(-2deg); }
+  50% { transform: translateX(0) rotate(0deg); }
+  75% { transform: translateX(6px) rotate(2deg); }
 }
-
 .celebration-mascot {
   animation: celebration-bounce 1.5s ease-in-out infinite;
   filter: drop-shadow(0 12px 24px rgba(15, 123, 168, 0.3));
