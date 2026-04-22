@@ -4,6 +4,24 @@ import './App.css';
 
 const API_URL = 'https://szpiczek-backend.onrender.com';
 // ============================================================
+// KOMPONENT STOPKI (spektakularna neonowa orbita)
+// ============================================================
+function AppFooter() {
+  return (
+    <footer className="app-footer">
+      <h2 className="app-footer-tagline">
+        Zaufaj nam, <span className="app-footer-glow">zadbaj o siebie.</span>
+        <span className="app-footer-heart">💙</span>
+      </h2>
+      <div className="app-footer-signature">
+        <span className="app-footer-dot"></span>
+        <span className="app-footer-sig-text">Built by <span className="app-footer-sig-name">MW</span></span>
+      </div>
+    </footer>
+  );
+}
+
+// ============================================================
 // HOOKS I HELPERY DLA KONT PACJENTÓW
 // ============================================================
 // Hook do magnetic effect na przyciskach
@@ -267,10 +285,7 @@ function HomePage() {
   };
 
   const renderFooter = () => (
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer>
+    <AppFooter />
   );
 
   const renderHeader = (slogan) => (
@@ -302,22 +317,22 @@ function HomePage() {
               <div className="service-card" onClick={() => handleServiceClick('szczepienia')}>
                 <div className="service-icon">💉</div><h3>Szczepienia</h3>
                 <p>Szczepienia dostępne w aptece</p>
-                <button className="btn-service">Zarezerwuj</button>
+                <button className="btn-service">Umów wizytę</button>
               </div>
               <div className="service-card" onClick={() => handleServiceClick('przeglądy')}>
                 <div className="service-icon">🩺</div><h3>Przeglądy lekowe</h3>
                 <p>Zapytaj farmaceute o swoje leki</p>
-                <button className="btn-service">Zarezerwuj</button>
+                <button className="btn-service">Umów wizytę</button>
               </div>
               <div className="service-card" onClick={() => handleServiceClick('badania')}>
                 <div className="service-icon">📊</div><h3>Badania diagnostyczne</h3>
                 <p>Badania dostępne w aptece</p>
-                <button className="btn-service">Zarezerwuj</button>
+                <button className="btn-service">Umów wizytę</button>
               </div>
               <div className="service-card" onClick={() => handleServiceClick('testy')}>
                 <div className="service-icon">🧬</div><h3>Testy diagnostyczne</h3>
                 <p>Testy dostępne w aptece</p>
-                <button className="btn-service">Zarezerwuj</button>
+                <button className="btn-service">Umów wizytę</button>
               </div>
             </div>
           </div>
@@ -331,7 +346,7 @@ function HomePage() {
     return (
       <div className="app">{renderHeader(slogans['vaccines-grid'])}
         <main><div className="container">
-          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0f7ba8', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz szczepienie</h2>
+          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz szczepienie</h2>
           <div className="vaccines-grid">
             {vaccines.map(v => (
               <div key={v} className="vaccine-card" onClick={() => { setSelectedVaccine(v); setCurrentPage('pharmacies'); }}>
@@ -350,7 +365,7 @@ function HomePage() {
     return (
       <div className="app">{renderHeader(slogans['exams-grid'])}
         <main><div className="container">
-          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0f7ba8', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz badanie diagnostyczne</h2>
+          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz badanie diagnostyczne</h2>
           <div className="vaccines-grid">
             {exams.map(e => (
               <div key={e} className="vaccine-card" onClick={() => { setSelectedExam(e); setCurrentPage('pharmacies'); }}>
@@ -369,7 +384,7 @@ function HomePage() {
     return (
       <div className="app">{renderHeader(slogans['tests-grid'])}
         <main><div className="container">
-          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0f7ba8', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz test diagnostyczny</h2>
+          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz test diagnostyczny</h2>
           <div className="vaccines-grid">
             {tests.map(t => (
               <div key={t} className="vaccine-card" onClick={() => { setSelectedTest(t); setCurrentPage('pharmacies'); }}>
@@ -388,7 +403,7 @@ function HomePage() {
     return (
       <div className="app">{renderHeader(slogans[`pharmacies-${selectedService}`])}
         <main><div className="container">
-          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0f7ba8', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz aptekę</h2>
+          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz aptekę</h2>
           <div className="pharmacies-grid">
             {pharmacies.map(p => (
               <div key={p.id} className="pharmacy-card" onClick={() => { setSelectedPharmacy(p); setCurrentPage('booking'); setSelectedDate(null); setSelectedTime(null); }}>
@@ -495,7 +510,7 @@ function HomePage() {
             <h2 className="celebration-title">Superhero! 🦸‍♂️</h2>
             <p className="celebration-subtitle">Właśnie stałeś się niezniszczalny!</p>
             <div className="celebration-divider"></div>
-            <h3 style={{ marginTop: '2rem', color: '#0f7ba8', fontSize: '1.4rem', fontWeight: '700' }}>Rezerwacja potwierdzona!</h3>
+            <h3 style={{ marginTop: '2rem', color: '#0d9488', fontSize: '1.4rem', fontWeight: '700' }}>Rezerwacja potwierdzona!</h3>
             <p>Email potwierdzenia został wysłany na {booking.email}</p>
             <div className="confirmation-details">
               <div className="detail-row"><span className="label">Imię i nazwisko</span><span className="value">{booking.firstName} {booking.lastName}</span></div>
@@ -529,33 +544,33 @@ function AboutPage() {
   return (
     <div className="app">
       <main>
-        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📖 O Szpiczku</h1>
-          
-          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Nasza misja</h2>
-          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
-            Szpiczek to innowacyjna platforma, która zmienia dostęp do usług zdrowotnych w aptekach. Naszym celem jest wyeliminowanie kolejek i uproszczenie procesu rezerwacji szczepień, badań diagnostycznych i przeglądu leków.
-          </p>
+        <div className="info-page-wrapper">
+          <div className="info-page-card">
+            <div className="info-page-icon">📖</div>
+            <h1 className="info-page-title">O Szpiczku</h1>
 
-          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Co nas wyróżnia?</h2>
-          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
-            ✅ Szybkie rezerwacje online<br/>
-            ✅ Dostęp do wielu aptek w regionie<br/>
-            ✅ Potwierdzenie rezerwacji w kilka sekund<br/>
-            ✅ Bezpieczeństwo danych pacjenta
-          </p>
+            <h2 className="info-page-section-title">Nasza misja</h2>
+            <p className="info-page-text">
+              Szpiczek to innowacyjna platforma, która zmienia dostęp do usług zdrowotnych w aptekach. Naszym celem jest wyeliminowanie kolejek i uproszczenie procesu rezerwacji szczepień, badań diagnostycznych i przeglądu leków.
+            </p>
 
-          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Nasze wartości</h2>
-          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
-            Wierzymy w demokratyzację opieki zdrowotnej. Każdy ma prawo do szybkiego i wygodnego dostępu do usług medycznych, niezależnie od wieku czy lokalizacji.
-          </p>
+            <h2 className="info-page-section-title">Co nas wyróżnia?</h2>
+            <div className="info-page-highlight">
+              <p className="info-contact-line">✅ <strong>Szybkie rezerwacje online</strong></p>
+              <p className="info-contact-line">✅ <strong>Dostęp do wielu aptek</strong> w regionie</p>
+              <p className="info-contact-line">✅ <strong>Potwierdzenie rezerwacji</strong> w kilka sekund</p>
+              <p className="info-contact-line" style={{ marginBottom: 0 }}>✅ <strong>Bezpieczeństwo</strong> danych pacjenta</p>
+            </div>
+
+            <h2 className="info-page-section-title">Nasze wartości</h2>
+            <p className="info-page-text">
+              Wierzymy w demokratyzację opieki zdrowotnej. Każdy ma prawo do szybkiego i wygodnego dostępu do usług medycznych, niezależnie od wieku czy lokalizacji.
+            </p>
+          </div>
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
@@ -573,22 +588,27 @@ function FAQPage() {
   return (
     <div className="app">
       <main>
-        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>❓ Często zadawane pytania</h1>
-          
-          {faqs.map((faq, idx) => (
-            <div key={idx} style={{ marginBottom: '2rem', borderLeft: '4px solid #0f7ba8', paddingLeft: '1.5rem' }}>
-              <h3 style={{ color: '#0f7ba8', marginBottom: '0.5rem' }}>Q: {faq.q}</h3>
-              <p style={{ color: '#555', lineHeight: '1.8' }}>A: {faq.a}</p>
-            </div>
-          ))}
+        <div className="info-page-wrapper">
+          <div className="info-page-card">
+            <div className="info-page-icon">❓</div>
+            <h1 className="info-page-title">Często zadawane pytania</h1>
+            <p className="info-page-text" style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              Znajdź szybko odpowiedzi na najpopularniejsze pytania.
+            </p>
+
+            {faqs.map((faq, idx) => (
+              <div key={idx} className="faq-item">
+                <h3 className="faq-question">
+                  <span className="faq-q-badge">Q</span> {faq.q}
+                </h3>
+                <p className="faq-answer">{faq.a}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
@@ -597,33 +617,33 @@ function ContactPage() {
   return (
     <div className="app">
       <main>
-        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📧 Kontakt</h1>
-          
-          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Zainteresowany współpracą?</h2>
-          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
-            Skontaktuj się z nami w poniższe sposoby:
-          </p>
+        <div className="info-page-wrapper">
+          <div className="info-page-card">
+            <div className="info-page-icon">📧</div>
+            <h1 className="info-page-title">Kontakt</h1>
 
-          <div style={{ background: '#e0f7ff', padding: '2rem', borderRadius: '12px', marginBottom: '2rem' }}>
-            <p style={{ marginBottom: '1rem' }}><strong>📧 Email:</strong> hello@szpiczek.pl</p>
-            <p style={{ marginBottom: '1rem' }}><strong>📱 WhatsApp:</strong> +48 123 456 789</p>
-            <p style={{ marginBottom: '0' }}><strong>📞 Telefon:</strong> +48 12 345 67 89</p>
+            <h2 className="info-page-section-title">Zainteresowany współpracą?</h2>
+            <p className="info-page-text">
+              Skontaktuj się z nami w poniższe sposoby:
+            </p>
+
+            <div className="info-page-highlight">
+              <p className="info-contact-line"><strong>📧 Email:</strong> hello@szpiczek.pl</p>
+              <p className="info-contact-line"><strong>📱 WhatsApp:</strong> +48 123 456 789</p>
+              <p className="info-contact-line" style={{ marginBottom: 0 }}><strong>📞 Telefon:</strong> +48 12 345 67 89</p>
+            </div>
+
+            <h2 className="info-page-section-title">Godziny dostępności</h2>
+            <p className="info-page-text">
+              Poniedziałek - Piątek: 8:00 - 18:00<br/>
+              Sobota: 9:00 - 14:00<br/>
+              Niedziela: Zamknięte
+            </p>
           </div>
-
-          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Godziny dostępności</h2>
-          <p style={{ lineHeight: '1.8', color: '#555' }}>
-            Poniedziałek - Piątek: 8:00 - 18:00<br/>
-            Sobota: 9:00 - 14:00<br/>
-            Niedziela: Zamknięte
-          </p>
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
@@ -632,43 +652,35 @@ function PartnersPage() {
   return (
     <div className="app">
       <main>
-        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>🤝 Partnerzy</h1>
-          
-          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Sieci aptek</h2>
-          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
-            Współpracujemy z siecią aptek ACZ - liderem w opiece zdrowotnej na terenie Polski.
-          </p>
+        <div className="info-page-wrapper">
+          <div className="info-page-card">
+            <div className="info-page-icon">🤝</div>
+            <h1 className="info-page-title">Partnerzy</h1>
 
-          <div style={{ background: '#e0f7ff', padding: '2rem', borderRadius: '12px', marginBottom: '2rem' }}>
-            <h3 style={{ color: '#0f7ba8', marginBottom: '1rem' }}>Chcesz dołączyć do naszych partnerów?</h3>
-            <p style={{ color: '#555', marginBottom: '1rem' }}>
-              Jeśli prowadzisz aptekę i zainteresowany Cię integracją z platformą Szpiczek, skontaktuj się z nami.
+            <h2 className="info-page-section-title">Sieci aptek</h2>
+            <p className="info-page-text">
+              Współpracujemy z siecią aptek ACZ - liderem w opiece zdrowotnej na terenie Polski.
             </p>
-            <a href="mailto:partners@szpiczek.pl" style={{ 
-              background: 'linear-gradient(135deg, #0f7ba8 0%, #1a9fcf 100%)',
-              color: 'white',
-              padding: '0.7rem 1.5rem',
-              borderRadius: '6px',
-              textDecoration: 'none',
-              display: 'inline-block',
-              marginTop: '1rem'
-            }}>
-              Napisz do nas
-            </a>
-          </div>
 
-          <h2 style={{ color: '#0f7ba8', marginTop: '2rem' }}>Dla firm</h2>
-          <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '2rem' }}>
-            Oferujemy pakiety szczepień dla pracowników. Kontaktuj się, aby uzyskać wycenę dedykowaną dla Twojej organizacji.
-          </p>
+            <div className="info-page-highlight">
+              <h3 style={{ color: '#0d9488', marginBottom: '1rem', fontSize: '1.2rem' }}>Chcesz dołączyć do naszych partnerów?</h3>
+              <p className="info-page-text" style={{ marginBottom: '1.2rem' }}>
+                Jeśli prowadzisz aptekę i zainteresowana Cię integracja z platformą Szpiczek, skontaktuj się z nami.
+              </p>
+              <a href="mailto:partners@szpiczek.pl" className="info-page-cta">
+                Napisz do nas →
+              </a>
+            </div>
+
+            <h2 className="info-page-section-title">Dla firm</h2>
+            <p className="info-page-text">
+              Oferujemy pakiety szczepień dla pracowników. Skontaktuj się, aby uzyskać wycenę dedykowaną dla Twojej organizacji.
+            </p>
+          </div>
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
@@ -683,33 +695,25 @@ function BlogPage() {
   return (
     <div className="app">
       <main>
-        <div className="container" style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ color: '#0f7ba8', marginBottom: '2rem' }}>📰 Blog zdrowotny</h1>
-          
-          <p style={{ color: '#666', marginBottom: '2rem' }}>
-            Artykuły i porady na temat zdrowia, szczepień i profilaktyki.
-          </p>
+        <div className="info-page-wrapper">
+          <div className="info-page-card">
+            <div className="info-page-icon">📰</div>
+            <h1 className="info-page-title">Blog zdrowotny</h1>
+            <p className="info-page-text" style={{ marginBottom: '2rem' }}>
+              Artykuły i porady na temat zdrowia, szczepień i profilaktyki.
+            </p>
 
-          {posts.map((post, idx) => (
-            <div key={idx} style={{ 
-              background: 'white',
-              border: '0.5px solid #ddd',
-              padding: '1.5rem',
-              borderRadius: '8px',
-              marginBottom: '1.5rem',
-              cursor: 'pointer'
-            }}>
-              <h3 style={{ color: '#0f7ba8', marginBottom: '0.5rem' }}>📝 {post.title}</h3>
-              <p style={{ color: '#999', fontSize: '14px' }}>📅 {new Date(post.date).toLocaleDateString('pl-PL')}</p>
-            </div>
-          ))}
+            {posts.map((post, idx) => (
+              <div key={idx} className="blog-post-card">
+                <h3 className="blog-post-title">📝 {post.title}</h3>
+                <p className="blog-post-date">📅 {new Date(post.date).toLocaleDateString('pl-PL')}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
 
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <p className="footer-slogan" style={{ margin: '0 0 0.5rem 0' }}>Zaufaj nam, zadbaj o siebie. 💙</p>
-        <p style={{ margin: 0, fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
@@ -772,7 +776,7 @@ function CancelPage() {
             
             {status === 'loading' && (
               <div style={{ textAlign: 'center' }}>
-                <h2 style={{ color: '#0f7ba8' }}>Ładowanie...</h2>
+                <h2 style={{ color: '#0d9488' }}>Ładowanie...</h2>
               </div>
             )}
 
@@ -780,16 +784,16 @@ function CancelPage() {
               <div style={{ textAlign: 'center' }}>
                 <h2 style={{ color: '#ef4444' }}>❌ Błąd</h2>
                 <p style={{ color: '#666', marginTop: '1rem' }}>{message}</p>
-                <a href="/" style={{ display: 'inline-block', marginTop: '2rem', background: '#0f7ba8', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '6px', textDecoration: 'none' }}>Strona główna</a>
+                <a href="/" style={{ display: 'inline-block', marginTop: '2rem', background: '#0d9488', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '6px', textDecoration: 'none' }}>Strona główna</a>
               </div>
             )}
 
             {status === 'ready' && booking && (
               <>
-                <h1 style={{ color: '#0f7ba8', textAlign: 'center', marginBottom: '2rem' }}>❌ Anuluj rezerwację</h1>
+                <h1 style={{ color: '#0d9488', textAlign: 'center', marginBottom: '2rem' }}>❌ Anuluj rezerwację</h1>
                 <p style={{ color: '#666', textAlign: 'center', marginBottom: '2rem' }}>Czy na pewno chcesz anulować poniższą rezerwację?</p>
 
-                <div style={{ background: '#e0f7ff', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem' }}>
+                <div style={{ background: '#f0fdf9', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem' }}>
                   <p style={{ marginBottom: '0.5rem' }}><strong>Pacjent:</strong> {booking.firstName} {booking.lastName}</p>
                   <p style={{ marginBottom: '0.5rem' }}><strong>Usługa:</strong> {booking.service}</p>
                   {booking.vaccine && <p style={{ marginBottom: '0.5rem' }}><strong>Szczepienie:</strong> {booking.vaccine}</p>}
@@ -812,7 +816,7 @@ function CancelPage() {
 
             {status === 'cancelling' && (
               <div style={{ textAlign: 'center' }}>
-                <h2 style={{ color: '#0f7ba8' }}>Anulowanie...</h2>
+                <h2 style={{ color: '#0d9488' }}>Anulowanie...</h2>
               </div>
             )}
 
@@ -820,17 +824,14 @@ function CancelPage() {
               <div style={{ textAlign: 'center' }}>
                 <h1 style={{ color: '#10b981', marginBottom: '1rem' }}>✅ Anulowane</h1>
                 <p style={{ color: '#666', marginBottom: '2rem' }}>Twoja rezerwacja została anulowana. Slot zwolniony dla innych pacjentów.</p>
-                <a href="/" style={{ display: 'inline-block', background: '#0f7ba8', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '6px', textDecoration: 'none' }}>Strona główna</a>
+                <a href="/" style={{ display: 'inline-block', background: '#0d9488', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '6px', textDecoration: 'none' }}>Strona główna</a>
               </div>
             )}
 
           </div>
         </div>
       </main>
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-        <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
@@ -873,40 +874,39 @@ function PatientLoginPage() {
 
   return (
     <div className="app"><main>
-      <div className="container" style={{ maxWidth: '450px', margin: '3rem auto', padding: '0 2rem' }}>
-        <div style={{ background: 'white', padding: '2.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
-          <h1 style={{ color: '#0f7ba8', textAlign: 'center', marginBottom: '0.5rem' }}>Zaloguj się</h1>
-          <p style={{ color: '#666', textAlign: 'center', marginBottom: '2rem', fontSize: '14px' }}>Zarządzaj rezerwacjami w swoim koncie</p>
+      <div className="auth-wrapper">
+        <div className="auth-card">
+          <div className="auth-icon">🔐</div>
+          <h1 className="auth-title">Zaloguj się</h1>
+          <p className="auth-subtitle">Zarządzaj rezerwacjami w swoim koncie</p>
 
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Email</label>
-            <input type="email" value={formData.email} onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setError(''); }}
-              placeholder="email@example.com" style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+          <div className="auth-field">
+            <label className="auth-label">Email</label>
+            <input type="email" className="auth-input" value={formData.email}
+              onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setError(''); }}
+              placeholder="email@example.com" />
           </div>
 
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '14px', fontWeight: '600' }}>Hasło</label>
-            <input type="password" value={formData.password} onChange={(e) => { setFormData({ ...formData, password: e.target.value }); setError(''); }}
-              placeholder="Twoje hasło" style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+          <div className="auth-field">
+            <label className="auth-label">Hasło</label>
+            <input type="password" className="auth-input" value={formData.password}
+              onChange={(e) => { setFormData({ ...formData, password: e.target.value }); setError(''); }}
+              placeholder="Twoje hasło" />
           </div>
 
-          {error && <div style={{ background: '#fee', border: '1px solid #fcc', color: '#c33', padding: '0.7rem', borderRadius: '6px', marginBottom: '1rem', fontSize: '14px' }}>❌ {error}</div>}
+          {error && <div className="auth-error">❌ {error}</div>}
 
-          <button onClick={handleLogin} disabled={loading}
-            style={{ width: '100%', padding: '0.8rem', background: loading ? '#ccc' : 'linear-gradient(135deg, #0f7ba8, #1a9fcf)', color: 'white', border: 'none', borderRadius: '6px', fontSize: '15px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer' }}>
-            {loading ? 'Logowanie...' : 'Zaloguj się'}
+          <button onClick={handleLogin} disabled={loading} className="auth-button">
+            {loading ? 'Logowanie...' : 'Zaloguj się →'}
           </button>
 
-          <p style={{ textAlign: 'center', color: '#666', marginTop: '1.5rem', fontSize: '14px' }}>
-            Nie masz konta? <a href="/register" style={{ color: '#0f7ba8', fontWeight: '600' }}>Zarejestruj się</a>
+          <p className="auth-footer-text">
+            Nie masz konta? <a href="/register" className="auth-link">Zarejestruj się</a>
           </p>
         </div>
       </div>
     </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <AppFooter /></div>
   );
 }
 
@@ -955,7 +955,7 @@ function PatientRegisterPage() {
     <div className="app"><main>
       <div className="container" style={{ maxWidth: '500px', margin: '3rem auto', padding: '0 2rem' }}>
         <div style={{ background: 'white', padding: '2.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
-          <h1 style={{ color: '#0f7ba8', textAlign: 'center', marginBottom: '0.5rem' }}>Utwórz konto</h1>
+          <h1 style={{ color: '#0d9488', textAlign: 'center', marginBottom: '0.5rem' }}>Utwórz konto</h1>
           <p style={{ color: '#666', textAlign: 'center', marginBottom: '2rem', fontSize: '14px' }}>Rezerwuj szybciej i zarządzaj wizytami</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
@@ -992,20 +992,17 @@ function PatientRegisterPage() {
           {error && <div style={{ background: '#fee', border: '1px solid #fcc', color: '#c33', padding: '0.7rem', borderRadius: '6px', marginBottom: '1rem', fontSize: '14px' }}>❌ {error}</div>}
 
           <button onClick={handleRegister} disabled={loading}
-            style={{ width: '100%', padding: '0.8rem', background: loading ? '#ccc' : 'linear-gradient(135deg, #0f7ba8, #1a9fcf)', color: 'white', border: 'none', borderRadius: '6px', fontSize: '15px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer' }}>
+            style={{ width: '100%', padding: '0.8rem', background: loading ? '#ccc' : 'linear-gradient(135deg, #0d9488, #14b8a6)', color: 'white', border: 'none', borderRadius: '6px', fontSize: '15px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer' }}>
             {loading ? 'Tworzenie...' : 'Utwórz konto'}
           </button>
 
           <p style={{ textAlign: 'center', color: '#666', marginTop: '1.5rem', fontSize: '14px' }}>
-            Masz już konto? <a href="/login" style={{ color: '#0f7ba8', fontWeight: '600' }}>Zaloguj się</a>
+            Masz już konto? <a href="/login" style={{ color: '#0d9488', fontWeight: '600' }}>Zaloguj się</a>
           </p>
         </div>
       </div>
     </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <AppFooter /></div>
   );
 }
 
@@ -1072,24 +1069,24 @@ function MyAccountPage() {
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            <h1 style={{ color: '#0f7ba8', margin: 0 }}>Witaj, {patient.firstName}! 👋</h1>
+            <h1 style={{ color: '#0d9488', margin: 0 }}>Witaj, {patient.firstName}! 👋</h1>
             <p style={{ color: '#666', marginTop: '0.5rem' }}>{patient.email}</p>
           </div>
           <button onClick={handleLogout} style={{ padding: '0.6rem 1.2rem', background: '#f0f0f0', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer' }}>Wyloguj się</button>
         </div>
 
         <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', marginBottom: '1.5rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-          <h2 style={{ color: '#0f7ba8', marginTop: 0, fontSize: '1.3rem' }}>📅 Nadchodzące wizyty ({upcoming.length})</h2>
+          <h2 style={{ color: '#0d9488', marginTop: 0, fontSize: '1.3rem' }}>📅 Nadchodzące wizyty ({upcoming.length})</h2>
           {upcoming.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '2rem', color: '#999' }}>
               Brak nadchodzących wizyt.<br/>
-              <a href="/" style={{ color: '#0f7ba8', fontWeight: '600', marginTop: '1rem', display: 'inline-block' }}>Zarezerwuj wizytę →</a>
+              <a href="/" style={{ color: '#0d9488', fontWeight: '600', marginTop: '1rem', display: 'inline-block' }}>Zarezerwuj wizytę →</a>
             </div>
           ) : (
             upcoming.map(b => (
               <div key={b.id} style={{ border: '1px solid #e0e0e0', borderRadius: '8px', padding: '1rem', marginBottom: '0.8rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                 <div>
-                  <div style={{ fontWeight: '600', color: '#0f7ba8', marginBottom: '0.3rem' }}>
+                  <div style={{ fontWeight: '600', color: '#0d9488', marginBottom: '0.3rem' }}>
                     {b.service}{b.vaccine && ` · ${b.vaccine}`}{b.exam && ` · ${b.exam}`}{b.test && ` · ${b.test}`}
                   </div>
                   <div style={{ fontSize: '14px', color: '#666' }}>
@@ -1120,10 +1117,7 @@ function MyAccountPage() {
         )}
       </div>
     </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <AppFooter /></div>
   );
 }
 function PharmacyLoginPage() {
@@ -1172,13 +1166,16 @@ function PharmacyLoginPage() {
   if (!isLoggedIn) {
     return (
       <div className="app"><main>
-        <div className="container" style={{ maxWidth: '500px', margin: '5rem auto' }}>
-          <div style={{ background: 'white', padding: '3rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-            <h1 style={{ textAlign: 'center', color: '#0f7ba8', marginBottom: '2rem' }}>📋 Panel Apteki</h1>
-            <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Apteka</label>
-              <select value={loginForm.pharmacy} onChange={(e) => { setLoginForm({ ...loginForm, pharmacy: e.target.value }); setLoginError(''); }}
-                style={{ width: '100%', padding: '0.8rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }}>
+        <div className="auth-wrapper">
+          <div className="auth-card">
+            <div className="auth-icon">📋</div>
+            <h1 className="auth-title">Panel Apteki</h1>
+            <p className="auth-subtitle">Zaloguj się aby zarządzać rezerwacjami</p>
+
+            <div className="auth-field">
+              <label className="auth-label">Apteka</label>
+              <select className="auth-input" value={loginForm.pharmacy}
+                onChange={(e) => { setLoginForm({ ...loginForm, pharmacy: e.target.value }); setLoginError(''); }}>
                 <option value="">Wybierz aptekę</option>
                 <option value="Myślibórz">Myślibórz</option>
                 <option value="Świnoujście">Świnoujście</option>
@@ -1187,25 +1184,26 @@ function PharmacyLoginPage() {
                 <option value="Police">Police</option>
               </select>
             </div>
-            <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Hasło</label>
-              <input type="password" placeholder="Wpisz hasło" value={loginForm.password}
-                onChange={(e) => { setLoginForm({ ...loginForm, password: e.target.value }); setLoginError(''); }}
-                style={{ width: '100%', padding: '0.8rem', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
+
+            <div className="auth-field">
+              <label className="auth-label">Hasło</label>
+              <input type="password" className="auth-input" placeholder="Wpisz hasło" value={loginForm.password}
+                onChange={(e) => { setLoginForm({ ...loginForm, password: e.target.value }); setLoginError(''); }} />
             </div>
-            {loginError && <div style={{ background: '#fee', border: '1px solid #fcc', color: '#c33', padding: '1rem', borderRadius: '6px', marginBottom: '1rem' }}>❌ {loginError}</div>}
-            <button onClick={handleLogin} disabled={loading}
-              style={{ width: '100%', padding: '0.8rem', background: loading ? '#ccc' : 'linear-gradient(135deg, #0f7ba8, #1a9fcf)', color: 'white', border: 'none', borderRadius: '6px', fontSize: '16px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer' }}>
-              {loading ? 'Logowanie...' : 'Zaloguj się'}
+
+            {loginError && <div className="auth-error">❌ {loginError}</div>}
+
+            <button onClick={handleLogin} disabled={loading} className="auth-button">
+              {loading ? 'Logowanie...' : 'Zaloguj się →'}
             </button>
-            <p style={{ textAlign: 'center', color: '#999', fontSize: '12px', marginTop: '2rem' }}>Hasło testowe: <strong>password123</strong></p>
+
+            <p className="auth-footer-text">
+              Hasło testowe: <strong>password123</strong>
+            </p>
           </div>
         </div>
       </main>
-      <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-        <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-        <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-      </footer></div>
+      <AppFooter /></div>
     );
   }
 
@@ -1223,7 +1221,7 @@ function PharmacyDashboard({ token, pharmacyName, onLogout }) {
       <div style={{ maxWidth: '1200px', margin: '2rem auto', padding: '0 2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <div>
-            <h1 style={{ color: '#0f7ba8', margin: 0 }}>📋 Panel Apteki: {pharmacyName}</h1>
+            <h1 style={{ color: '#0d9488', margin: 0 }}>📋 Panel Apteki: {pharmacyName}</h1>
           </div>
           <button onClick={onLogout} style={{ padding: '0.6rem 1.2rem', background: '#f0f0f0', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer' }}>Wyloguj się</button>
         </div>
@@ -1239,11 +1237,11 @@ function PharmacyDashboard({ token, pharmacyName, onLogout }) {
                 padding: '0.8rem 1.5rem',
                 background: 'transparent',
                 border: 'none',
-                borderBottom: activeTab === tab.id ? '3px solid #0f7ba8' : '3px solid transparent',
+                borderBottom: activeTab === tab.id ? '3px solid #0d9488' : '3px solid transparent',
                 cursor: 'pointer',
                 fontSize: '15px',
                 fontWeight: activeTab === tab.id ? '600' : '400',
-                color: activeTab === tab.id ? '#0f7ba8' : '#666'
+                color: activeTab === tab.id ? '#0d9488' : '#666'
               }}>
               {tab.label}
             </button>
@@ -1255,10 +1253,7 @@ function PharmacyDashboard({ token, pharmacyName, onLogout }) {
         {activeTab === 'stats' && <StatsTab token={token} pharmacyName={pharmacyName} />}
       </div>
     </main>
-    <footer className="footer" style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-      <p className="footer-slogan">Zaufaj nam, zadbaj o siebie. 💙</p>
-      <p style={{ fontSize: '12px', color: '#0c4a6e', opacity: 0.7 }}>Built by MW</p>
-    </footer></div>
+    <AppFooter /></div>
   );
 }
 
@@ -1383,7 +1378,7 @@ function CalendarTab({ token, pharmacyName }) {
           <button onClick={() => changeDate(1)} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>›</button>
           <button onClick={() => setSelectedDate(new Date().toISOString().split('T')[0])} style={{ padding: '0.5rem 1rem', cursor: 'pointer', marginLeft: '0.5rem' }}>Dzisiaj</button>
         </div>
-        <button onClick={() => setShowAddForm(!showAddForm)} style={{ padding: '0.7rem 1.5rem', background: '#0f7ba8', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
+        <button onClick={() => setShowAddForm(!showAddForm)} style={{ padding: '0.7rem 1.5rem', background: '#0d9488', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
           {showAddForm ? '× Anuluj' : '+ Dodaj wizytę'}
         </button>
       </div>
@@ -1431,8 +1426,8 @@ function CalendarTab({ token, pharmacyName }) {
                 <div style={{ color: '#666', fontWeight: '600' }}>{time}</div>
                 {slot.type === 'booking' && (
                   <div style={{ 
-                    background: slot.data.source === 'online' ? '#dbeafe' : '#d1fae5',
-                    borderLeft: `4px solid ${slot.data.source === 'online' ? '#2563eb' : '#10b981'}`,
+                    background: slot.data.source === 'online' ? '#ccfbf1' : '#d1fae5',
+                    borderLeft: `4px solid ${slot.data.source === 'online' ? '#0d9488' : '#10b981'}`,
                     padding: '0.6rem 1rem',
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -1481,7 +1476,7 @@ function CalendarTab({ token, pharmacyName }) {
           <div style={{ background: 'white', border: '1px solid #ddd', borderRadius: '8px', padding: '1rem' }}>
             <div style={{ fontWeight: '600', marginBottom: '0.8rem' }}>Legenda</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-              <div style={{ width: '14px', height: '14px', background: '#dbeafe', borderLeft: '3px solid #2563eb' }}></div>
+              <div style={{ width: '14px', height: '14px', background: '#ccfbf1', borderLeft: '3px solid #0d9488' }}></div>
               <span style={{ fontSize: '13px' }}>Rezerwacja online</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
@@ -1602,7 +1597,7 @@ function ListTab({ token, pharmacyName }) {
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button onClick={handleExportCSV} style={{ padding: '0.6rem 1.2rem', background: 'white', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer' }}>📥 Eksport CSV</button>
-          <button onClick={handlePrint} style={{ padding: '0.6rem 1.2rem', background: '#0f7ba8', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>🖨️ Drukuj listę</button>
+          <button onClick={handlePrint} style={{ padding: '0.6rem 1.2rem', background: '#0d9488', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>🖨️ Drukuj listę</button>
         </div>
       </div>
 
@@ -1639,14 +1634,14 @@ function ListTab({ token, pharmacyName }) {
                     <td style={{ padding: '0.7rem' }}>{new Date(b.date).toLocaleDateString('pl-PL')}</td>
                     <td style={{ padding: '0.7rem', fontWeight: '600' }}>{b.time}</td>
                     <td style={{ padding: '0.7rem' }}>{b.firstName} {b.lastName}</td>
-                    <td style={{ padding: '0.7rem', color: '#0f7ba8' }}>{b.phone}</td>
+                    <td style={{ padding: '0.7rem', color: '#0d9488' }}>{b.phone}</td>
                     <td style={{ padding: '0.7rem' }}>{b.service}</td>
                     <td style={{ padding: '0.7rem', color: '#666' }}>{b.vaccine || b.exam || b.test || b.medications || '-'}</td>
                     <td style={{ padding: '0.7rem' }}>
                       <span style={{ 
                         fontSize: '12px', padding: '0.2rem 0.6rem', borderRadius: '4px',
-                        background: b.source === 'online' ? '#dbeafe' : '#d1fae5',
-                        color: b.source === 'online' ? '#1e40af' : '#065f46'
+                        background: b.source === 'online' ? '#ccfbf1' : '#d1fae5',
+                        color: b.source === 'online' ? '#0f766e' : '#065f46'
                       }}>
                         {b.source === 'online' ? 'Online' : b.source === 'phone' ? 'Telefon' : 'Walk-in'}
                       </span>
@@ -1728,7 +1723,7 @@ function StatsTab({ token, pharmacyName }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
         <div style={{ background: 'white', border: '1px solid #ddd', borderRadius: '8px', padding: '1.2rem' }}>
           <div style={{ color: '#666', fontSize: '13px' }}>Łącznie wizyt</div>
-          <div style={{ fontSize: '28px', fontWeight: '700', color: '#0f7ba8' }}>{stats.total}</div>
+          <div style={{ fontSize: '28px', fontWeight: '700', color: '#0d9488' }}>{stats.total}</div>
         </div>
         <div style={{ background: 'white', border: '1px solid #ddd', borderRadius: '8px', padding: '1.2rem' }}>
           <div style={{ color: '#666', fontSize: '13px' }}>Potwierdzone</div>
@@ -1757,7 +1752,7 @@ function StatsTab({ token, pharmacyName }) {
                   <span style={{ fontWeight: '600' }}>{s.count} ({pct}%)</span>
                 </div>
                 <div style={{ background: '#f0f0f0', borderRadius: '4px', height: '12px' }}>
-                  <div style={{ background: '#0f7ba8', width: `${pct}%`, height: '100%', borderRadius: '4px' }}></div>
+                  <div style={{ background: '#0d9488', width: `${pct}%`, height: '100%', borderRadius: '4px' }}></div>
                 </div>
               </div>
             );
@@ -1777,7 +1772,7 @@ function StatsTab({ token, pharmacyName }) {
                   <span style={{ fontWeight: '600' }}>{v.count}</span>
                 </div>
                 <div style={{ background: '#f0f0f0', borderRadius: '4px', height: '12px' }}>
-                  <div style={{ background: '#0f7ba8', width: `${pct}%`, height: '100%', borderRadius: '4px' }}></div>
+                  <div style={{ background: '#0d9488', width: `${pct}%`, height: '100%', borderRadius: '4px' }}></div>
                 </div>
               </div>
             );
