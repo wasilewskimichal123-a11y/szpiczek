@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 
@@ -11,7 +11,7 @@ function AppFooter() {
     <footer className="app-footer">
       <h2 className="app-footer-tagline">
         Zaufaj nam, <span className="app-footer-glow">zadbaj o siebie.</span>
-        <span className="app-footer-heart">💙</span>
+        <span className="app-footer-heart">💚</span>
       </h2>
       <div className="app-footer-signature">
         <span className="app-footer-dot"></span>
@@ -423,10 +423,10 @@ function HomePage() {
           <div className="container">
             <div className="hero-section">
               <div className="hero-mascot">
-                <img src="/images/szpiczek2.PNG" alt="Szpiczek" className="hero-image" />
+                <img src="/images/MedMis.png" alt="MedMiś" className="hero-image" />
               </div>
               <div className="hero-text">
-                <h1 className="hero-title">Cześć! Jestem Szpiczek! 👋</h1>
+                <h1 className="hero-title">Cześć! Jestem MedMiś! 👋</h1>
                 <p className="hero-subtitle">Twój osobisty asystent do rezerwacji usług zdrowotnych w aptece</p>
                 <p className="hero-description">Wybierz usługę poniżej i zarezerwuj termin. Bez kolejek, bez stresów!</p>
               </div>
@@ -639,7 +639,7 @@ function HomePage() {
         <main><div className="container">
           <div className="confirmation">
             <div className="celebration-container">
-              <img src="/images/szpiczek2.PNG" alt="Szpiczek" className="celebration-mascot" />
+              <img src="/images/MedMis.png" alt="MedMiś" className="celebration-mascot" />
             </div>
             <h2 className="celebration-title">Superhero! 🦸‍♂️</h2>
             <p className="celebration-subtitle">Właśnie stałeś się niezniszczalny!</p>
@@ -681,11 +681,11 @@ function AboutPage() {
         <div className="info-page-wrapper">
           <div className="info-page-card">
             <div className="info-page-icon">📖</div>
-            <h1 className="info-page-title">O Szpiczku</h1>
+            <h1 className="info-page-title">O MedMisiu</h1>
 
             <h2 className="info-page-section-title">Nasza misja</h2>
             <p className="info-page-text">
-              Szpiczek to innowacyjna platforma, która zmienia dostęp do usług zdrowotnych w aptekach. Naszym celem jest wyeliminowanie kolejek i uproszczenie procesu rezerwacji szczepień, badań diagnostycznych i przeglądu leków.
+              MedMiś to innowacyjna platforma, która zmienia dostęp do usług zdrowotnych w aptekach. Naszym celem jest wyeliminowanie kolejek i uproszczenie procesu rezerwacji szczepień, badań diagnostycznych i przeglądu leków.
             </p>
 
             <h2 className="info-page-section-title">Co nas wyróżnia?</h2>
@@ -762,7 +762,7 @@ function ContactPage() {
             </p>
 
             <div className="info-page-highlight">
-              <p className="info-contact-line"><strong>📧 Email:</strong> hello@szpiczek.pl</p>
+              <p className="info-contact-line"><strong>📧 Email:</strong> hello@medmis.pl</p>
               <p className="info-contact-line"><strong>📱 WhatsApp:</strong> +48 123 456 789</p>
               <p className="info-contact-line" style={{ marginBottom: 0 }}><strong>📞 Telefon:</strong> +48 12 345 67 89</p>
             </div>
@@ -799,9 +799,9 @@ function PartnersPage() {
             <div className="info-page-highlight">
               <h3 style={{ color: '#0d9488', marginBottom: '1rem', fontSize: '1.2rem' }}>Chcesz dołączyć do naszych partnerów?</h3>
               <p className="info-page-text" style={{ marginBottom: '1.2rem' }}>
-                Jeśli prowadzisz aptekę i zainteresowana Cię integracja z platformą Szpiczek, skontaktuj się z nami.
+                Jeśli prowadzisz aptekę i zainteresowana Cię integracja z platformą MedMiś, skontaktuj się z nami.
               </p>
-              <a href="mailto:partners@szpiczek.pl" className="info-page-cta">
+              <a href="mailto:partners@medmis.pl" className="info-page-cta">
                 Napisz do nas →
               </a>
             </div>
@@ -1788,7 +1788,7 @@ function ListTab({ token, pharmacyName }) {
         )}
 
         <div style={{ borderTop: '1px solid #ddd', paddingTop: '1rem', marginTop: '1rem', fontSize: '12px', color: '#999', textAlign: 'center' }}>
-          Wydrukowano z Szpiczek.pl · {new Date().toLocaleString('pl-PL')}
+          Wydrukowano z MedMiś.pl · {new Date().toLocaleString('pl-PL')}
         </div>
       </div>
     </div>
