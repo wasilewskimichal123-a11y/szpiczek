@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 
@@ -197,6 +197,8 @@ function HomePage() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [blockedTimes, setBlockedTimes] = useState([]);
+  const [vaccineSearch, setVaccineSearch] = useState('');
+  const [pharmacySearch, setPharmacySearch] = useState('');
   const [booking, setBooking] = useState(null);
   const [captchaAnswer, setCaptchaAnswer] = useState('');
   const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 0, num2: 0, answer: 0 });
@@ -474,18 +476,73 @@ function HomePage() {
   }
 
   if (currentPage === 'vaccines-grid') {
+    // Filtrowanie szczepionek po wyszukiwanej frazie (ignoruje wielkość liter i polskie znaki)
+    const normalize = (s) => s.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/ł/g, 'l');
+    const searchQuery = normalize(vaccineSearch.trim());
+    const filteredVaccines = searchQuery
+      ? vaccines.filter(v => normalize(v).includes(searchQuery))
+      : vaccines;
+
     return (
       <div className="app">{renderHeader(slogans['vaccines-grid'])}
         <main><div className="container">
           <IconGradientDef />
-          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz szczepienie</h2>
-          <div className="vaccines-grid">
-            {vaccines.map(v => (
-              <div key={v} className="vaccine-card" onClick={() => { setSelectedVaccine(v); setCurrentPage('pharmacies'); }}>
-                <div className="vaccine-card-icon-wrap"><IconSyringe /></div><h3>{v}</h3>
-                <button className="btn-service">Wybierz</button>
+          <div className="page-header-with-mascot">
+            <img src="/images/MedMis-strzykawka.png" alt="" className="page-mini-mascot" aria-hidden="true" />
+            <h2 className="page-title-centered">Wybierz szczepienie</h2>
+          </div>
+
+          {/* Wyszukiwarka szczepionek */}
+          <div className="search-wrapper">
+            <div className="search-box">
+              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Szukaj szczepionki... (np. grypa, HPV)"
+                value={vaccineSearch}
+                onChange={(e) => setVaccineSearch(e.target.value)}
+              />
+              <div className={`search-counter ${filteredVaccines.length === 0 ? 'search-counter-empty' : ''}`}>
+                {filteredVaccines.length === 0
+                  ? '0 wyników'
+                  : filteredVaccines.length === 1
+                    ? '1 wynik'
+                    : filteredVaccines.length < 5
+                      ? `${filteredVaccines.length} wyniki`
+                      : `${filteredVaccines.length} wyników`}
               </div>
-            ))}
+              {vaccineSearch && (
+                <button className="search-clear" onClick={() => setVaccineSearch('')} title="Wyczyść">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="vaccines-grid">
+            {filteredVaccines.length === 0 ? (
+              <div className="no-results">
+                <img src="/images/MedMis-wyniki_badan.png" alt="" className="no-results-mascot" aria-hidden="true" />
+                <h3 style={{ color: '#0f1f4c', marginBottom: '0.5rem', fontSize: '1.2rem' }}>Brak wyników</h3>
+                <p style={{ color: '#64748b' }}>Spróbuj innej nazwy lub wyczyść wyszukiwanie, aby zobaczyć wszystkie szczepionki.</p>
+              </div>
+            ) : (
+              filteredVaccines.map(v => (
+                <div key={v} className="vaccine-card" onClick={() => { setSelectedVaccine(v); setCurrentPage('pharmacies'); }}>
+                  <div className="vaccine-card-icon-wrap"><IconSyringe /></div><h3>{v}</h3>
+                  <button className="btn-service">Wybierz</button>
+                </div>
+              ))
+            )}
           </div>
         </div></main>
         {renderFooter()}
@@ -534,21 +591,73 @@ function HomePage() {
   }
 
   if (currentPage === 'pharmacies') {
+    // Filtrowanie aptek po mieście (ignoruje wielkość liter i polskie znaki)
+    const normalizePharm = (s) => s.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/ł/g, 'l');
+    const searchPharm = normalizePharm(pharmacySearch.trim());
+    const filteredPharmacies = searchPharm
+      ? pharmacies.filter(p => normalizePharm(p.city).includes(searchPharm))
+      : pharmacies;
+
     return (
       <div className="app">{renderHeader(slogans[`pharmacies-${selectedService}`])}
         <main><div className="container">
-          <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz aptekę</h2>
-          <div className="pharmacies-grid">
-            {pharmacies.map(p => (
-              <div key={p.id} className="pharmacy-card" onClick={() => { setSelectedPharmacy(p); setCurrentPage('booking'); setSelectedDate(null); setSelectedTime(null); }}>
-                <h3>{p.name}</h3>
-                <div className="city">{p.city}</div>
-                <div className="address">{p.address}</div>
-                <div className="hours">{p.hours}</div>
-                <div className="email">{p.email}</div>
-                <button className="btn-primary">Wybierz</button>
+          <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: '#0d9488', fontSize: '1.8rem', fontWeight: '700' }}>Wybierz aptekę</h2>
+
+          {/* Wyszukiwarka aptek po mieście */}
+          <div className="search-wrapper">
+            <div className="search-box">
+              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Szukaj po mieście... (np. Szczecin, Police)"
+                value={pharmacySearch}
+                onChange={(e) => setPharmacySearch(e.target.value)}
+              />
+              <div className={`search-counter ${filteredPharmacies.length === 0 ? 'search-counter-empty' : ''}`}>
+                {filteredPharmacies.length === 0
+                  ? '0 aptek'
+                  : filteredPharmacies.length === 1
+                    ? '1 apteka'
+                    : filteredPharmacies.length < 5
+                      ? `${filteredPharmacies.length} apteki`
+                      : `${filteredPharmacies.length} aptek`}
               </div>
-            ))}
+              {pharmacySearch && (
+                <button className="search-clear" onClick={() => setPharmacySearch('')} title="Wyczyść">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="pharmacies-grid">
+            {filteredPharmacies.length === 0 ? (
+              <div className="no-results">
+                <img src="/images/MedMis-wyniki_badan.png" alt="" className="no-results-mascot" aria-hidden="true" />
+                <h3 style={{ color: '#0f1f4c', marginBottom: '0.5rem', fontSize: '1.2rem' }}>Brak wyników</h3>
+                <p style={{ color: '#64748b' }}>Nie znaleziono apteki w podanym mieście. Spróbuj innej nazwy lub wyczyść wyszukiwanie.</p>
+              </div>
+            ) : (
+              filteredPharmacies.map(p => (
+                <div key={p.id} className="pharmacy-card" onClick={() => { setSelectedPharmacy(p); setCurrentPage('booking'); setSelectedDate(null); setSelectedTime(null); }}>
+                  <h3>{p.name}</h3>
+                  <div className="city">{p.city}</div>
+                  <div className="address">{p.address}</div>
+                  <div className="hours">{p.hours}</div>
+                  <div className="email">{p.email}</div>
+                  <button className="btn-primary">Wybierz</button>
+                </div>
+              ))
+            )}
           </div>
         </div></main>
         {renderFooter()}
@@ -637,29 +746,74 @@ function HomePage() {
     return (
       <div className="app">{renderHeader(slogans['confirmation'])}
         <main><div className="container">
-          <div className="confirmation">
-            <div className="celebration-container">
-              <img src="/images/MedMis.png" alt="MedMiś" className="celebration-mascot" />
+          <div className="confirmation-wrap">
+
+            {/* HERO z misiem */}
+            <div className="celebration-hero">
+              <div className="celebration-orbit celebration-orbit-1"></div>
+              <div className="celebration-orbit celebration-orbit-2"></div>
+              <div className="celebration-glow"></div>
+
+              {/* Latające medyczne plusiki */}
+              <div className="floating-plus">+</div>
+              <div className="floating-plus">+</div>
+              <div className="floating-plus">+</div>
+              <div className="floating-plus">+</div>
+
+              <div className="celebration-mascot-wrap">
+                <img src="/images/MedMis-telefon-dzwonek.png" alt="MedMiś" className="celebration-mascot" />
+                <div className="check-badge">✓</div>
+              </div>
+
+              <h2 className="celebration-title">
+                Rezerwacja <span className="celebration-title-accent">potwierdzona</span>
+              </h2>
+              <p className="celebration-subtitle">
+                Zajmiemy się Tobą w wyznaczonym terminie. Wysłaliśmy szczegóły na <strong>{booking.email}</strong>.
+              </p>
             </div>
-            <h2 className="celebration-title">Superhero! 🦸‍♂️</h2>
-            <p className="celebration-subtitle">Właśnie stałeś się niezniszczalny!</p>
-            <div className="celebration-divider"></div>
-            <h3 style={{ marginTop: '2rem', color: '#0d9488', fontSize: '1.4rem', fontWeight: '700' }}>Rezerwacja potwierdzona!</h3>
-            <p>Email potwierdzenia został wysłany na {booking.email}</p>
-            <div className="confirmation-details">
-              <div className="detail-row"><span className="label">Imię i nazwisko</span><span className="value">{booking.firstName} {booking.lastName}</span></div>
-              <div className="detail-row"><span className="label">Email</span><span className="value">{booking.email}</span></div>
-              <div className="detail-row"><span className="label">Telefon</span><span className="value">{booking.phone}</span></div>
-              <div className="detail-row"><span className="label">Usługa</span><span className="value">{booking.service}</span></div>
-              {booking.vaccine && <div className="detail-row"><span className="label">Szczepienie</span><span className="value">{booking.vaccine}</span></div>}
-              {booking.exam && <div className="detail-row"><span className="label">Badanie</span><span className="value">{booking.exam}</span></div>}
-              {booking.test && <div className="detail-row"><span className="label">Test</span><span className="value">{booking.test}</span></div>}
-              <div className="detail-row"><span className="label">Apteka</span><span className="value">{booking.pharmacy}</span></div>
-              <div className="detail-row"><span className="label">Data i godzina</span><span className="value">{new Date(booking.date).toLocaleDateString('pl-PL')} o {booking.time}</span></div>
+
+            {/* KARTA SZCZEGÓŁÓW */}
+            <div className="booking-details-card">
+              <div className="booking-details-title">
+                <span>Szczegóły rezerwacji</span>
+              </div>
+
+              {/* Highlight data + godzina */}
+              <div className="detail-datetime">
+                <div className="detail-datetime-left">
+                  <div className="detail-datetime-icon">📅</div>
+                  <div>
+                    <div className="detail-datetime-label">Twoja wizyta</div>
+                    <div className="detail-datetime-value">
+                      {new Date(booking.date).toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' })} • {booking.time}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="detail-row"><span className="detail-label">Imię i nazwisko</span><span className="detail-value">{booking.firstName} {booking.lastName}</span></div>
+              <div className="detail-row"><span className="detail-label">Email</span><span className="detail-value">{booking.email}</span></div>
+              <div className="detail-row"><span className="detail-label">Telefon</span><span className="detail-value">{booking.phone}</span></div>
+              <div className="detail-row"><span className="detail-label">Usługa</span><span className="detail-value">{booking.service}</span></div>
+              {booking.vaccine && <div className="detail-row"><span className="detail-label">Szczepienie</span><span className="detail-value">{booking.vaccine}</span></div>}
+              {booking.exam && <div className="detail-row"><span className="detail-label">Badanie</span><span className="detail-value">{booking.exam}</span></div>}
+              {booking.test && <div className="detail-row"><span className="detail-label">Test</span><span className="detail-value">{booking.test}</span></div>}
+              <div className="detail-row"><span className="detail-label">Apteka</span><span className="detail-value">ACZ {booking.pharmacy}</span></div>
+
+              <div className="cta-buttons">
+                <button className="btn-confirm-secondary" onClick={handleBackHome}>Strona główna</button>
+              </div>
             </div>
-            <div className="confirmation-footer">
-              <button className="btn-primary btn-large" onClick={handleBackHome}>Powróć do strony głównej</button>
+
+            {/* Info box - delikatne przypomnienie */}
+            <div className="confirmation-info-box">
+              <span className="info-box-icon">💡</span>
+              <div className="info-box-text">
+                <strong>Na wszelki wypadek:</strong> link do anulowania rezerwacji znajdziesz w mailu potwierdzającym. Wizyty można też odwołać bezpośrednio w aptece lub z poziomu "Moje konto".
+              </div>
             </div>
+
           </div>
         </div></main>
         {renderFooter()}
@@ -680,8 +834,16 @@ function AboutPage() {
       <main>
         <div className="info-page-wrapper">
           <div className="info-page-card">
-            <div className="info-page-icon">📖</div>
-            <h1 className="info-page-title">O MedMisiu</h1>
+            {/* HERO z misiem apteczką */}
+            <div className="page-hero-mascot">
+              <div className="page-hero-mascot-glow"></div>
+              <img src="/images/MedMis-apteczka.png" alt="" className="page-hero-mascot-img" aria-hidden="true" />
+            </div>
+
+            <h1 className="info-page-title">Poznaj MedMisia</h1>
+            <p className="info-page-text" style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#64748b' }}>
+              Tworzymy platformę, która zmienia sposób, w jaki umawiasz wizyty w aptekach.
+            </p>
 
             <h2 className="info-page-section-title">Nasza misja</h2>
             <p className="info-page-text">
@@ -724,10 +886,15 @@ function FAQPage() {
       <main>
         <div className="info-page-wrapper">
           <div className="info-page-card">
-            <div className="info-page-icon">❓</div>
-            <h1 className="info-page-title">Często zadawane pytania</h1>
-            <p className="info-page-text" style={{ textAlign: 'center', marginBottom: '2rem' }}>
-              Znajdź szybko odpowiedzi na najpopularniejsze pytania.
+            {/* HERO z misiem machającym */}
+            <div className="page-hero-mascot">
+              <div className="page-hero-mascot-glow"></div>
+              <img src="/images/MedMis.png" alt="" className="page-hero-mascot-img" aria-hidden="true" />
+            </div>
+
+            <h1 className="info-page-title">Częste pytania</h1>
+            <p className="info-page-text" style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#64748b' }}>
+              Mam dla Ciebie odpowiedzi na najpopularniejsze pytania o nasze usługi.
             </p>
 
             {faqs.map((faq, idx) => (
@@ -753,8 +920,16 @@ function ContactPage() {
       <main>
         <div className="info-page-wrapper">
           <div className="info-page-card">
-            <div className="info-page-icon">📧</div>
-            <h1 className="info-page-title">Kontakt</h1>
+            {/* HERO z misiem telefonem */}
+            <div className="page-hero-mascot">
+              <div className="page-hero-mascot-glow"></div>
+              <img src="/images/MedMis-telefon.png" alt="" className="page-hero-mascot-img" aria-hidden="true" />
+            </div>
+
+            <h1 className="info-page-title">Porozmawiajmy</h1>
+            <p className="info-page-text" style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#64748b' }}>
+              Masz pytania? Chętnie na nie odpowiemy. Wybierz najwygodniejszy sposób kontaktu.
+            </p>
 
             <h2 className="info-page-section-title">Zainteresowany współpracą?</h2>
             <p className="info-page-text">
@@ -788,8 +963,16 @@ function PartnersPage() {
       <main>
         <div className="info-page-wrapper">
           <div className="info-page-card">
-            <div className="info-page-icon">🤝</div>
-            <h1 className="info-page-title">Partnerzy</h1>
+            {/* HERO z misiem kciukiem */}
+            <div className="page-hero-mascot">
+              <div className="page-hero-mascot-glow"></div>
+              <img src="/images/MedMis-kciuk.png" alt="" className="page-hero-mascot-img" aria-hidden="true" />
+            </div>
+
+            <h1 className="info-page-title">Współpracujmy</h1>
+            <p className="info-page-text" style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#64748b' }}>
+              Razem zmieniamy dostęp do opieki zdrowotnej w Polsce.
+            </p>
 
             <h2 className="info-page-section-title">Sieci aptek</h2>
             <p className="info-page-text">
@@ -831,10 +1014,15 @@ function BlogPage() {
       <main>
         <div className="info-page-wrapper">
           <div className="info-page-card">
-            <div className="info-page-icon">📰</div>
-            <h1 className="info-page-title">Blog zdrowotny</h1>
-            <p className="info-page-text" style={{ marginBottom: '2rem' }}>
-              Artykuły i porady na temat zdrowia, szczepień i profilaktyki.
+            {/* HERO z misiem lupą */}
+            <div className="page-hero-mascot">
+              <div className="page-hero-mascot-glow"></div>
+              <img src="/images/MedMis-wyniki_badan.png" alt="" className="page-hero-mascot-img" aria-hidden="true" />
+            </div>
+
+            <h1 className="info-page-title">Strefa wiedzy</h1>
+            <p className="info-page-text" style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#64748b' }}>
+              Artykuły, badania i porady eksperckie — wszystko o zdrowiu i profilaktyce.
             </p>
 
             {posts.map((post, idx) => (
@@ -1010,9 +1198,13 @@ function PatientLoginPage() {
     <div className="app"><main>
       <div className="auth-wrapper">
         <div className="auth-card">
-          <div className="auth-icon">🔐</div>
-          <h1 className="auth-title">Zaloguj się</h1>
-          <p className="auth-subtitle">Zarządzaj rezerwacjami w swoim koncie</p>
+          {/* HERO miś z tarczą OK */}
+          <div className="auth-hero-mascot">
+            <div className="auth-hero-mascot-glow"></div>
+            <img src="/images/MedMis-zielony-ok.png" alt="" className="auth-hero-mascot-img" aria-hidden="true" />
+          </div>
+          <h1 className="auth-title">Witaj z powrotem</h1>
+          <p className="auth-subtitle">Zaloguj się, by zarządzać rezerwacjami</p>
 
           <div className="auth-field">
             <label className="auth-label">Email</label>
@@ -1089,8 +1281,13 @@ function PatientRegisterPage() {
     <div className="app"><main>
       <div className="container" style={{ maxWidth: '500px', margin: '3rem auto', padding: '0 2rem' }}>
         <div style={{ background: 'white', padding: '2.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
-          <h1 style={{ color: '#0d9488', textAlign: 'center', marginBottom: '0.5rem' }}>Utwórz konto</h1>
-          <p style={{ color: '#666', textAlign: 'center', marginBottom: '2rem', fontSize: '14px' }}>Rezerwuj szybciej i zarządzaj wizytami</p>
+          {/* HERO miś z sercem EKG */}
+          <div className="auth-hero-mascot">
+            <div className="auth-hero-mascot-glow"></div>
+            <img src="/images/MedMis-serce.png" alt="" className="auth-hero-mascot-img" aria-hidden="true" />
+          </div>
+          <h1 style={{ color: '#0f1f4c', textAlign: 'center', marginBottom: '0.5rem' }}>Dołącz do MedMisia</h1>
+          <p style={{ color: '#64748b', textAlign: 'center', marginBottom: '2rem', fontSize: '14px' }}>Stwórz konto i zacznij dbać o swoje zdrowie z nami</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
             <div>
@@ -1212,9 +1409,11 @@ function MyAccountPage() {
         <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', marginBottom: '1.5rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
           <h2 style={{ color: '#0d9488', marginTop: 0, fontSize: '1.3rem' }}>📅 Nadchodzące wizyty ({upcoming.length})</h2>
           {upcoming.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '2rem', color: '#999' }}>
-              Brak nadchodzących wizyt.<br/>
-              <a href="/" style={{ color: '#0d9488', fontWeight: '600', marginTop: '1rem', display: 'inline-block' }}>Zarezerwuj wizytę →</a>
+            <div className="empty-state-account">
+              <img src="/images/MedMis-kalendarz.png" alt="" className="empty-state-mascot" aria-hidden="true" />
+              <h3 className="empty-state-title">Brak nadchodzących wizyt</h3>
+              <p className="empty-state-text">Zaplanuj swoją pierwszą wizytę — szczepienie, badanie lub test.</p>
+              <a href="/" className="empty-state-cta">Zarezerwuj wizytę →</a>
             </div>
           ) : (
             upcoming.map(b => (

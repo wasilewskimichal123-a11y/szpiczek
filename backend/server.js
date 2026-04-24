@@ -64,8 +64,9 @@ async function sendPatientEmail(booking) {
 
   <!-- HEADER (neonowa orbita) -->
   <tr>
-    <td style="background:linear-gradient(135deg,#0a1929 0%,#0d9488 120%);padding:48px 32px;text-align:center;">
-      <div style="display:inline-block;width:72px;height:72px;background:linear-gradient(135deg,#14b8a6,#0d9488);border-radius:50%;text-align:center;line-height:72px;font-size:36px;color:white;box-shadow:0 0 30px rgba(20,184,166,0.5);margin-bottom:16px;">✓</div>
+    <td style="background:linear-gradient(135deg,#0a1929 0%,#0d9488 120%);padding:40px 32px 32px;text-align:center;">
+      <img src="https://szpiczek.vercel.app/images/MedMis-zielony-ok.png" alt="MedMiś" width="140" height="140" style="display:block;margin:0 auto 8px;width:140px;height:140px;filter:drop-shadow(0 10px 30px rgba(20,184,166,0.5));">
+      <div style="display:inline-block;width:60px;height:60px;background:linear-gradient(135deg,#14b8a6,#0d9488);border-radius:50%;text-align:center;line-height:60px;font-size:30px;color:white;box-shadow:0 0 30px rgba(20,184,166,0.5);margin-bottom:14px;">✓</div>
       <h1 style="color:#ffffff;font-size:28px;font-weight:800;margin:8px 0 6px;letter-spacing:-0.5px;">Wszystko <span style="color:#14b8a6;">gotowe</span>!</h1>
       <p style="color:rgba(255,255,255,0.75);font-size:13px;margin:0;font-weight:600;letter-spacing:1.2px;">TWOJA REZERWACJA POTWIERDZONA</p>
     </td>
