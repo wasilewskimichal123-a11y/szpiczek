@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -16,8 +16,8 @@ function generateToken() {
 // MAIL SETUP
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASSWORD
