@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const db = require('./database');
 require('dotenv').config();
+require('dns').setDefaultResultOrder('ipv4first');
 
 const app = express();
 app.use(express.json());
