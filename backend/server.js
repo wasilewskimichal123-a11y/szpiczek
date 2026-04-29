@@ -1,11 +1,10 @@
-﻿const express = require('express');
+const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const db = require('./database');
 require('dotenv').config();
-require('dns').setDefaultResultOrder('ipv4first');
 
 const app = express();
 app.use(express.json());
@@ -14,20 +13,18 @@ app.use(cors());
 function generateToken() {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
-// MAIL SETUP
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  family: 4,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASSWORD
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
+// MAIL SETUP - Resend (HTTP API zamiast SMTP, bo Render blokuje porty SMTP)
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Funkcja wysyłki - jednolite API niezależnie od dostawcy
+async function sendMail({ from, to, subject, html }) {
+  return await resend.emails.send({
+    from: from || 'MedMiś <onboarding@resend.dev>',
+    to: Array.isArray(to) ? to : [to],
+    subject,
+    html
+  });
+}
 
 // MIDDLEWARE
 const authenticateToken = (req, res, next) => {
@@ -47,7 +44,7 @@ async function sendPatientEmail(booking) {
   });
 
   const mailOptions = {
-    from: process.env.GMAIL_USER,
+    from: 'MedMiś <onboarding@resend.dev>',
     to: booking.email,
     subject: `✓ Rezerwacja potwierdzona — ${new Date(booking.date).toLocaleDateString('pl-PL')} o ${booking.time}`,
     html: `
@@ -160,7 +157,7 @@ async function sendPatientEmail(booking) {
     `
   };
   try {
-    await transporter.sendMail(mailOptions);
+    await sendMail(mailOptions);
     console.log(`✓ Email wysłany do pacjenta: ${booking.email}`);
   } catch (error) {
     console.log(`✗ Błąd emaila pacjentowi:`, error.message);
@@ -170,7 +167,7 @@ async function sendPatientEmail(booking) {
 // HELPER: Email apteka
 async function sendPharmacyEmail(booking) {
   const mailOptions = {
-    from: process.env.GMAIL_USER,
+    from: 'MedMiś <onboarding@resend.dev>',
     to: `${booking.pharmacy}@acz.farm`,
     subject: `🔔 Nowa rezerwacja - ${booking.firstName} ${booking.lastName}`,
     html: `
@@ -183,7 +180,7 @@ async function sendPharmacyEmail(booking) {
     `
   };
   try {
-    await transporter.sendMail(mailOptions);
+    await sendMail(mailOptions);
     console.log(`✓ Email wysłany do apteki: ${booking.pharmacy}`);
   } catch (error) {
     console.log(`✗ Błąd emaila aptece:`, error.message);
